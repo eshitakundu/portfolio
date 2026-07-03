@@ -1,0 +1,6 @@
+/* Authentic Win95/98 bitmap UI font, hosted by the 98.css project (MIT).
+   This is now the only display/UI typeface used site-wide — the old
+   Fraunces/Caveat/Space Grotesk faces have been retired for a
+   consistent retro-Windows look across every app window. */
+@font-face{ font-family:'Pixelated MS Sans Serif'; font-style:normal; font-weight:400; font-display:swap; src:url('https://unpkg.com/98.css@0.1.21/dist/ms_sans_serif.woff2') format('woff2'), url('https://unpkg.com/98.css@0.1.21/dist/ms_sans_serif.woff') format('woff'); }
+@font-face{ font-family:'Pixelated MS Sans Serif'; font-style:normal; font-weight:700; font-display:swap; src:url('https://unpkg.com/98.css@0.1.21/dist/ms_sans_serif_bold.woff2') format('woff2'), url('https://unpkg.com/98.css@0.1.21/dist/ms_sans_serif_bold.woff') format('woff'); }
