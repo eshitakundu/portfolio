@@ -80,10 +80,10 @@
 
 /* "Classic" scheme — the real Windows 95 default: teal desktop, navy titlebar. */
 [data-theme="light"] {
-  --sky-1: #1c9797;
-  --sky-2: #008080;
-  --sky-3: #036a6a;
-  --sky-4: #024f4f;
+  --sky-1: #0f5353;
+  --sky-2: #004646;
+  --sky-3: #023a3a;
+  --sky-4: #012b2b;
   --accent:   #000080;
   --accent-2: #1084d0;
   --win-navy: #000080;
@@ -97,10 +97,10 @@
    desktop, purple titlebar. Window chrome (silver, black text) is unchanged —
    this is NOT a "dark mode", Windows 95 never had one. */
 [data-theme="dark"] {
-  --sky-1: #3a2450;
-  --sky-2: #2c1b3d;
-  --sky-3: #24172f;
-  --sky-4: #190f21;
+  --sky-1: #261734;
+  --sky-2: #1d1228;
+  --sky-3: #170f1f;
+  --sky-4: #100a15;
   --chrome:   #c0c0c0;
   --chrome-2: #d8d8d8;
   --bg-elev:  var(--chrome);
@@ -225,7 +225,7 @@ em { font-style: normal; font-family: var(--font-display); font-weight: 700; }
 }
 /* Drifting cloud puffs. */
 .wallpaper-fallback::before, .wallpaper-fallback::after {
-  content: ""; position: absolute; inset: 0;
+  content: none; position: absolute; inset: 0;
   background:
     radial-gradient(320px 120px at 20% 30%, rgba(255,255,255,.5), transparent 70%),
     radial-gradient(420px 150px at 70% 18%, rgba(255,255,255,.38), transparent 70%),
@@ -277,6 +277,19 @@ em { font-style: normal; font-family: var(--font-display); font-weight: 700; }
   .wallpaper-fallback, .wallpaper-fallback::before, .wallpaper-fallback::after,
   .wallpaper-vignette { animation: none; }
 }
+
+/* Film-grain texture over the wallpaper: static SVG fractal noise, tiled and
+   blended with "overlay" so it reads as grain rather than a visible pattern. */
+.wallpaper-vignette::before {
+  content: "";
+  position: absolute; inset: -20%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='2.4' intercept='-0.55'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 130px 130px;
+  mix-blend-mode: overlay;
+  opacity: .55;
+  pointer-events: none;
+}
+[data-theme="dark"] .wallpaper-vignette::before { opacity: .62; }
 
 /* ---- Terminal hero: retro console window -------------------------- */
 .desktop-watermark {
