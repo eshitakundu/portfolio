@@ -65,44 +65,44 @@ const EXPERIENCE = [
     role: "Experiential Learner - RPA Developer & Business Analyst",
     location: "Kolkata, India",
     bullets: [
-      "Built and deployed UiPath RPA workflows for Excel reporting that saved the team 10+ hours a week and dropped the error rate by 70%.",
-      "Wrote the Process Design Documents (PDDs) for those pipelines and shipped them across Agile sprints, talking to stakeholders directly the whole way."
+      "Cut manual data-processing time by 10+ hours/week, reduced error rate by 70%, with UiPath RPA for Excel reporting.",
+      "Authored Process Design Documents (PDDs) for automation pipelines across multiple Agile sprints, coordinating directly with stakeholders on scope and sign-off."
     ]
   }
 ];
 
 const ACHIEVEMENTS = [
   {
-    title: "2nd in the World, BRICS-FS-36 Data Analysis & Visualization",
+    title: "2nd Place - BRICS-FS-36 Data Analysis & Visualization",
     cert: "https://drive.google.com/file/d/1eUbbKUpUdZsSF0-W7ApcbcmyK6M2rRP9/view?usp=drive_link",
     org: "WorldSkills, Russia, Dec 2024",
-    desc: "Came 2nd in the world in an 8-hour analytics sprint. Took raw data all the way to finished dashboards in Python, Excel, Tableau, and Streamlit, against the clock."
+    desc: "Ranked 2nd globally in an 8-hour analytics challenge using Python, Excel, Tableau, and Streamlit."
   },
   {
-    title: "EL Excellence Award, Top 50 Learner",
+    title: "EL Excellence Award - Top 50 Learner",
     cert: "https://drive.google.com/file/d/1GGTMfMh05PWTjIRcA4W3HnQFWSENJk-e/view",
     citation: "https://drive.google.com/file/d/1YVZL-pyKFrt_LN6Briw1cF5UIUr_n_7M/view",
     org: "Federation University Australia, Feb 2026",
-    desc: "Picked as one of the top 50 learners in the program worldwide. The citation was co-signed by the COO of Federation University Australia and the CEO of Employability.life."
+    desc: "Selected among Top 50 Learners globally; citation co-signed by both organizations' COO and CEO."
   }
 ];
 
 const CERTIFICATIONS = [
   { name: "Applied ML in Python", cert: "https://drive.google.com/file/d/1VJWcxqMfhzTZrcLeHnlotZAyNLGY2VhV/view?usp=sharing", org: "University of Michigan", date: "Apr 2025" },
-  { name: "Google Business Intelligence", cert: "https://drive.google.com/file/d/1mNmnKZC7PrGra5U6kKfpYND2YIV0zMtv/view?usp=drive_link", org: "Google", date: "Mar 2024" },
-  { name: "SQL", cert: "https://drive.google.com/file/d/10pEUAIvh9mh0-mswEgHcz70reCDYTkTn/view?usp=sharing", org: "University of Colorado Boulder", date: "Apr 2025" },
-  { name: "Oracle Visual Builder (VBCS)", cert: "https://drive.google.com/file/d/1I2WwVDHPvaEbkhyw4hm6XGJAKKqC1EIj/view", org: "Oracle", date: "2026" }
+  { name: "OCI AI Foundations", cert: "https://drive.google.com/file/d/11d-zq13ilOsTe8kAMNJ35lhlTo-YA5TA/view?usp=sharing", org: "Oracle", date: "2026" },
+  { name: "MCP Fractal", cert: "https://drive.google.com/file/d/18AgmTAJGU2zwegKp96C6OH06Ux1U24bx/view?usp=sharing", org: "Coursera", date: "2026" },
+  { name: "SQL", cert: "https://drive.google.com/file/d/10pEUAIvh9mh0-mswEgHcz70reCDYTkTn/view?usp=sharing", org: "University of Colorado Boulder", date: "Apr 2025" }
 ];
 
 // Matched directly to the Drive links Esh sent (filenames confirmed by
 // fetching each link's title). Linked straight to Drive like the rest of
 // CERTIFICATIONS, no local file copy needed.
 const CERTIFICATIONS_MORE = [
+  { name: "Google Business Intelligence", org: "Google", cert: "https://drive.google.com/file/d/1mNmnKZC7PrGra5U6kKfpYND2YIV0zMtv/view?usp=drive_link" },
+  { name: "Oracle Visual Builder (VBCS)", org: "Oracle", cert: "https://drive.google.com/file/d/1I2WwVDHPvaEbkhyw4hm6XGJAKKqC1EIj/view" },
   { name: "Network Security Management", org: "Chongqing Polytechnic", cert: "https://drive.google.com/file/d/1Oh54b18EynwooDJe9FAzwpiEAIBo9eVz/view?usp=sharing" },
   { name: "Job Simulation", org: "Forage", cert: "https://drive.google.com/file/d/14myZWQII6nwkJpEKSx2b0hLYF-oateOz/view?usp=sharing" },
   { name: "XPMC Work Readiness Program Report", org: "Federation University Australia", cert: "https://drive.google.com/file/d/12Rs7PjVmIKwllaCDCizftFmEKKvSpB_O/view?usp=sharing" },
-  { name: "MCP Fractal", org: "Coursera", cert: "https://drive.google.com/file/d/18AgmTAJGU2zwegKp96C6OH06Ux1U24bx/view?usp=sharing" },
-  { name: "OCI AI Foundations", org: "Oracle", cert: "https://drive.google.com/file/d/11d-zq13ilOsTe8kAMNJ35lhlTo-YA5TA/view?usp=sharing" },
   { name: "Data Science", org: "Internshala", cert: "https://drive.google.com/file/d/1JWIchjJfJ6HGZRRpu7cLJ8Db23VIaZYa/view?usp=sharing" },
   { name: "NSDC", org: "Internshala", cert: "https://drive.google.com/file/d/1bIvUX8Vp0f8O-hgUYQBwuOYPZcn_GaZU/view?usp=sharing" },
   { name: "AICTE Internship", org: "AICTE", cert: "https://drive.google.com/file/d/1VxtdG1Asu9mI2xC9VTSupmY1NGKet3xi/view?usp=sharing" },
@@ -112,7 +112,7 @@ const CERTIFICATIONS_MORE = [
 
 const SKILLS = {
   "Languages": ["Python", "SQL"],
-  "GenAI & Agentic AI": ["LLM agents", "DAG-based agent orchestration (Heym)", "MCP (Model Context Protocol)", "NVIDIA NIM APIs", "deterministic-scoring & agent evaluation design", "prompt & context engineering"],
+  "GenAI & Agentic AI": ["LLM agents", "agent orchestration", "MCP", "NVIDIA NIM APIs", "agent eval design", "prompt engineering"],
   "Data Engineering": ["dbt", "Snowflake", "AWS S3", "Apache Airflow", "ELT Pipelines", "PostgreSQL"],
   "Analytics & BI": ["Apache Superset", "Tableau", "Power BI", "Excel", "Streamlit", "scikit-learn"],
   "Tools & Infra": ["Docker", "CI/CD", "Git", "REST APIs", "UiPath (RPA)", "Oracle VBCS"]
