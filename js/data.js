@@ -9,7 +9,7 @@
 
 const BIO = {
   name: "Eshita Kundu",
-  tagline: "Final-year CSE student (8.8 CGPA). Currently building ARIS and looking for a full-time seat somewhere.",
+  tagline: "Computer Science graduate (8.80 CGPA). Currently building ARIS and looking for a full-time seat somewhere.",
   whisper: "she/her | Kolkata | open to full-time roles",
   photoSrc: "assets/img/avatar-photo.webp", // see ASSETS_TODO.md for generation prompt
   body: `
@@ -25,7 +25,7 @@ const BIO = {
 // treated as command output.
 const TERMINAL_LINES = [
   { cmd: true, text: "whoami" },
-  { text: "eshita kundu — agentic ai engineer, final-year cse" },
+  { text: "eshita kundu - agentic ai engineer, cs graduate" },
   { cmd: true, text: "cat status.txt" },
   { text: "shipping ARIS · open to full-time roles · kolkata, india" },
   { cmd: true, text: "cat awards.txt" },
@@ -51,9 +51,9 @@ const CONTACT = {
 const EDUCATION = [
   {
     school: "Sister Nivedita University",
-    dates: "Jun 2022 -- Jun 2026",
+    dates: "Jun 2022 - Jun 2026",
     degree: "B.Tech in Computer Science and Engineering",
-    meta: "CGPA: 8.8 / 10 (Through 7th Semester)"
+    meta: "CGPA: 8.80 / 10"
   }
 ];
 
@@ -61,8 +61,8 @@ const EXPERIENCE = [
   {
     org: "Employability.life (XPMC Program), Federation University Australia",
     cert: "https://drive.google.com/file/d/1UYP0-IhTqH1KCa6GsnZkKMWBa8agiodJ/view?usp=sharing",
-    dates: "Sep 2024 -- Nov 2024",
-    role: "Experiential Learner -- RPA Developer & Business Analyst",
+    dates: "Sep 2024 - Nov 2024",
+    role: "Experiential Learner - RPA Developer & Business Analyst",
     location: "Kolkata, India",
     bullets: [
       "Built and deployed UiPath RPA workflows for Excel reporting that saved the team 10+ hours a week and dropped the error rate by 70%.",
@@ -115,7 +115,7 @@ const SKILLS = {
   "GenAI & Agentic AI": ["LLM agents", "DAG-based agent orchestration (Heym)", "MCP (Model Context Protocol)", "NVIDIA NIM APIs", "deterministic-scoring & agent evaluation design", "prompt & context engineering"],
   "Data Engineering": ["dbt", "Snowflake", "AWS S3", "Apache Airflow", "ELT Pipelines", "PostgreSQL"],
   "Analytics & BI": ["Apache Superset", "Tableau", "Power BI", "Excel", "Streamlit", "scikit-learn"],
-  "Tools & Infra": ["Docker", "CI/CD", "Git", "REST APIs", "Node.js/Express", "MongoDB", "UiPath (RPA)", "Oracle VBCS"]
+  "Tools & Infra": ["Docker", "CI/CD", "Git", "REST APIs", "UiPath (RPA)", "Oracle VBCS"]
 };
 
 // ---- PROJECTS -----------------------------------------------------------
@@ -130,7 +130,7 @@ const FLAGSHIP = [
     flagship: true,
     hex: ["#6699FF", "#99CCFF", "#8FC97A", "#000000"],
     caption: "a multi-agent verdict engine for 'should we adopt this dependency?'",
-    desc: "Live multi-agent decision-support tool that scores software dependencies across 6 weighted dimensions and emails a verdict-backed Adoption Brief. Runs as a 7-branch parallel agent DAG on a self-hosted Heym fork, with deterministic Python scoring, MCP payload compression, and Cloudflare Pages + Tunnel + Docker deployment.",
+    desc: "Live multi-agent decision-support tool that scores software dependencies across 6 weighted dimensions and emails a verdict-backed Adoption Brief. Runs as a 7-branch parallel agent DAG on a self-hosted Heym fork, with deterministic Python scoring, MCP payload compression, and self-hosted deployment via Docker Compose on a DigitalOcean droplet with zero-downtime build-then-swap deploys.",
     tags: ["Heym self-hosted fork", "PythonExec node", "LLM Agents", "NVIDIA NIM", "GitHub/OSV/Tavily APIs"],
     links: [
       { label: "Live", href: "https://aris.eshita.dev" },
@@ -153,7 +153,19 @@ const FLAGSHIP = [
     caption: "natural-language CI/CD triggering with MCP skill routing",
     desc: "Team-built DevOps system where I containerized and sandboxed the OpenClaw LLM agent in Docker, then integrated a Telegram bot with MCP skill routing for CI/CD triggering and automated log summaries.",
     tags: ["Docker", "OpenClaw", "Telegram Bot", "MCP", "CI/CD"],
-    links: [{ label: "GitHub", href: "https://github.com/Mouli51ch/Devops-Automation/tree/feature/openclaw-agent" }]
+    links: [
+      { label: "GitHub", href: "https://github.com/Mouli51ch/Devops-Automation/tree/feature/openclaw-agent" },
+      { label: "Demo", href: "https://drive.google.com/file/d/1hDGKNvoISSvxF2wnWiTTDwlYouhe_ICL/view?usp=sharing" }
+    ]
+  },
+  {
+    id: "study-buddy-mcp",
+    name: "Study Buddy MCP | Personal Study System",
+    hex: ["#F5A3C7", "#6699FF"],
+    caption: "a personal MCP server for studying, doubling as a full protocol reference",
+    desc: "Python MCP server exposing 13 tools, 3 resources, and 4 prompts across the full set of MCP primitives, giving Claude structured, path-traversal-safe access to personal study notes and past-year question papers, with PDF, DOCX, and image support. SQLite-backed mastery tracking with fuzzy topic matching prevents silent duplicate topics. Built for the Codédex Monthly Challenge, June 2026.",
+    tags: ["Python", "MCP", "SQLite", "Pydantic", "uv"],
+    links: [{ label: "GitHub", href: "https://github.com/eshitakundu/study-buddy" }]
   },
   {
     id: "github-ranker-mcp",
