@@ -506,5 +506,4 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .win[data-world="shinkai"] .win-body::before { animation: none; }
-}
+  .win[data-world="shinkai"] 
