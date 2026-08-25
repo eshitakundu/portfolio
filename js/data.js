@@ -281,15 +281,15 @@ const GALLERY = [
 
 const MESSAGES = [
   {
-    text: "joining the brics meeting",
+    text: "joining the BRICS meeting",
     img: "assets/experiences/BRICS_attending.webp",
-    caption: "BRICS-FS-36, Data Analysis & Visualization, Russia",
-    date: "Dec 2024"
+    caption: "BRICS-FS-36, Data Analysis & Visualization",
+    date: "Nov 2024"
   },
   {
     text: "I won!",
-    img: "assets/experiences/BRICS_winning.webp",
-    caption: "2nd in the world, an 8-hour analytics sprint",
-    date: "Dec 2024"
+    img: "assets/experiences/BRICS_winning.png",
+    caption: "2nd Prize, BRICS-FS-36 International Final",
+    date: "Nov 2024"
   }
 ];
