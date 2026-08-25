@@ -51,3 +51,11 @@ function renderRecognition(){
 renderProjects();renderMap();renderProfile();renderRecognition();$("#year").textContent=new Date().getFullYear();
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 let lastY=0;addEventListener("scroll",()=>{const y=scrollY;$(".site-header").classList.toggle("hidden",y>lastY&&y>160);lastY=y},{passive:true});
+
+const emailCopy=$("#emailCopy"),copyStatus=$("#copyStatus");
+emailCopy.addEventListener("click",async()=>{
+ const email=emailCopy.dataset.email;
+ try{await navigator.clipboard.writeText(email)}catch{const field=document.createElement("textarea");field.value=email;field.setAttribute("readonly","");field.style.position="fixed";field.style.opacity="0";document.body.appendChild(field);field.select();document.execCommand("copy");field.remove()}
+ emailCopy.querySelector("strong").textContent="Copied!";copyStatus.textContent="Email address copied to clipboard.";
+ setTimeout(()=>{emailCopy.querySelector("strong").textContent="Copy email";copyStatus.textContent=""},2500);
+});
