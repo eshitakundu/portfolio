@@ -55,7 +55,10 @@ let lastY=0;addEventListener("scroll",()=>{const y=scrollY;$(".site-header").cla
 const emailCopy=$("#emailCopy"),copyStatus=$("#copyStatus");
 emailCopy.addEventListener("click",async()=>{
  const email=emailCopy.dataset.email;
- try{await navigator.clipboard.writeText(email)}catch{const field=document.createElement("textarea");field.value=email;field.setAttribute("readonly","");field.style.position="fixed";field.style.opacity="0";document.body.appendChild(field);field.select();document.execCommand("copy");field.remove()}
+ try{await navigator.clipboard.writeText(email)}catch{const field=document.createElement("textarea");field.value=email;field.setAttribute("readonly","");field.style.position="fixed";field.style.opacity="0";document.body.appendChild(field);field.select();const copied=document.execCommand("copy");field.remove();if(!copied){copyStatus.textContent="Please select and copy the email address above.";return}}
  emailCopy.querySelector("strong").textContent="Copied!";copyStatus.textContent="Email address copied to clipboard.";
  setTimeout(()=>{emailCopy.querySelector("strong").textContent="Copy email";copyStatus.textContent=""},2500);
 });
+const localClock = document.querySelector('#localClock');
+function updateClock(){localClock.textContent = new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit'}).format(new Date());}
+updateClock(); setInterval(updateClock,60000);
