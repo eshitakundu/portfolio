@@ -9,13 +9,13 @@
 
 const BIO = {
   name: "Eshita Kundu",
-  tagline: "Computer Science graduate (8.80 CGPA). Currently building ARIS and looking for a full-time seat somewhere.",
+  tagline: "Computer Science graduate (8.80 CGPA). Built and deployed ARIS. Open to full-time AI engineering roles.",
   whisper: "she/her | Kolkata | open to full-time roles",
   photoSrc: "assets/img/avatar-photo.webp", // see ASSETS_TODO.md for generation prompt
   body: `
-    <p>My main project right now is <strong>ARIS</strong>, a live tool that scores whether a software dependency is safe to adopt. It runs on a self-hosted fork of Heym.</p>
+    <p>I built and deployed <strong>ARIS</strong>, a live tool that scores whether a software dependency is safe to adopt. It runs on a self-hosted fork of Heym.</p>
     <p>Most of my time goes into the unglamorous parts: getting scoring logic to give the same answer twice, keeping agent workflows from silently breaking, and building dashboards that hold up once real people start clicking around in them.</p>
-    <p>I placed <strong>2nd globally</strong> at BRICS-FS-36, WorldSkills Russia, in an 8-hour data analysis and visualization challenge.</p>
+    <p>I won <strong>2nd Prize</strong> at the BRICS-FS-36 international final in China, hosted by WorldSkills Russia and partner organizations.</p>
   `
 };
 
@@ -27,7 +27,7 @@ const TERMINAL_LINES = [
   { cmd: true, text: "whoami" },
   { text: "eshita kundu - agentic ai engineer, cs graduate" },
   { cmd: true, text: "cat status.txt" },
-  { text: "shipping ARIS · open to full-time roles · kolkata, india" },
+  { text: "ARIS deployed · open to full-time roles · kolkata, india" },
   { cmd: true, text: "cat awards.txt" },
   { text: "2nd place, worldskills BRICS-FS-36 (data analysis & viz, russia)" },
   { cmd: true, text: "ls skills/" },
@@ -75,15 +75,15 @@ const ACHIEVEMENTS = [
   {
     title: "2nd Place - BRICS-FS-36 Data Analysis & Visualization",
     cert: "https://drive.google.com/file/d/1eUbbKUpUdZsSF0-W7ApcbcmyK6M2rRP9/view?usp=drive_link",
-    org: "WorldSkills, Russia, Dec 2024",
-    desc: "Ranked 2nd globally in an 8-hour analytics challenge using Python, Excel, Tableau, and Streamlit."
+    org: "International final, China · Dec 2024",
+    desc: "Won 2nd Prize in the international final held in China and hosted by WorldSkills Russia and partner organizations."
   },
   {
     title: "EL Excellence Award - Top 50 Learner",
     cert: "https://drive.google.com/file/d/1GGTMfMh05PWTjIRcA4W3HnQFWSENJk-e/view",
     citation: "https://drive.google.com/file/d/1YVZL-pyKFrt_LN6Briw1cF5UIUr_n_7M/view",
     org: "Federation University Australia, Feb 2026",
-    desc: "Selected among Top 50 Learners globally; citation co-signed by both organizations' COO and CEO."
+    desc: "Selected among the program’s Top 50 Learners; citation co-signed by both organizations' COO and CEO."
   }
 ];
 

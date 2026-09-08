@@ -1,7 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="EK OS favicon">
-  <rect x="0" y="0" width="24" height="24" fill="#c0c0c0"></rect>
-  <rect x="1" y="1" width="10" height="10" fill="#ff6a00"></rect>
-  <rect x="13" y="1" width="10" height="10" fill="#7cbb00"></rect>
-  <rect x="1" y="13" width="10" height="10" fill="#00a4ef"></rect>
-  <rect x="13" y="13" width="10" height="10" fill="#ffb900"></rect>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Eshita favicon">
+  <rect width="32" height="32" fill="#294fe5"/>
+  <path fill="#f3f1e9" d="M7 7h18v5H12v3h10v4H12v3h13v5H7z"/>
 </svg>
