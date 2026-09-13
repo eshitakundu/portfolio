@@ -41,10 +41,10 @@ function renderProfile(){
  $("#educationList").innerHTML=EDUCATION.map(x=>`<article><div><span>${x.dates}</span></div><div><h3>${x.degree}</h3><p>${x.school} · <strong>${x.meta}</strong></p></div></article>`).join("");
  const groups=[
   ["Languages & Backend",["JavaScript","Python","SQL","Node.js","FastAPI","Pydantic","REST APIs"]],
-  ["Agents & Orchestration",["Herdr","LangGraph","LLM agents","MCP","FastMCP","Tool calling"]],
-  ["Retrieval & Evaluation",["RAG","Embeddings","Vector search","Structured outputs","Agent evaluation"]],
+  ["Agents & Orchestration",["LangGraph","LLM Agents","MCP","FastMCP","Tool / Function Calling","Agent Orchestration"]],
+  ["Retrieval & Evaluation",["RAG","Embeddings","Vector Search","Structured Outputs","LLM / Agent Evaluation"]],
   ["Databases",["PostgreSQL","pgvector","MongoDB","Redis","SQLite"]],
-  ["Infrastructure & Delivery",["Docker","Docker Compose","CI/CD","Git / GitHub","DigitalOcean","Cloudflare","AWS S3"]],
+  ["Infrastructure & Developer Tooling",["Docker","Docker Compose","Git / GitHub","GitHub Actions","CI/CD","DigitalOcean","Cloudflare","AWS S3","Herdr","tmux"]],
   ["Data & Analytics",["pandas","NumPy","scikit-learn","dbt","Snowflake","Airflow","Tableau","Power BI"]]
  ];
  $("#skills").innerHTML=groups.map(([name,items],i)=>`<article><span class="stack-index">0${i+1}</span><h3>${name}</h3><ul class="stack-list">${items.map(item=>`<li>${item}</li>`).join("")}</ul></article>`).join("");
