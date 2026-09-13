@@ -11,3 +11,15 @@
 @media(hover:hover){.hero-portrait:hover img{filter:saturate(1) contrast(1.02);transform:scale(1.025)}}
 @media(max-width:650px){.hero-portrait{min-height:440px}.hero-portrait img{object-position:50% 36%}}
 @media(prefers-reduced-motion:reduce){.hero-portrait img{transition:none}.hero-portrait:hover img{transform:none}}
+/* Technology inventory: bordered panels and restrained editorial accents. */
+.skills{grid-template-columns:repeat(3,minmax(0,1fr))}
+.skills article{position:relative;border-bottom:1px solid var(--line);background:transparent}
+.skills article:nth-child(1){background:#e1e6f7}
+.skills article:nth-child(2){background:#dbe4bb}
+.skills article:nth-child(3n){border-right:0}
+.skills h3{margin:10px 0 18px;font-size:21px}
+.stack-index{font:12px monospace;color:var(--blue)}
+.stack-list{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0}
+.stack-list li{border:1px solid var(--line);padding:6px 9px;font-size:14px;line-height:1.4;background:rgba(255,255,255,.2)}
+@media(max-width:1000px){.skills{grid-template-columns:repeat(2,minmax(0,1fr))}.skills article:nth-child(3n){border-right:1px solid var(--line)}.skills article:nth-child(2n){border-right:0}}
+@media(max-width:650px){.skills{grid-template-columns:1fr}.skills article,.skills article:nth-child(3n){border-right:0}.site-header nav{gap:12px;flex-wrap:wrap}}

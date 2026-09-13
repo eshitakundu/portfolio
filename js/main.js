@@ -36,11 +36,18 @@ function renderMap(){
 }
 
 function renderProfile(){
- $("#bio").innerHTML=`<p>My work sits where AI agents meet dependable software. I build the less glamorous parts too: deterministic scoring, safe tool access, data pipelines, and deployments that keep working once real people use them.</p><p>I built and deployed <strong>ARIS</strong>, a multi-agent technology adoption system with reproducible scoring and auditable verdicts. I’m looking for a team where engineering judgment matters as much as the demo.</p>`;
+ $("#bio").innerHTML=`<p>I develop AI systems with an emphasis on reliable software engineering: deterministic scoring, validated tool access, data pipelines, and production deployments.</p><p>I built and deployed <strong>ARIS</strong>, a multi-agent technology adoption system with reproducible scoring and auditable verdicts. I’m seeking AI engineering opportunities focused on reliable, production-oriented systems.</p>`;
   $("#experienceList").innerHTML=EXPERIENCE.map(x=>`<article><div><span>${x.dates}</span><small>${x.location}</small></div><div><h3>${x.role}</h3><h4>${x.org}</h4><ul>${x.bullets.map(b=>`<li>${b.replace("10+ hours/week","<strong>10+ hours/week</strong>").replace("70%","<strong>70%</strong>")}</li>`).join("")}</ul><a href="${x.cert}" target="_blank">View credential ↗</a><figure class="experience-photo"><img src="assets/experiences/XPMC.webp" alt="XPMC Work Readiness Program group" loading="lazy"><figcaption>XPMC Work Readiness Program · Federation University Australia</figcaption></figure></div></article>`).join("");
  $("#educationList").innerHTML=EDUCATION.map(x=>`<article><div><span>${x.dates}</span></div><div><h3>${x.degree}</h3><p>${x.school} · <strong>${x.meta}</strong></p></div></article>`).join("");
- const groups=[["Agents & Retrieval",["LLM agents","LangGraph","MCP / FastMCP","RAG","Embeddings","Vector search","Agent evaluation"],"priority"],["Python & Backend",["Python","SQL","FastAPI","Pydantic","REST APIs","Structured outputs"],"priority"],["Databases",["PostgreSQL","pgvector","MongoDB","Redis","SQLite"]],["Infrastructure",["Docker / Compose","CI/CD","Git / GitHub","DigitalOcean","Cloudflare","AWS S3"]]];
- $("#skills").innerHTML=groups.map(([n,a,c])=>`<article class="${c||""}"><h3>${n}</h3><p>${a.join(" · ")}</p></article>`).join("");
+ const groups=[
+  ["Languages & Backend",["JavaScript","Python","SQL","Node.js","FastAPI","Pydantic","REST APIs"]],
+  ["Agents & Orchestration",["Herdr","LangGraph","LLM agents","MCP","FastMCP","Tool calling"]],
+  ["Retrieval & Evaluation",["RAG","Embeddings","Vector search","Structured outputs","Agent evaluation"]],
+  ["Databases",["PostgreSQL","pgvector","MongoDB","Redis","SQLite"]],
+  ["Infrastructure & Delivery",["Docker","Docker Compose","CI/CD","Git / GitHub","DigitalOcean","Cloudflare","AWS S3"]],
+  ["Data & Analytics",["pandas","NumPy","scikit-learn","dbt","Snowflake","Airflow","Tableau","Power BI"]]
+ ];
+ $("#skills").innerHTML=groups.map(([name,items],i)=>`<article><span class="stack-index">0${i+1}</span><h3>${name}</h3><ul class="stack-list">${items.map(item=>`<li>${item}</li>`).join("")}</ul></article>`).join("");
 }
 function renderRecognition(){
  $("#achievements").innerHTML=ACHIEVEMENTS.map((a,i)=>`<article class="${i===0?"primary-award":""}"><span>0${i+1}</span><div><h3>${i===0?"2nd Prize":a.title}</h3><h4>${i===0?"BRICS-FS-36 Data Analysis & Visualization · International Final · Dec 2024":a.org}</h4><p>${i===0?"8-hour international analytics final · Python · Excel · Tableau · Streamlit":a.desc}</p><a href="${a.cert}" target="_blank">Credential ↗</a>${a.citation?`<a href="${a.citation}" target="_blank">Citation ↗</a>`:""}</div></article>`).join("");

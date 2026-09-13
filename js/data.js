@@ -111,8 +111,8 @@ const CERTIFICATIONS_MORE = [
 ];
 
 const SKILLS = {
-  "Languages": ["Python", "SQL"],
-  "GenAI & Agentic AI": ["LLM agents", "agent orchestration", "MCP", "NVIDIA NIM APIs", "agent eval design", "prompt engineering"],
+  "Languages": ["JavaScript", "Python", "SQL"],
+  "GenAI & Agentic AI": ["Herdr", "LLM agents", "agent orchestration", "MCP", "NVIDIA NIM APIs", "agent eval design", "prompt engineering"],
   "Data Engineering": ["dbt", "Snowflake", "AWS S3", "Apache Airflow", "ELT Pipelines", "PostgreSQL"],
   "Analytics & BI": ["Apache Superset", "Tableau", "Power BI", "Excel", "Streamlit", "scikit-learn"],
   "Tools & Infra": ["Docker", "CI/CD", "Git", "REST APIs", "UiPath (RPA)", "Oracle VBCS"]
@@ -281,13 +281,13 @@ const GALLERY = [
 
 const MESSAGES = [
   {
-    text: "joining the BRICS meeting",
+    text: "BRICS-FS-36 participation",
     img: "assets/experiences/BRICS_attending.webp",
     caption: "BRICS-FS-36, Data Analysis & Visualization",
     date: "Nov 2024"
   },
   {
-    text: "I won!",
+    text: "BRICS-FS-36 · 2nd Prize",
     img: "assets/experiences/BRICS_winning.png",
     caption: "2nd Prize, BRICS-FS-36 International Final",
     date: "Nov 2024"
