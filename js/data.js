@@ -112,10 +112,10 @@ const CERTIFICATIONS_MORE = [
 
 const SKILLS = {
   "Languages": ["JavaScript", "Python", "SQL"],
-  "GenAI & Agentic AI": ["Herdr", "LLM agents", "agent orchestration", "MCP", "NVIDIA NIM APIs", "agent eval design", "prompt engineering"],
+  "GenAI & Agentic AI": [ "LLM agents", "agent orchestration", "MCP", "NVIDIA NIM APIs", "agent eval design", "prompt engineering"],
   "Data Engineering": ["dbt", "Snowflake", "AWS S3", "Apache Airflow", "ELT Pipelines", "PostgreSQL"],
   "Analytics & BI": ["Apache Superset", "Tableau", "Power BI", "Excel", "Streamlit", "scikit-learn"],
-  "Tools & Infra": ["Docker", "CI/CD", "Git", "REST APIs", "UiPath (RPA)", "Oracle VBCS"]
+  "Tools & Infra": ["GitHub Actions", "Herdr", "tmux", "Docker", "CI/CD", "Git", "REST APIs", "UiPath (RPA)", "Oracle VBCS"]
 };
 
 // ---- PROJECTS -----------------------------------------------------------
