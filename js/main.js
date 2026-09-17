@@ -3,11 +3,12 @@ const linkList=(a=[])=>a.map(l=>`<a href="${l.href}" target="_blank" rel="norefe
 const byId=id=>[...FLAGSHIP,...DATA_PROJECTS,...MISC_PROJECTS].find(p=>p.id===id);
 
 const flagshipSpecs={
+  traceintel:{summary:"Persistent on-chain exposure intelligence: reconstructs Ethereum and Monad transaction evidence, then checks which ERC-20 permissions remain active.",points:[["THEN → NOW","Historical approvals compared with current allowance, owner balance, and spender bytecode at a recorded block"],["Evidence & interpretation","Deterministic risk and exposure analysis; NOOA selects validated, cited claims without changing scores"],["Architecture & deployment","React + TypeScript → Cloudflare Workers → Render / FastAPI → PostgreSQL report snapshots"],["Verification","pytest, Vitest, Playwright, and offline evaluations cover exposure transitions, claim grounding, storage, and the proxy boundary"]]},
   aris:{summary:"Multi-agent system that evaluates software dependencies across six dimensions and produces an auditable adoption verdict.",points:[["Architecture","7-branch parallel agent DAG"],["Reliability","Deterministic Python scoring separated from LLM narrative"],["Deployment","Cloudflare Pages frontend; Dockerized Heym/FastAPI/PostgreSQL backend on DigitalOcean via Cloudflare Tunnel"],["Integrations","GitHub / OSV / Tavily / NVIDIA NIM"]]},
   "mcp-devops-hub":{summary:"Natural-language DevOps system that routes CI/CD tasks through MCP and returns automated log summaries.",points:[["Agent runtime","Containerized and sandboxed OpenClaw agent"],["Orchestration","Telegram bot with MCP skill routing"],["Automation","Natural-language CI/CD triggering"],["Execution safety","Human-controlled execution boundaries and failure summaries"]]},
   "study-buddy-mcp":{summary:"Personal MCP server that gives Claude structured, safe access to study material and mastery data.",points:[["Protocol","13 tools, 3 resources, and 4 prompts"],["Safety","Path-traversal-safe document access"],["Data","SQLite mastery tracking with fuzzy matching"],["Backend","Pydantic-validated Python MCP server"]]}
 };
-const flagshipOrder=["aris","mcp-devops-hub","study-buddy-mcp"];
+const flagshipOrder=["traceintel","aris","mcp-devops-hub","study-buddy-mcp"];
 const moreOrder=["deep-research-agent","github-ranker-mcp","flowchart-mcp","hn-mcp","elearning-analytics-dbt","disease-outbreak-predictor","ecommerce-spending","espresso-yourself","vbs-calculator"];
 
 function renderProjects(){
@@ -16,35 +17,62 @@ function renderProjects(){
 }
 
 const layers=[
- {name:"AI / LLMs",desc:"Model APIs and evaluation form the reasoning layer behind my AI systems.",tech:["NVIDIA NIM","Prompt engineering","Agent evaluation"],projects:["aris","deep-research-agent","mcp-devops-hub"]},
+ {name:"AI / LLMs",desc:"Model APIs and evaluation form the reasoning layer behind my AI systems.",tech:["NVIDIA NIM","NOOA / OpenRouter","Prompt engineering","Agent evaluation"],projects:["traceintel","aris","deep-research-agent","mcp-devops-hub"]},
  {name:"Agents & Orchestration",desc:"Agents divide complex work into coordinated, observable execution paths.",tech:["Python","Parallel DAGs","Heym"],projects:["aris","deep-research-agent","mcp-devops-hub"]},
  {name:"MCP",desc:"MCP gives models structured, validated access to tools, resources, and prompts.",tech:["FastMCP","MCP primitives","Skill routing"],projects:["aris","study-buddy-mcp","github-ranker-mcp","flowchart-mcp","hn-mcp"]},
- {name:"Tools / APIs",desc:"External APIs ground agent decisions in current, verifiable information.",tech:["GitHub API","OSV","Tavily","REST APIs"],projects:["aris","deep-research-agent","github-ranker-mcp"]},
- {name:"Data Systems",desc:"Reliable storage and transformation keep application state and analytics usable.",tech:["PostgreSQL / SQLite","dbt","Snowflake","Airflow"],projects:["study-buddy-mcp","elearning-analytics-dbt","disease-outbreak-predictor"]},
- {name:"Infrastructure / Deployment",desc:"Containerization and delivery workflows turn prototypes into running systems.",tech:["Docker","CI/CD","DigitalOcean","Render"],projects:["aris","mcp-devops-hub","github-ranker-mcp"]}
+ {name:"Tools / APIs",desc:"External APIs ground agent decisions in current, verifiable information.",tech:["GitHub API","OSV","Tavily","EVM JSON-RPC","REST APIs"],projects:["traceintel","aris","deep-research-agent","github-ranker-mcp"]},
+ {name:"Data Systems",desc:"Reliable storage and transformation keep application state and analytics usable.",tech:["PostgreSQL / SQLite","dbt","Snowflake","Airflow"],projects:["traceintel","study-buddy-mcp","elearning-analytics-dbt","disease-outbreak-predictor"]},
+ {name:"Infrastructure / Deployment",desc:"Containerization and delivery workflows turn prototypes into running systems.",tech:["Docker","CI/CD","DigitalOcean","Cloudflare Workers","Render"],projects:["traceintel","aris","mcp-devops-hub","github-ranker-mcp"]}
 ];
 function setLayer(i){
+ document.querySelectorAll("[data-signal-layer]").forEach((n,j)=>{n.classList.toggle("active",i===j);n.setAttribute("aria-pressed",String(i===j))});
+ const signalLabel=document.querySelector("#signalLabel");if(signalLabel)signalLabel.textContent=layers[i].name;
  document.querySelectorAll(".layer-node").forEach((n,j)=>{n.classList.toggle("active",i===j);n.setAttribute("aria-pressed",i===j)});
  const l=layers[i];$("#systemDetail").innerHTML=`<span>Layer 0${i+1}</span><h3>${l.name}</h3><p class="layer-desc">${l.desc}</p><div class="map-tech">${l.tech.map(t=>`<span>${t}</span>`).join("")}</div><p>Projects using this layer</p><div class="map-projects">${l.projects.map(id=>{const p=byId(id);return `<a href="#project-${id}" data-target="${id}">${p.name} <span>↘</span></a>`}).join("")}</div>`;
  document.querySelectorAll("[data-project]").forEach(el=>el.classList.toggle("map-match",l.projects.includes(el.dataset.project)));
 }
 function renderMap(){
+ renderCircuit();
  $("#systemFlow").innerHTML=layers.map((l,i)=>`<button class="layer-node" type="button" aria-pressed="false" data-layer="${i}"><small>0${i+1}</small><span>${l.name}</span><b>↓</b></button>`).join("");
  $("#systemFlow").addEventListener("click",e=>{const b=e.target.closest("[data-layer]");if(b)setLayer(+b.dataset.layer)});
  $("#systemFlow").addEventListener("mouseover",e=>{const b=e.target.closest("[data-layer]");if(b)setLayer(+b.dataset.layer)});
  setLayer(0);
 }
 
+// A lightweight, interactive companion to the system map; no animation library.
+function renderCircuit(){
+ const labels=["AI / LLMs","Agents","MCP","Tools / APIs","Data","Infrastructure"];
+ const positions=[[150,65],[450,65],[750,65],[150,205],[450,205],[750,205]];
+ const paths=["M150 65 H450","M450 65 H750","M150 205 H450","M450 205 H750","M150 65 V205","M450 65 V205","M750 65 V205","M150 65 H270 Q300 65 300 95 V175 Q300 205 330 205 H450","M450 65 H570 Q600 65 600 95 V175 Q600 205 630 205 H750"];
+ const panel=document.createElement("div");panel.className="signal-panel";
+ panel.innerHTML=`<div class="signal-toolbar"><span>CONNECTIONS / <strong id="signalLabel">AI / LLMs</strong></span><button id="signalMotion" type="button" aria-pressed="false">Pause motion</button></div><div class="signal-stage"><svg viewBox="0 0 900 270" preserveAspectRatio="none" aria-hidden="true" focusable="false"><defs><pattern id="signalGrid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="currentColor" opacity=".2"/></pattern></defs><rect width="900" height="270" fill="url(#signalGrid)"/>${paths.map((d,i)=>`<path class="signal-wire" d="${d}"/><circle class="signal-packet" r="3.5"><animateMotion dur="${3+i%3}s" begin="-${i*.7}s" repeatCount="indefinite" path="${d}"/></circle>`).join("")}</svg>${labels.map((label,i)=>`<button type="button" class="signal-node" data-signal-layer="${i}" aria-pressed="false" style="left:${positions[i][0]/9}%;top:${positions[i][1]/2.7}%"><small>0${i+1}</small><span>${label}</span></button>`).join("")}</div><p class="signal-caption">Different layers. Connected work. Select a node to explore.</p>`;
+ document.querySelector(".system-layout").before(panel);
+ panel.addEventListener("click",e=>{const node=e.target.closest("[data-signal-layer]");if(node)setLayer(Number(node.dataset.signalLayer))});
+ const svg=panel.querySelector("svg"),toggle=panel.querySelector("#signalMotion"),preference=matchMedia("(prefers-reduced-motion: reduce)");
+ let paused=preference.matches,inView=false;
+ function syncMotion(){
+  const stopped=paused||!inView||document.hidden;
+  if(stopped)svg.pauseAnimations();else svg.unpauseAnimations();
+  panel.classList.toggle("motion-paused",stopped);
+  toggle.textContent=paused?"Play motion":"Pause motion";toggle.setAttribute("aria-pressed",String(paused));
+ }
+ toggle.addEventListener("click",()=>{paused=!paused;syncMotion()});
+ preference.addEventListener("change",e=>{paused=e.matches;syncMotion()});
+ document.addEventListener("visibilitychange",syncMotion);
+ new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;syncMotion()},{threshold:0}).observe(panel);
+ syncMotion();
+}
+
 function renderProfile(){
- $("#bio").innerHTML=`<p>I develop AI systems with an emphasis on reliable software engineering: deterministic scoring, validated tool access, data pipelines, and production deployments.</p><p>I built and deployed <strong>ARIS</strong>, a multi-agent technology adoption system with reproducible scoring and auditable verdicts. I’m seeking AI engineering opportunities focused on reliable, production-oriented systems.</p>`;
+ $("#bio").innerHTML=`<p>I develop AI systems with an emphasis on reliable software engineering: deterministic scoring, validated tool access, data pipelines, and production deployments.</p><p>I built and deployed <strong>ARIS</strong>, a multi-agent technology adoption system with reproducible scoring and auditable verdicts. My latest project, <strong>TraceIntel</strong>, follows Ethereum and Monad transaction permissions from historical evidence to current exposure, with deterministic analysis and evidence-grounded NOOA interpretation. I’m seeking AI engineering opportunities focused on reliable, production-oriented systems.</p>`;
   $("#experienceList").innerHTML=EXPERIENCE.map(x=>`<article><div><span>${x.dates}</span><small>${x.location}</small></div><div><h3>${x.role}</h3><h4>${x.org}</h4><ul>${x.bullets.map(b=>`<li>${b.replace("10+ hours/week","<strong>10+ hours/week</strong>").replace("70%","<strong>70%</strong>")}</li>`).join("")}</ul><a href="${x.cert}" target="_blank">View credential ↗</a><figure class="experience-photo"><img src="assets/experiences/XPMC.webp" alt="XPMC Work Readiness Program group" loading="lazy"><figcaption>XPMC Work Readiness Program · Federation University Australia</figcaption></figure></div></article>`).join("");
  $("#educationList").innerHTML=EDUCATION.map(x=>`<article><div><span>${x.dates}</span></div><div><h3>${x.degree}</h3><p>${x.school} · <strong>${x.meta}</strong></p></div></article>`).join("");
  const groups=[
-  ["Languages & Backend",["JavaScript","Python","SQL","Node.js","FastAPI","Pydantic","REST APIs"]],
-  ["Agents & Orchestration",["LangGraph","LLM Agents","MCP","FastMCP","Tool / Function Calling","Agent Orchestration"]],
+  ["Languages, Frontend & Backend",["JavaScript","TypeScript","React","Vite","Python","SQL","Node.js","FastAPI","Pydantic","REST APIs"]],
+  ["Agents & Orchestration",["LangGraph","LLM Agents","MCP","FastMCP","Tool / Function Calling","Agent Orchestration","NOOA"]],
   ["Retrieval & Evaluation",["RAG","Embeddings","Vector Search","Structured Outputs","LLM / Agent Evaluation"]],
   ["Databases",["PostgreSQL","pgvector","MongoDB","Redis","SQLite"]],
-  ["Infrastructure & Developer Tooling",["Docker","Docker Compose","Git / GitHub","GitHub Actions","CI/CD","DigitalOcean","Cloudflare","AWS S3","Herdr","tmux"]],
+  ["Infrastructure & Developer Tooling",["Docker","Docker Compose","Git / GitHub","GitHub Actions","CI/CD","DigitalOcean","Cloudflare","Cloudflare Workers","Render","AWS S3","Herdr","tmux"]],
   ["Data & Analytics",["pandas","NumPy","scikit-learn","dbt","Snowflake","Airflow","Tableau","Power BI"]]
  ];
  $("#skills").innerHTML=groups.map(([name,items],i)=>`<article><span class="stack-index">0${i+1}</span><h3>${name}</h3><ul class="stack-list">${items.map(item=>`<li>${item}</li>`).join("")}</ul></article>`).join("");
