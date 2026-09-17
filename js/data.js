@@ -121,9 +121,21 @@ const SKILLS = {
 // ---- PROJECTS -----------------------------------------------------------
 
 // Flagship / detailed projects get the full annotated-diagram treatment.
-// ARIS is intentionally first and visually the largest. It's the strongest,
-// realest signal on this whole site (live, deployed, production system).
+// Current deployed work leads; keep descriptions grounded in implementation.
 const FLAGSHIP = [
+  {
+    id: "traceintel",
+    name: "TraceIntel",
+    flagship: true,
+    hex: ["#6699FF", "#8FC97A"],
+    caption: "the transaction finished. what permissions are still active?",
+    desc: "Persistent on-chain exposure intelligence for Ethereum and Monad through a shared EVM pipeline. Reconstructs transaction evidence and compares historical ERC-20 approvals with current allowance, owner balance, and spender bytecode in a THEN → NOW view. Deterministic risk and exposure analysis stays separate from evidence-grounded NOOA interpretation; PostgreSQL preserves block-specific report snapshots.",
+    tags: ["React + TypeScript", "FastAPI", "PostgreSQL", "NOOA", "Ethereum + Monad"],
+    links: [
+      { label: "Live", href: "https://traceintel.eshita.dev" },
+      { label: "GitHub", href: "https://github.com/eshitakundu/TraceIntel" }
+    ]
+  },
   {
     id: "aris",
     name: "ARIS | Technology Adoption Intelligence",
