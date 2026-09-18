@@ -12,8 +12,8 @@ const flagshipOrder=["traceintel","aris","mcp-devops-hub","study-buddy-mcp"];
 const moreOrder=["deep-research-agent","github-ranker-mcp","flowchart-mcp","hn-mcp","elearning-analytics-dbt","disease-outbreak-predictor","ecommerce-spending","espresso-yourself","vbs-calculator"];
 
 function renderProjects(){
-  $("#featuredProjects").innerHTML=flagshipOrder.map((id,i)=>{const p=byId(id),s=flagshipSpecs[id];return `<article class="project ${i===0?"lead":""}" id="project-${id}" data-project="${id}"><div class="project-index">0${i+1}</div><div class="project-copy"><h3>${p.name}</h3><p class="project-summary">${s.summary}</p><details class="engineering"><summary>Inside the build <span>+</span></summary><div class="engineering-grid">${s.points.map(([label,value])=>`<div><strong>${label}</strong><p>${value}</p></div>`).join("")}</div></details><div class="tags">${p.tags.slice(0,5).map(t=>`<span>${t}</span>`).join("")}</div></div><div class="project-links">${linkList(p.links)}</div></article>`}).join("");
-  $("#projectArchive").innerHTML=`<details class="archive-fold"><summary>More builds <span>09 projects + earlier work</span></summary><div class="archive-grid">${moreOrder.map(id=>{const p=byId(id);return `<article id="project-${id}" data-project="${id}"><h4>${p.name}</h4><p>${p.desc}</p><div class="tags">${p.tags.slice(0,5).map(t=>`<span>${t}</span>`).join("")}</div>${linkList(p.links)}</article>`}).join("")}</div><details class="older"><summary>Earlier practice & coursework (${TRASH_PROJECTS.length})</summary><div>${TRASH_PROJECTS.map(p=>`<a href="${p.href}" target="_blank" rel="noreferrer">${p.name} ↗</a>`).join("")}</div></details></details>`;
+  $("#featuredProjects").innerHTML=flagshipOrder.map((id,i)=>{const p=byId(id),s=flagshipSpecs[id];return `<article class="project ${i===0?"lead":""}" id="project-${id}" data-project="${id}"><div class="project-index">0${i+1}</div><div class="project-copy"><h3>${p.name}</h3><p class="project-summary">${s.summary}</p><div class="engineering"><span>Engineering summary</span><div class="engineering-grid">${s.points.map(([label,value])=>`<div><strong>${label}</strong><p>${value}</p></div>`).join("")}</div></div><div class="tags">${p.tags.slice(0,5).map(t=>`<span>${t}</span>`).join("")}</div></div><div class="project-links">${linkList(p.links)}</div></article>`}).join("");
+  $("#projectArchive").innerHTML=`<div class="archive-head"><div><span>Compact project archive</span><h3>More builds</h3></div><span>09 additional builds</span></div><div class="archive-grid">${moreOrder.map(id=>{const p=byId(id);return `<article id="project-${id}" data-project="${id}"><h4>${p.name}</h4><p>${p.desc}</p><div class="tags">${p.tags.slice(0,5).map(t=>`<span>${t}</span>`).join("")}</div>${linkList(p.links)}</article>`}).join("")}</div><details class="older"><summary>Earlier practice & coursework (${TRASH_PROJECTS.length})</summary><div>${TRASH_PROJECTS.map(p=>`<a href="${p.href}" target="_blank" rel="noreferrer">${p.name} ↗</a>`).join("")}</div></details>`;
 }
 
 const layers=[
@@ -39,7 +39,7 @@ function renderMap(){
 
 function renderProfile(){
  $("#bio").innerHTML=`<p>I develop AI systems with an emphasis on reliable software engineering: deterministic scoring, validated tool access, data pipelines, and production deployments.</p><p>I built and deployed <strong>ARIS</strong>, a multi-agent technology adoption system with reproducible scoring and auditable verdicts. My latest project, <strong>TraceIntel</strong>, follows Ethereum and Monad transaction permissions from historical evidence to current exposure, with deterministic analysis and evidence-grounded NOOA interpretation. I’m seeking AI engineering opportunities focused on reliable, production-oriented systems.</p>`;
-  $("#experienceList").innerHTML=EXPERIENCE.map(x=>`<article><div><span>${x.dates}</span><small>${x.location}</small></div><div><h3>${x.role}</h3><h4>${x.org}</h4><ul>${x.bullets.map(b=>`<li>${b.replace("10+ hours/week","<strong>10+ hours/week</strong>").replace("70%","<strong>70%</strong>")}</li>`).join("")}</ul><a href="${x.cert}" target="_blank">View credential ↗</a><details class="experience-memory"><summary>From the program ↗</summary><figure class="experience-photo"><img src="assets/experiences/XPMC.webp" alt="XPMC Work Readiness Program group" loading="lazy"><figcaption>XPMC Work Readiness Program · Federation University Australia</figcaption></figure></details></div></article>`).join("");
+  $("#experienceList").innerHTML=EXPERIENCE.map(x=>`<article><div><span>${x.dates}</span><small>${x.location}</small></div><div><h3>${x.role}</h3><h4>${x.org}</h4><ul>${x.bullets.map(b=>`<li>${b.replace("10+ hours/week","<strong>10+ hours/week</strong>").replace("70%","<strong>70%</strong>")}</li>`).join("")}</ul><a href="${x.cert}" target="_blank">View credential ↗</a><figure class="experience-photo"><img src="assets/experiences/XPMC.webp" alt="XPMC Work Readiness Program group" loading="lazy"><figcaption>XPMC Work Readiness Program · Federation University Australia</figcaption></figure></div></article>`).join("");
  $("#educationList").innerHTML=EDUCATION.map(x=>`<article><div><span>${x.dates}</span></div><div><h3>${x.degree}</h3><p>${x.school} · <strong>${x.meta}</strong></p></div></article>`).join("");
  const groups=[
   ["Languages, Frontend & Backend",["JavaScript","TypeScript","React","Vite","Python","SQL","Node.js","FastAPI","Pydantic","REST APIs"]],
@@ -71,13 +71,3 @@ emailCopy.addEventListener("click",async()=>{
 const localClock = document.querySelector('#localClock');
 function updateClock(){localClock.textContent = new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit'}).format(new Date());}
 updateClock(); setInterval(updateClock,60000);
-
-// Open compact archive groups when a system-map link targets a project inside them.
-function revealLinkedProject(){
- const target=document.getElementById(location.hash.slice(1));
- if(!target)return;
- let parent=target.parentElement;
- while(parent){if(parent.tagName==='DETAILS')parent.open=true;parent=parent.parentElement}
- if(location.hash.startsWith('#project-'))target.scrollIntoView({block:'start'});
-}
-addEventListener('hashchange',revealLinkedProject);revealLinkedProject();
