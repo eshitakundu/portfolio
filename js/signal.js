@@ -5,6 +5,7 @@
   const context = canvas.getContext('2d');
   if (!context) return;
   const button = document.querySelector('#heroMotion');
+  const surface = canvas.closest('.intro-copy') || canvas;
   const preference = matchMedia('(prefers-reduced-motion: reduce)');
   let paused = preference.matches, visible = true, frame = 0, time = 0, last = 0;
   let width = 0, height = 0, pointer = {x: .5, y: .5}, current = {x: .5, y: .5};
@@ -46,12 +47,12 @@
   }
   function sync() {
     cancelAnimationFrame(frame); last = 0;
-    button.textContent = paused ? 'Play' : 'Pause';
-    button.setAttribute('aria-label', paused ? 'Play signal animation' : 'Pause signal animation');
+    button.textContent = paused ? 'Play motion' : 'Pause motion';
+    button.setAttribute('aria-label', paused ? 'Play background animation' : 'Pause background animation');
     if (!paused && visible && !document.hidden) frame = requestAnimationFrame(tick); else draw();
   }
-  canvas.addEventListener('pointermove', e => { const box = canvas.getBoundingClientRect(); pointer = {x:(e.clientX-box.left)/box.width,y:(e.clientY-box.top)/box.height}; });
-  canvas.addEventListener('pointerleave', () => { pointer = {x:.5,y:.5}; });
+  surface.addEventListener('pointermove', e => { const box = canvas.getBoundingClientRect(); pointer = {x:(e.clientX-box.left)/box.width,y:(e.clientY-box.top)/box.height}; });
+  surface.addEventListener('pointerleave', () => { pointer = {x:.5,y:.5}; });
   button.addEventListener('click', () => { paused = !paused; sync(); });
   preference.addEventListener('change', e => { paused = e.matches; sync(); });
   document.addEventListener('visibilitychange', sync);
