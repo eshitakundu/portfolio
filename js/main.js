@@ -12,8 +12,8 @@ const flagshipOrder=["traceintel","aris","mcp-devops-hub","study-buddy-mcp"];
 const moreOrder=["deep-research-agent","github-ranker-mcp","flowchart-mcp","hn-mcp","elearning-analytics-dbt","disease-outbreak-predictor","ecommerce-spending","espresso-yourself","vbs-calculator"];
 
 function renderProjects(){
-  $("#featuredProjects").innerHTML=flagshipOrder.map((id,i)=>{const p=byId(id),s=flagshipSpecs[id];return `<article class="project ${i===0?"lead":""}" id="project-${id}" data-project="${id}"><div class="project-index">0${i+1}</div><div class="project-copy"><h3>${p.name}</h3><p class="project-summary">${s.summary}</p><div class="engineering"><span>Engineering summary</span><div class="engineering-grid">${s.points.map(([label,value])=>`<div><strong>${label}</strong><p>${value}</p></div>`).join("")}</div></div><div class="tags">${p.tags.slice(0,5).map(t=>`<span>${t}</span>`).join("")}</div></div><div class="project-links">${linkList(p.links)}</div></article>`}).join("");
-  $("#projectArchive").innerHTML=`<div class="archive-head"><div><span>Compact project archive</span><h3>More builds</h3></div><span>09 additional builds</span></div><div class="archive-grid">${moreOrder.map(id=>{const p=byId(id);return `<article id="project-${id}" data-project="${id}"><h4>${p.name}</h4><p>${p.desc}</p><div class="tags">${p.tags.slice(0,5).map(t=>`<span>${t}</span>`).join("")}</div>${linkList(p.links)}</article>`}).join("")}</div><details class="older"><summary>Earlier practice & coursework (${TRASH_PROJECTS.length})</summary><div>${TRASH_PROJECTS.map(p=>`<a href="${p.href}" target="_blank" rel="noreferrer">${p.name} ↗</a>`).join("")}</div></details>`;
+  $("#featuredProjects").innerHTML=flagshipOrder.map((id,i)=>{const p=byId(id),s=flagshipSpecs[id];return `<article class="project ${i===0?"lead":""}" id="project-${id}" data-project="${id}"><div class="project-index">0${i+1}</div><div class="project-copy"><h3>${p.name}</h3><p class="project-summary">${s.summary}</p><details class="engineering"><summary>Inside the build <span>+</span></summary><div class="engineering-grid">${s.points.map(([label,value])=>`<div><strong>${label}</strong><p>${value}</p></div>`).join("")}</div></details><div class="tags">${p.tags.slice(0,5).map(t=>`<span>${t}</span>`).join("")}</div></div><div class="project-links">${linkList(p.links)}</div></article>`}).join("");
+  $("#projectArchive").innerHTML=`<details class="archive-fold"><summary>More builds <span>09 projects + earlier work</span></summary><div class="archive-grid">${moreOrder.map(id=>{const p=byId(id);return `<article id="project-${id}" data-project="${id}"><h4>${p.name}</h4><p>${p.desc}</p><div class="tags">${p.tags.slice(0,5).map(t=>`<span>${t}</span>`).join("")}</div>${linkList(p.links)}</article>`}).join("")}</div><details class="older"><summary>Earlier practice & coursework (${TRASH_PROJECTS.length})</summary><div>${TRASH_PROJECTS.map(p=>`<a href="${p.href}" target="_blank" rel="noreferrer">${p.name} ↗</a>`).join("")}</div></details></details>`;
 }
 
 const layers=[
@@ -25,47 +25,21 @@ const layers=[
  {name:"Infrastructure / Deployment",desc:"Containerization and delivery workflows turn prototypes into running systems.",tech:["Docker","CI/CD","DigitalOcean","Cloudflare Workers","Render"],projects:["traceintel","aris","mcp-devops-hub","github-ranker-mcp"]}
 ];
 function setLayer(i){
- document.querySelectorAll("[data-signal-layer]").forEach((n,j)=>{n.classList.toggle("active",i===j);n.setAttribute("aria-pressed",String(i===j))});
- const signalLabel=document.querySelector("#signalLabel");if(signalLabel)signalLabel.textContent=layers[i].name;
  document.querySelectorAll(".layer-node").forEach((n,j)=>{n.classList.toggle("active",i===j);n.setAttribute("aria-pressed",i===j)});
  const l=layers[i];$("#systemDetail").innerHTML=`<span>Layer 0${i+1}</span><h3>${l.name}</h3><p class="layer-desc">${l.desc}</p><div class="map-tech">${l.tech.map(t=>`<span>${t}</span>`).join("")}</div><p>Projects using this layer</p><div class="map-projects">${l.projects.map(id=>{const p=byId(id);return `<a href="#project-${id}" data-target="${id}">${p.name} <span>↘</span></a>`}).join("")}</div>`;
  document.querySelectorAll("[data-project]").forEach(el=>el.classList.toggle("map-match",l.projects.includes(el.dataset.project)));
 }
 function renderMap(){
- renderCircuit();
+
  $("#systemFlow").innerHTML=layers.map((l,i)=>`<button class="layer-node" type="button" aria-pressed="false" data-layer="${i}"><small>0${i+1}</small><span>${l.name}</span><b>↓</b></button>`).join("");
  $("#systemFlow").addEventListener("click",e=>{const b=e.target.closest("[data-layer]");if(b)setLayer(+b.dataset.layer)});
  $("#systemFlow").addEventListener("mouseover",e=>{const b=e.target.closest("[data-layer]");if(b)setLayer(+b.dataset.layer)});
  setLayer(0);
 }
 
-// A lightweight, interactive companion to the system map; no animation library.
-function renderCircuit(){
- const labels=["AI / LLMs","Agents","MCP","Tools / APIs","Data","Infrastructure"];
- const positions=[[150,65],[450,65],[750,65],[150,205],[450,205],[750,205]];
- const paths=["M150 65 H450","M450 65 H750","M150 205 H450","M450 205 H750","M150 65 V205","M450 65 V205","M750 65 V205","M150 65 H270 Q300 65 300 95 V175 Q300 205 330 205 H450","M450 65 H570 Q600 65 600 95 V175 Q600 205 630 205 H750"];
- const panel=document.createElement("div");panel.className="signal-panel";
- panel.innerHTML=`<div class="signal-toolbar"><span>CONNECTIONS / <strong id="signalLabel">AI / LLMs</strong></span><button id="signalMotion" type="button" aria-pressed="false">Pause motion</button></div><div class="signal-stage"><svg viewBox="0 0 900 270" preserveAspectRatio="none" aria-hidden="true" focusable="false"><defs><pattern id="signalGrid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="currentColor" opacity=".2"/></pattern></defs><rect width="900" height="270" fill="url(#signalGrid)"/>${paths.map((d,i)=>`<path class="signal-wire" d="${d}"/><circle class="signal-packet" r="3.5"><animateMotion dur="${3+i%3}s" begin="-${i*.7}s" repeatCount="indefinite" path="${d}"/></circle>`).join("")}</svg>${labels.map((label,i)=>`<button type="button" class="signal-node" data-signal-layer="${i}" aria-pressed="false" style="left:${positions[i][0]/9}%;top:${positions[i][1]/2.7}%"><small>0${i+1}</small><span>${label}</span></button>`).join("")}</div><p class="signal-caption">Different layers. Connected work. Select a node to explore.</p>`;
- document.querySelector(".system-layout").before(panel);
- panel.addEventListener("click",e=>{const node=e.target.closest("[data-signal-layer]");if(node)setLayer(Number(node.dataset.signalLayer))});
- const svg=panel.querySelector("svg"),toggle=panel.querySelector("#signalMotion"),preference=matchMedia("(prefers-reduced-motion: reduce)");
- let paused=preference.matches,inView=false;
- function syncMotion(){
-  const stopped=paused||!inView||document.hidden;
-  if(stopped)svg.pauseAnimations();else svg.unpauseAnimations();
-  panel.classList.toggle("motion-paused",stopped);
-  toggle.textContent=paused?"Play motion":"Pause motion";toggle.setAttribute("aria-pressed",String(paused));
- }
- toggle.addEventListener("click",()=>{paused=!paused;syncMotion()});
- preference.addEventListener("change",e=>{paused=e.matches;syncMotion()});
- document.addEventListener("visibilitychange",syncMotion);
- new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;syncMotion()},{threshold:0}).observe(panel);
- syncMotion();
-}
-
 function renderProfile(){
  $("#bio").innerHTML=`<p>I develop AI systems with an emphasis on reliable software engineering: deterministic scoring, validated tool access, data pipelines, and production deployments.</p><p>I built and deployed <strong>ARIS</strong>, a multi-agent technology adoption system with reproducible scoring and auditable verdicts. My latest project, <strong>TraceIntel</strong>, follows Ethereum and Monad transaction permissions from historical evidence to current exposure, with deterministic analysis and evidence-grounded NOOA interpretation. I’m seeking AI engineering opportunities focused on reliable, production-oriented systems.</p>`;
-  $("#experienceList").innerHTML=EXPERIENCE.map(x=>`<article><div><span>${x.dates}</span><small>${x.location}</small></div><div><h3>${x.role}</h3><h4>${x.org}</h4><ul>${x.bullets.map(b=>`<li>${b.replace("10+ hours/week","<strong>10+ hours/week</strong>").replace("70%","<strong>70%</strong>")}</li>`).join("")}</ul><a href="${x.cert}" target="_blank">View credential ↗</a><figure class="experience-photo"><img src="assets/experiences/XPMC.webp" alt="XPMC Work Readiness Program group" loading="lazy"><figcaption>XPMC Work Readiness Program · Federation University Australia</figcaption></figure></div></article>`).join("");
+  $("#experienceList").innerHTML=EXPERIENCE.map(x=>`<article><div><span>${x.dates}</span><small>${x.location}</small></div><div><h3>${x.role}</h3><h4>${x.org}</h4><ul>${x.bullets.map(b=>`<li>${b.replace("10+ hours/week","<strong>10+ hours/week</strong>").replace("70%","<strong>70%</strong>")}</li>`).join("")}</ul><a href="${x.cert}" target="_blank">View credential ↗</a><details class="experience-memory"><summary>From the program ↗</summary><figure class="experience-photo"><img src="assets/experiences/XPMC.webp" alt="XPMC Work Readiness Program group" loading="lazy"><figcaption>XPMC Work Readiness Program · Federation University Australia</figcaption></figure></details></div></article>`).join("");
  $("#educationList").innerHTML=EDUCATION.map(x=>`<article><div><span>${x.dates}</span></div><div><h3>${x.degree}</h3><p>${x.school} · <strong>${x.meta}</strong></p></div></article>`).join("");
  const groups=[
   ["Languages, Frontend & Backend",["JavaScript","TypeScript","React","Vite","Python","SQL","Node.js","FastAPI","Pydantic","REST APIs"]],
@@ -97,3 +71,13 @@ emailCopy.addEventListener("click",async()=>{
 const localClock = document.querySelector('#localClock');
 function updateClock(){localClock.textContent = new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit'}).format(new Date());}
 updateClock(); setInterval(updateClock,60000);
+
+// Open compact archive groups when a system-map link targets a project inside them.
+function revealLinkedProject(){
+ const target=document.getElementById(location.hash.slice(1));
+ if(!target)return;
+ let parent=target.parentElement;
+ while(parent){if(parent.tagName==='DETAILS')parent.open=true;parent=parent.parentElement}
+ if(location.hash.startsWith('#project-'))target.scrollIntoView({block:'start'});
+}
+addEventListener('hashchange',revealLinkedProject);revealLinkedProject();
