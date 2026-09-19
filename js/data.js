@@ -41,6 +41,7 @@ const TERMINAL_LINES = [
 ];
 
 const CONTACT = {
+  twitter: "https://x.com/EshitaKunn",
   email: "eshita.kundu.2026@gmail.com",
   linkedin: "https://linkedin.com/in/eshitakundu",
   github: "https://github.com/eshitakundu"
