@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import vm from 'node:vm';
 import path from 'node:path';
+// Run with Node.js: node scripts/build.mjs. Deploy the generated dist/ directory.
 const root = path.resolve(import.meta.dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 // Pre-render selected projects using exactly the same content and renderer as the browser.
@@ -16,7 +17,10 @@ for (const id of ['featuredProjects', 'projectArchive']) {
   else html = html.replace(`<div id="${id}"></div>`, start + content + end);
 }
 fs.writeFileSync(path.join(root,'index.html'),html);
-fs.mkdirSync(path.join(root,'dist'), {recursive:true});
+const dist = path.join(root, 'dist');
+if (path.dirname(dist) !== root || path.basename(dist) !== 'dist') throw new Error('Invalid build output path');
+fs.rmSync(dist, {recursive:true, force:true});
+fs.mkdirSync(dist, {recursive:true});
 for (const file of ['index.html','resume.html','robots.txt','sitemap.xml','_headers']) fs.copyFileSync(path.join(root,file),path.join(root,'dist',file));
 for (const dir of ['css','js','assets']) fs.cpSync(path.join(root,dir),path.join(root,'dist',dir),{recursive:true});
 console.log('Pre-rendered selected projects and refreshed dist from source.');
