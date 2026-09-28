@@ -11,7 +11,7 @@ const BIO = {
   name: "Eshita Kundu",
   tagline: "Computer Science graduate (8.80 CGPA). Built and deployed ARIS. Open to full-time AI engineering roles.",
   whisper: "she/her | Kolkata | open to full-time roles",
-  photoSrc: "assets/img/avatar-photo.webp", // see ASSETS_TODO.md for generation prompt
+  photoSrc: "assets/img/avatar-photo.webp",
   body: `
     <p>I built and deployed <strong>ARIS</strong>, a live tool that scores whether a software dependency is safe to adopt. It runs on a self-hosted fork of Heym.</p>
     <p>Most of my time goes into the unglamorous parts: getting scoring logic to give the same answer twice, keeping agent workflows from silently breaking, and building dashboards that hold up once real people start clicking around in them.</p>
@@ -279,12 +279,6 @@ const TRASH_PROJECTS = [
   { name: "UiPath-Even-Number-Analyzer", href: "https://github.com/eshitakundu/UiPath-Even-Number-Analyzer" },
   { name: "Netflix-Revenue-and-Usage-Statistics", href: "https://github.com/eshitakundu/Netflix-Revenue-and-Usage-Statistics" },
   { name: "QuestEd (Ideathon project)", href: "https://github.com/eshitakundu/QuestEd" }
-];
-
-// Event / hackathon photos. Empty until Esh drops real files into
-// assets/img/events/. Never fabricate or stock-photo this.
-const GALLERY = [
-  // { src: "assets/img/events/brics-2024.jpg", caption: "BRICS-FS-36, Russia, Dec 2024" },
 ];
 
 // ---- MEMORIES / MESSAGES ------------------------------------------------
