@@ -130,10 +130,11 @@ const FLAGSHIP = [
     flagship: true,
     hex: ["#6699FF", "#8FC97A"],
     caption: "the transaction finished. what permissions are still active?",
-    desc: "Persistent on-chain exposure intelligence for Ethereum and Monad through a shared EVM pipeline. Reconstructs transaction evidence and compares historical ERC-20 approvals with current allowance, owner balance, and spender bytecode in a THEN → NOW view. Deterministic risk and exposure analysis stays separate from evidence-grounded NOOA interpretation; PostgreSQL preserves block-specific report snapshots.",
-    tags: ["React + TypeScript", "FastAPI", "PostgreSQL", "NOOA", "Ethereum + Monad"],
+    desc: "On-chain exposure agent for Ethereum and Monad. Decodes every ERC-20 approval in a transaction and compares historical permissions with current allowance, owner balance, and spender code in a THEN → NOW view. A NOOA planner calls 3 typed read-only tools under a code-enforced budget; a reporter cites only verified claims, with a deterministic fallback. 24 offline evals run in CI, including 5 adversarial cases.",
+    tags: ["NOOA", "FastAPI", "PostgreSQL", "React + TypeScript", "Ethereum + Monad"],
     links: [
       { label: "Live", href: "https://traceintel.eshita.dev" },
+      { label: "Demo", href: "https://drive.google.com/file/d/1-5eEX6gudDaP5FLFxx9WotcHQ9CJlThD/view?usp=drive_link" },
       { label: "GitHub", href: "https://github.com/eshitakundu/TraceIntel" }
     ]
   },
@@ -143,10 +144,11 @@ const FLAGSHIP = [
     flagship: true,
     hex: ["#6699FF", "#99CCFF", "#8FC97A", "#000000"],
     caption: "a multi-agent verdict engine for 'should we adopt this dependency?'",
-    desc: "Live multi-agent decision-support tool that scores software dependencies across 6 weighted dimensions and emails a verdict-backed Adoption Brief. Runs as a 7-branch parallel agent DAG on a self-hosted Heym fork, with deterministic Python scoring, MCP payload compression, and self-hosted deployment via Docker Compose on a DigitalOcean droplet with zero-downtime build-then-swap deploys.",
+    desc: "Live agent workflow that scores a software dependency against your repo across 6 weighted dimensions and emails a verdict-backed Adoption Brief. A 104-node DAG with 7 parallel evidence branches runs on a self-hosted Heym fork; LLMs only extract and narrate, while 18 Python nodes compute every score. Deployed with Docker Compose on a DigitalOcean droplet behind a Cloudflare Tunnel.",
     tags: ["Heym self-hosted fork", "PythonExec node", "LLM Agents", "NVIDIA NIM", "GitHub/OSV/Tavily APIs"],
     links: [
       { label: "Live", href: "https://aris.eshita.dev" },
+      { label: "Demo", href: "https://drive.google.com/file/d/1jML5SADdQUz9jS4FM7lG59d3zc-DFHqd/view?usp=sharing" },
       { label: "GitHub", href: "https://github.com/eshitakundu/ARIS" }
     ]
   },
@@ -163,9 +165,9 @@ const FLAGSHIP = [
     id: "mcp-devops-hub",
     name: "MCP Driven DevOps Orchestration Hub",
     hex: ["#000000", "#FFD84D", "#F5A3C7"],
-    caption: "natural-language CI/CD triggering with MCP skill routing",
-    desc: "Team-built DevOps system where I containerized and sandboxed the OpenClaw LLM agent in Docker, then integrated a Telegram bot with MCP skill routing for CI/CD triggering and automated log summaries.",
-    tags: ["Docker", "OpenClaw", "Telegram Bot", "MCP", "CI/CD"],
+    caption: "chat-driven DevOps jobs through fixed agent skills",
+    desc: "Team-built DevOps job runner where I built the OpenClaw agent layer: a Telegram bot and 6 fixed, argument-free skills for network, system, and login checks, job-status reports, and failed-job log analysis.",
+    tags: ["OpenClaw", "Telegram Bot", "Agent Skills", "Node.js", "REST APIs"],
     links: [
       { label: "GitHub", href: "https://github.com/Mouli51ch/Devops-Automation/tree/feature/openclaw-agent" },
       { label: "Demo", href: "https://drive.google.com/file/d/1hDGKNvoISSvxF2wnWiTTDwlYouhe_ICL/view?usp=sharing" }
