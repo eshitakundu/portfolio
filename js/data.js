@@ -153,6 +153,18 @@ const FLAGSHIP = [
     ]
   },
   {
+    id: "agon",
+    name: "Agon | Guardrailed AI Trading Agent",
+    hex: ["#000000", "#FFD84D"],
+    caption: "give your trading agent a budget, not your keys",
+    desc: "Team hackathon project with 100+ registered accounts. Co-designed an MCP server that lets AI clients such as Claude Code research Solana tokens and paper-trade at live Jupiter prices through typed tools. A deterministic guard outside the LLM enforces spending caps and slippage limits before signing, and uncertain trade outcomes fail closed with no blind retries.",
+    tags: ["TypeScript", "MCP", "Solana", "Jupiter API", "Agent guardrails"],
+    links: [
+      { label: "Site", href: "https://agon-landing-mu.vercel.app" },
+      { label: "Demo", href: "https://youtu.be/2ded1QWIE_g" }
+    ]
+  },
+  {
     id: "deep-research-agent",
     name: "Deep Research Agent",
     hex: ["#99CCFF", "#8FC97A"],
