@@ -246,7 +246,7 @@ const DATA_PROJECTS = [
     tags: ["Python", "Regression", "ML"],
     links: [{ label: "GitHub", href: "https://github.com/eshitakundu/E-Commerce-Customer-Spending-Analysis" }]
   },
-  { id: "netflix-elt", name: "Netflix ELT (dbt + Snowflake)", draft: true, tags: ["dbt", "Snowflake", "ELT"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/netflix-elt-dbt-snowflake" }] },
+  { id: "netflix-elt", name: "Netflix-style ELT (dbt + DuckDB)", draft: true, tags: ["dbt", "DuckDB", "ELT"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/netflix-elt-dbt" }] },
   { id: "csv-mysql-airflow", name: "CSV → MySQL Airflow Pipeline", draft: true, tags: ["Python", "Airflow", "MySQL"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/csv-mysql-airflow" }] },
   { id: "powerbi-hospitality", name: "Hospitality Revenue Insights (Power BI)", draft: true, tags: ["Power BI"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/PowerBI-Hospitality-Revenue-Insights" }] },
   { id: "coffee-sales-dashboard", name: "Coffee Sales Dashboard", draft: true, tags: ["Dashboard"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/Coffee-Sales-Dashboard" }] },
