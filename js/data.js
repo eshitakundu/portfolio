@@ -306,6 +306,15 @@ const MISC_PROJECTS = [
   { id: "neuraseek", name: "NeuraSeek", draft: true, tags: ["Python"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/NeuraSeek" }] },
   { id: "constellation-app", name: "constellation-app", draft: true, tags: ["JavaScript"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/constellation-app" }] },
   {
+    id: "reply-radar",
+    name: "Reply Radar",
+    desc: "Local tool that finds X posts worth replying to and drafts replies in your voice with a free LLM. It cleans, scores and de-duplicates imported posts, falls back between free models when one is busy, and never posts for you: you review each draft and post it yourself.",
+    tags: ["JavaScript", "Node.js", "OpenRouter", "Playwright"],
+    links: [
+      { label: "GitHub", href: "https://github.com/eshitakundu/reply-radar" }
+    ]
+  },
+  {
     id: "moodify",
     name: "MoodIfy",
     desc: "Community music TV: tell it how you feel and get a song someone shared for that feeling. Free LLM mood reader with keyword fallback, TF-IDF retrieval and layered moderation.",

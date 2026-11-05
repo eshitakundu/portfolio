@@ -10,7 +10,7 @@ const flagshipSpecs={
   "study-buddy-mcp":{summary:"Personal MCP server that gives Claude structured, safe access to study material and mastery data.",points:[["Protocol","13 tools, 3 resources, and 4 prompts"],["Safety","Path-traversal-safe document access"],["Data","SQLite mastery tracking with fuzzy matching"],["Backend","Pydantic-validated Python MCP server"]]}
 };
 const flagshipOrder=["traceintel","aris","devpulse","study-buddy-mcp"];
-const moreOrder=["agon","jev-flow","mcp-devops-hub","moodify","repobrief","deep-research-agent","github-ranker-mcp","flowchart-mcp","hn-mcp","elearning-analytics-dbt","disease-outbreak-predictor","ecommerce-spending","espresso-yourself","vbs-calculator"];
+const moreOrder=["agon","jev-flow","reply-radar","mcp-devops-hub","moodify","repobrief","deep-research-agent","github-ranker-mcp","flowchart-mcp","hn-mcp","elearning-analytics-dbt","disease-outbreak-predictor","ecommerce-spending","espresso-yourself","vbs-calculator"];
 
 function renderProjects(){
   $("#featuredProjects").innerHTML=flagshipOrder.map((id,i)=>{const p=byId(id),s=flagshipSpecs[id];return `<article class="project ${i===0?"lead":""}" id="project-${id}" data-project="${id}"><div class="project-index">0${i+1}</div><div class="project-copy"><h3>${p.name}</h3><p class="project-summary">${s.summary}</p><div class="engineering"><span>Engineering summary</span><div class="engineering-grid">${s.points.map(([label,value])=>`<div><strong>${label}</strong><p>${value}</p></div>`).join("")}</div></div><div class="tags">${p.tags.slice(0,5).map(t=>`<span>${t}</span>`).join("")}</div></div><div class="project-links">${linkList(p.links)}</div></article>`}).join("");
