@@ -9,7 +9,7 @@
 
 const BIO = {
   name: "Eshita Kundu",
-  tagline: "Computer Science graduate (8.80 CGPA). Built and deployed ARIS. Open to full-time AI engineering roles.",
+  tagline: "Computer Science graduate (8.80 CGPA). I build LLM agents where code, not the model, makes the final call. Open to full-time AI engineering roles.",
   whisper: "she/her | Kolkata | open to full-time roles",
   photoSrc: "assets/img/avatar-photo.webp",
   body: `
@@ -27,14 +27,15 @@ const TERMINAL_LINES = [
   { cmd: true, text: "whoami" },
   { text: "eshita kundu - agentic ai engineer, cs graduate" },
   { cmd: true, text: "cat status.txt" },
-  { text: "ARIS deployed · open to full-time roles · kolkata, india" },
+  { text: "3 agents live · 7 merged OSS PRs · open to full-time roles" },
   { cmd: true, text: "cat awards.txt" },
-  { text: "2nd place, worldskills BRICS-FS-36 (data analysis & viz, russia)" },
+  { text: "2nd place, BRICS-FS-36 international final (data analysis & viz, china)" },
   { cmd: true, text: "ls skills/" },
-  { text: "python  sql  llm-agents  mcp  dbt  snowflake  airflow  docker" },
+  { text: "python  fastapi  llm-agents  mcp  evals  postgres  docker" },
   { cmd: true, text: "ps --running" },
+  { text: "TraceIntel.exe      RUNNING" },
+  { text: "DevPulse.exe        RUNNING" },
   { text: "ARIS.exe            RUNNING" },
-  { text: "mcp-devops-hub.exe  RUNNING" },
   { text: "job-search.exe      RUNNING" },
   { cmd: true, text: "contact --email" },
   { text: "eshita.kundu.2026@gmail.com" },
@@ -113,7 +114,7 @@ const CERTIFICATIONS_MORE = [
 
 const SKILLS = {
   "Languages": ["JavaScript", "Python", "SQL"],
-  "GenAI & Agentic AI": [ "LLM agents", "agent orchestration", "MCP", "NVIDIA NIM APIs", "agent eval design", "prompt engineering"],
+  "GenAI & Agentic AI": [ "LLM agents", "agent orchestration", "MCP", "NVIDIA NIM APIs", "agent eval design", "grounding validators"],
   "Data Engineering": ["dbt", "Snowflake", "AWS S3", "Apache Airflow", "ELT Pipelines", "PostgreSQL"],
   "Analytics & BI": ["Apache Superset", "Tableau", "Power BI", "Excel", "Streamlit", "scikit-learn"],
   "Tools & Infra": ["GitHub Actions", "Herdr", "tmux", "Docker", "CI/CD", "Git", "REST APIs", "UiPath (RPA)", "Oracle VBCS"]
@@ -150,6 +151,30 @@ const FLAGSHIP = [
       { label: "Live", href: "https://aris.eshita.dev" },
       { label: "Demo", href: "https://drive.google.com/file/d/1jML5SADdQUz9jS4FM7lG59d3zc-DFHqd/view?usp=sharing" },
       { label: "GitHub", href: "https://github.com/eshitakundu/ARIS" }
+    ]
+  },
+  {
+    id: "devpulse",
+    name: "DevPulse | Grounded Opinions from Hacker News",
+    hex: ["#FFD84D", "#6699FF"],
+    caption: "what do developers actually say about a tool?",
+    desc: "Reads the Hacker News threads about a developer tool and returns pros and cons where every point quotes a real comment and links to it. The model only proposes; a validator keeps a point only if its quote appears word for word in the comment it cites, with one repair round and a rule-based fallback. Runs as a Python Worker on Cloudflare with a D1 cache.",
+    tags: ["Python", "FastAPI", "Pydantic", "OpenRouter", "Cloudflare Workers + D1"],
+    links: [
+      { label: "Live", href: "https://devpulse.eshita.dev/?tool=Bun" },
+      { label: "GitHub", href: "https://github.com/eshitakundu/DevPulse" }
+    ]
+  },
+  {
+    id: "jev-flow",
+    name: "Jev Flow | Support Triage with Human Review",
+    hex: ["#8FC97A", "#000000"],
+    caption: "the model answers typed questions; a tested policy routes",
+    desc: "Support-triage inbox where an LLM answers typed questions and a deterministic, tested policy routes each message, with human review below a confidence threshold. Changing the threshold reroutes instantly without a new model call.",
+    tags: ["TypeScript", "Next.js", "Zod", "React Flow", "Human-in-the-loop"],
+    links: [
+      { label: "Live", href: "https://jevflow.eshita.dev" },
+      { label: "GitHub", href: "https://github.com/eshitakundu/jev-flow" }
     ]
   },
   {
@@ -269,13 +294,27 @@ const MISC_PROJECTS = [
     tags: ["HTML", "Oracle VBCS"],
     links: [{ label: "GitHub", href: "https://github.com/eshitakundu/vbs-calculator" }]
   },
-  { id: "repobrief", name: "repobrief", draft: true, tags: ["Python"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/repobrief" }] },
+  {
+    id: "repobrief",
+    name: "repobrief",
+    desc: "Understand any GitHub repo in seconds: metadata, README and recent commits, summarised by a free OpenRouter model or as a facts-only brief. Clear errors, tests, CI.",
+    tags: ["Python", "httpx", "GitHub API", "OpenRouter", "pytest"],
+    links: [{ label: "GitHub", href: "https://github.com/eshitakundu/repobrief" }]
+  },
   { id: "daily-tech-digest", name: "daily-tech-digest", draft: true, tags: ["Automation"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/daily-tech-digest" }] },
   { id: "pow-app", name: "pow-app", draft: true, tags: ["Python"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/pow-app" }] },
   { id: "neuraseek", name: "NeuraSeek", draft: true, tags: ["Python"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/NeuraSeek" }] },
   { id: "constellation-app", name: "constellation-app", draft: true, tags: ["JavaScript"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/constellation-app" }] },
-  { id: "moodify", name: "MoodIfy", draft: true, tags: ["Python"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/MoodIfy" }] },
-  { id: "devpulse", name: "DevPulse", draft: true, tags: ["Python"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/DevPulse" }] },
+  {
+    id: "moodify",
+    name: "MoodIfy",
+    desc: "Community music TV: tell it how you feel and get a song someone shared for that feeling. Free LLM mood reader with keyword fallback, TF-IDF retrieval and layered moderation.",
+    tags: ["Python", "FastAPI", "OpenRouter", "Cloudflare Workers + D1"],
+    links: [
+      { label: "Live", href: "https://moodify.eshita.dev" },
+      { label: "GitHub", href: "https://github.com/eshitakundu/MoodIfy" }
+    ]
+  },
   { id: "trackify", name: "Trackify", draft: true, tags: ["Python"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/Trackify" }] }
 ];
 
