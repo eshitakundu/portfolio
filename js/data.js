@@ -131,7 +131,7 @@ const FLAGSHIP = [
     flagship: true,
     hex: ["#6699FF", "#8FC97A"],
     caption: "the transaction finished. what permissions are still active?",
-    desc: "On-chain exposure agent for Ethereum and Monad. Decodes every ERC-20 approval in a transaction and compares historical permissions with current allowance, owner balance, and spender code in a THEN → NOW view. A NOOA planner calls 3 typed read-only tools under a code-enforced budget; a reporter cites only verified claims, with a deterministic fallback. 24 offline evals run in CI, including 5 adversarial cases.",
+    desc: "On-chain exposure agent for Ethereum and Monad. Decodes every ERC-20 approval in a transaction and compares historical permissions with current allowance, owner balance, and spender code in a THEN → NOW view. A NOOA planner calls 3 typed read-only tools under a code-enforced budget; a reporter cites only verified claims, with a deterministic fallback. 24 offline evals (5 adversarial) and 101 tests run in CI, and live runs on 2 models produced 0 ungrounded claims.",
     tags: ["NOOA", "FastAPI", "PostgreSQL", "React + TypeScript", "Ethereum + Monad"],
     links: [
       { label: "Live", href: "https://traceintel.eshita.dev" },
@@ -145,7 +145,7 @@ const FLAGSHIP = [
     flagship: true,
     hex: ["#6699FF", "#99CCFF", "#8FC97A", "#000000"],
     caption: "a multi-agent verdict engine for 'should we adopt this dependency?'",
-    desc: "Live agent workflow that scores a software dependency against your repo across 6 weighted dimensions and emails a verdict-backed Adoption Brief. A 104-node DAG with 7 parallel evidence branches runs on a self-hosted Heym fork; LLMs only extract and narrate, while 18 Python nodes compute every score. Deployed with Docker Compose on a DigitalOcean droplet behind a Cloudflare Tunnel.",
+    desc: "Agent workflow that scores a software dependency against your repo across 6 weighted dimensions and emails a verdict-backed Adoption Brief. A 104-node DAG with 7 parallel evidence branches runs on a self-hosted Heym fork; LLMs only extract and narrate, while 18 Python nodes compute every score, covered by 38 tests in CI. I proposed the Python exec node to Heym, and its maintainers shipped it as a native Code node. Ran with Docker Compose on a DigitalOcean droplet behind a Cloudflare Tunnel.",
     tags: ["Heym self-hosted fork", "PythonExec node", "LLM Agents", "NVIDIA NIM", "GitHub/OSV/Tavily APIs"],
     links: [
       { label: "Live", href: "https://aris.eshita.dev" },
@@ -158,7 +158,7 @@ const FLAGSHIP = [
     name: "DevPulse | Grounded Opinions from Hacker News",
     hex: ["#FFD84D", "#6699FF"],
     caption: "what do developers actually say about a tool?",
-    desc: "Reads the Hacker News threads about a developer tool and returns pros and cons where every point quotes a real comment and links to it. The model only proposes; a validator keeps a point only if its quote appears word for word in the comment it cites, with one repair round and a rule-based fallback. Runs as a Python Worker on Cloudflare with a D1 cache.",
+    desc: "Reads the Hacker News threads about a developer tool and returns pros and cons where every point quotes a real comment and links to it. The model only proposes; a validator keeps a point only if its quote appears word for word in the comment it cites, with one repair round and a rule-based fallback. In a live run over 20 tools, the model wrote 18 of 19 reports that passed validation (149 verbatim-cited points), and the D1 cache cut response time from 17.8 s to 0.27 s. Runs as a Python Worker on Cloudflare.",
     tags: ["Python", "FastAPI", "Pydantic", "OpenRouter", "Cloudflare Workers + D1"],
     links: [
       { label: "Live", href: "https://devpulse.eshita.dev/?tool=Bun" },
@@ -182,7 +182,7 @@ const FLAGSHIP = [
     name: "Agon | Guardrailed AI Trading Agent",
     hex: ["#000000", "#FFD84D"],
     caption: "give your trading agent a budget, not your keys",
-    desc: "Team hackathon project with 100+ registered accounts. Co-designed an MCP server that lets AI clients such as Claude Code research Solana tokens and paper-trade at live Jupiter prices through typed tools. A deterministic guard outside the LLM enforces spending caps and slippage limits before signing, and uncertain trade outcomes fail closed with no blind retries.",
+    desc: "Team hackathon project with 100+ registered accounts. Co-designed an MCP server that lets AI clients such as Claude Code research Solana tokens and paper-trade at live Jupiter prices through 8 typed tools. A deterministic guard outside the LLM enforces spending caps and slippage limits before signing: a pure function with 0 network or model calls that decides in about 3 µs. Uncertain trade outcomes fail closed with no blind retries.",
     tags: ["TypeScript", "MCP", "Solana", "Jupiter API", "Agent guardrails"],
     links: [
       { label: "Site", href: "https://agon-landing-mu.vercel.app" },
