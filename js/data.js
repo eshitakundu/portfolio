@@ -64,11 +64,12 @@ const EXPERIENCE = [
     org: "Employability.life (XPMC Program), Federation University Australia",
     cert: "https://drive.google.com/file/d/1UYP0-IhTqH1KCa6GsnZkKMWBa8agiodJ/view?usp=sharing",
     dates: "Sep 2024 - Nov 2024",
-    role: "Experiential Learner - RPA Developer & Business Analyst",
+    role: "Automation Developer & Business Analyst (Top 50 Learner award)",
     location: "Kolkata, India",
     bullets: [
-      "Cut manual data-processing time by 10+ hours/week, reduced error rate by 70%, with UiPath RPA for Excel reporting.",
-      "Authored Process Design Documents (PDDs) for automation pipelines across multiple Agile sprints, coordinating directly with stakeholders on scope and sign-off."
+      "Gathered requirements from client documents and authored Process Design Documents (PDDs) across Agile sprints, owning testing and stakeholder sign-off.",
+      "Built a UiPath web-automation bot that turns PDF data into submitted online forms, cutting batch entry to seconds.",
+      "Automated vendor receipt processing with OCR and intelligent document processing (UiPath Document Understanding) into Excel reports: 10+ hours saved weekly, 70% fewer errors."
     ]
   }
 ];
