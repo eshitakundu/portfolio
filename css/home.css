@@ -1,0 +1,303 @@
+/* Home sections (2026-11), built in editorial.css's own vocabulary:
+   framed panels, Arial, mono labels, blue / green / orange tints. */
+[hidden]{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.site-header{position:sticky;top:0;z-index:20;background:var(--paper);transition:transform .25s cubic-bezier(.23,1,.32,1)}
+.site-header.hidden{transform:translateY(-110%)}
+@media(prefers-reduced-motion:reduce){.site-header{transition:none}}
+.mono{font-family:monospace}
+.daynight{display:inline-grid;place-items:center;width:22px;height:22px}
+.daynight svg{width:20px;height:20px;fill:none;stroke-width:1.7;stroke-linecap:round}
+.daynight.is-day svg{stroke:var(--orange)}.daynight.is-day circle{fill:var(--orange)}
+.daynight.is-night svg path{fill:var(--blue);stroke:var(--blue)}
+.hero-portrait img{transition:transform .3s cubic-bezier(.23,1,.32,1),filter .3s cubic-bezier(.23,1,.32,1)}
+@media(hover:hover){.hero-portrait:hover img{transform:scale(1.02)}}
+.profile-email,footer a{display:inline-block;padding:12px 0}
+/* The info list only appears when the agent makes the hero tall; without the agent the column keeps its original, balanced layout. */
+.profile-facts{display:none}
+.agent-on .profile-column .profile-social{flex:0 0 auto;padding:18px 16px;border-bottom:1px solid var(--ink)}
+.agent-on .profile-facts{display:block;margin:0;padding:4px 16px;flex:1;background:var(--paper)}
+.profile-facts div{padding:11px 0;border-bottom:1px solid var(--line)}
+.profile-facts div:last-child{border-bottom:0}
+.profile-facts dt{font:700 10.5px/1.4 monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.profile-facts dd{margin:3px 0 0;font-size:13.5px;line-height:1.4;color:var(--ink)}
+@media(max-width:650px){.profile-facts{display:none}}
+.aris-icon{font-size:32px}.aris-icon span{font-size:16px;align-self:flex-start}
+::selection{background:var(--blue);color:#fff}
+
+/* hero: the agent button matches the résumé buttons */
+.hero-actions button,.case-actions button{font:700 12px/1.4 monospace;letter-spacing:.08em;text-transform:uppercase;padding:11px 14px;border:1px solid var(--ink);color:var(--ink);background:var(--paper);cursor:pointer;transition:transform .12s cubic-bezier(.23,1,.32,1)}
+.hero-actions button:hover,.case-actions button:hover{border-color:var(--blue);color:var(--blue)}
+.hero-actions a:active,.hero-actions button:active{transform:scale(.97)}
+
+/* section shared */
+.section-head h2{text-align:right}
+.section-lede{padding:18px 22px;border-bottom:1px solid var(--line);font-size:15px}
+
+/* live projects */
+.case{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;padding:30px 24px;border-bottom:1px solid var(--line);align-items:start}
+.case:last-child{border-bottom:0}
+/* three flagships, three worlds, each matching its letter tile */
+.case-traceintel{background:#eaedf8;box-shadow:inset 4px 0 0 var(--blue)}
+.case-aris{background:var(--ink);color:#f3f1e9;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
+.case-aris .case-media{order:2;border-color:#5c5c56}
+.case-aris .case-url{background:#2c2c28;color:#b9b8b0;border-color:#5c5c56}
+.case-aris h3,.case-aris .case-plain,.case-aris .case-problem span,.case-aris .case-plain span,.case-aris .case-proof em,.case-aris .case-how summary,.case-aris .engineering-grid strong,.case-aris .case-results b{color:#f3f1e9}
+.case-aris p,.case-aris .case-problem,.case-aris .case-proof,.case-aris .case-results a{color:#c4c3bb}
+.case-aris .case-proof{border-color:#4a4a45}
+.case-aris .case-proof strong{color:#c9dc6b}
+.case-aris .identity-icon{background:#c9dc6b;color:var(--ink)}
+.case-aris .live-tag.demo{background:transparent;color:#c4c3bb;border-color:#6b6b65}
+.case-aris .case-actions a,.case-aris .case-actions button{background:transparent;color:#f3f1e9;border-color:#8a8a83}
+.case-aris .case-actions a.primary{background:#c9dc6b;border-color:#c9dc6b;color:var(--ink)}
+.case-aris .case-actions a:hover,.case-aris .case-actions button:hover{border-color:#c9dc6b;color:#c9dc6b}
+.case-aris .case-actions a.primary:hover{color:var(--ink);filter:brightness(1.05)}
+.case-aris .tags span{border-color:#4a4a45;color:#c4c3bb}
+.case-aris .expand{color:#ed6d40}
+.case-aris a:focus-visible,.case-aris button:focus-visible,.case-aris summary:focus-visible{outline-color:#c9dc6b}
+.case-devpulse{background:#f6e6da;box-shadow:inset 4px 0 0 #ed6d40}
+.case-devpulse .case-proof strong{color:#a3381a}
+.case-devpulse .case-actions a.primary{background:#c34521;border-color:#c34521}
+.case-devpulse .case-actions a.primary:hover{background:#a3381a;color:#fff}
+.case-media{border:1px solid var(--ink);background:#fff}
+.case-url{display:block;padding:8px 12px;border-bottom:1px solid var(--ink);font:11px/1.2 monospace;letter-spacing:.04em;color:var(--muted);background:var(--paper)}
+.case-media video,.case-media img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.case-title{display:flex;align-items:center;gap:12px}
+.case-title .identity-icon{width:40px;height:40px;font-size:24px}
+.case-title h3{font-size:30px}
+.live-tag{margin-left:auto;display:inline-flex;align-items:center;font:700 11px monospace;letter-spacing:.12em;border:1px solid var(--line);padding:5px 8px;background:var(--paper)}
+.live-tag .status-dot{margin-right:6px}
+.live-tag.demo{border-style:dashed;color:var(--muted)}
+.case-problem,.case-plain{margin-top:14px;max-width:44ch}
+.case-problem{font-size:15px;line-height:1.5}
+.case-plain{font-size:18px;line-height:1.45;color:var(--ink)}
+.case-problem span,.case-plain span,.case-proof em{display:block;margin-bottom:4px;font:700 11px/1.4 monospace;letter-spacing:.12em;text-transform:uppercase;font-style:normal;color:var(--ink)}
+.case-proof{display:block;margin-top:18px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:15px;color:var(--muted)}
+.case-proof strong{color:var(--blue);font-weight:700}
+.case-proof:hover span{color:var(--ink)}
+.case-actions{margin-top:18px}
+.case-how{margin-top:16px}
+.case-how summary{min-height:44px;display:flex;align-items:center;gap:10px;cursor:pointer;list-style:none;font:700 12px monospace;letter-spacing:.1em;text-transform:uppercase;padding:8px 0}
+.case-how summary::-webkit-details-marker{display:none}
+.case-how .expand{margin-left:0;transition:transform .2s cubic-bezier(.23,1,.32,1)}
+.case-how[open] .expand{transform:rotate(45deg)}
+.case-how .engineering-grid{margin-top:10px}
+.case-results{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:6px;font-size:14px}
+.case-results a{color:var(--muted)}.case-results a:hover{color:var(--blue)}
+.case-results b{color:var(--ink)}
+
+/* open source */
+.oss-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+.oss-tile{display:flex;flex-direction:column;gap:16px;padding:24px;background:#e5e9d8;align-self:start;border-bottom:1px solid var(--line)}
+.oss-list{border-left:1px solid var(--line)}
+.oss-tile .tile-label{font-size:11px;letter-spacing:.12em}
+.oss-tile strong{font-size:40px;line-height:1.05;letter-spacing:-.045em;font-weight:600}
+.oss-tile p{font-size:15px;max-width:46ch}
+.oss-tile>a{color:var(--blue);font-size:14px}
+.oss-prs{font-size:14px}.oss-prs a{font-family:monospace;color:var(--blue);margin-left:6px}
+.oss-list{padding:8px 24px 24px}
+.spans{list-style:none;margin:0;padding:0}
+.spans li{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px;line-height:1.45}
+.state{align-self:start;justify-self:start;font:700 11px/1 monospace;letter-spacing:.1em;padding:6px 7px;background:#c9dc6b;color:var(--ink)}
+.is-open .state{background:var(--paper);box-shadow:inset 0 0 0 1px var(--ink)}
+.spans a,.pr-list a{font-family:monospace;color:var(--blue)}
+.pr-list{margin-top:14px;font-size:14px}.pr-list a{margin-left:8px}
+.oss-others{margin-top:18px;border-top:1px solid var(--line)}
+.oss-others a{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.oss-others b{font-size:16px}.oss-others span{grid-column:1;font-size:14px;color:var(--muted)}
+.oss-others em{grid-row:1/3;grid-column:2;align-self:center;font:700 11px monospace;letter-spacing:.08em;font-style:normal;color:#a3381a}
+
+/* more builds */
+.more-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.more-item{display:flex;flex-direction:column;gap:6px;padding:20px 22px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);transition:background .2s}
+.more-item:nth-child(2n){border-right:0}
+.more-item h3{font-size:18px;letter-spacing:-.03em;font-weight:700}
+.more-item p{font-size:14px}
+.more-item span{margin-top:auto;padding-top:10px;font-size:13px;color:var(--blue)}
+@media(hover:hover){.more-item:hover{background:#e8ebf4;color:var(--ink)}}
+.more-foot{display:flex;justify-content:space-between;gap:16px;padding:16px 22px;font-size:14px}
+.more-foot a{color:var(--blue)}
+.more-toggle{display:none;border:0;background:none;padding:6px 0;color:var(--ink);font:700 12px monospace;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+
+/* background */
+.bg-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.bg-grid article{display:flex;flex-direction:column;gap:12px;padding:22px;border-right:1px solid var(--line)}
+.bg-grid article:last-child{border-right:0}
+.bg-grid .tile-label{font-size:11px;letter-spacing:.1em;color:var(--muted)}
+.bg-grid h3{font-size:19px;line-height:1.25;letter-spacing:-.03em}
+.bg-grid h3 a:hover{color:var(--blue)}
+.bg-grid p{font-size:14px}
+
+/* ask my agent: a full-height column of the hero dashboard. It never changes the hero's size:
+   the column takes the height of the copy + rows beside it, and answers scroll inside. */
+.intro-panel.has-agent{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(360px,1fr)}
+.intro-panel.has-agent .intro-copy{grid-column:1;grid-row:1}
+.intro-panel.has-agent .intro-dashboard{display:contents}
+.intro-panel.has-agent .intro-rows{grid-column:1;grid-row:2;border-top:1px solid var(--line)}
+.intro-panel.has-agent .agent{grid-column:2;grid-row:1/3;contain:size layout;border:0;border-left:1px solid var(--line)}
+.intro-panel.has-agent .dashboard-shortcuts{grid-column:1/-1;grid-row:3;grid-template-columns:repeat(4,minmax(0,1fr));border-left:0;border-top:1px solid var(--line)}
+.intro-panel.has-agent .dashboard-tile{border-bottom:0}
+.intro-panel.has-agent .dashboard-tile:nth-child(even){border-right:1px solid var(--line)}
+.intro-panel.has-agent .dashboard-tile:last-child{border-right:0}
+.agent{display:flex;flex-direction:column;background:#f8f7f1;min-width:0;min-height:0}
+/* agent: named, with a status line, so it reads as an agent at a glance */
+.agent-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);background:#e8ebf4}
+.agent-avatar{width:42px;height:42px}
+.agent-avatar svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.agent-head h2{font-size:20px;font-weight:600;letter-spacing:-.035em;line-height:1.1}
+.agent-status{margin-top:3px;font:11px/1.4 monospace;color:var(--muted)}
+.agent-status .status-dot{margin-right:6px}
+.agent-tools{position:relative;padding:12px 16px 14px;border-bottom:1px solid var(--line)}
+.agent-tools .tile-label{display:block;margin-bottom:8px;font-size:10.5px;letter-spacing:.1em;color:var(--muted)}
+.agent-graph{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;position:relative}
+.agent-graph::before{content:"";position:absolute;left:8px;right:8px;top:50%;height:1px;background:var(--line)}
+.agent-graph li{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:2px;padding:8px;border:1px solid var(--line);background:var(--paper);font-size:12px;line-height:1.25;transition:border-color .2s}
+.agent-graph li>*{position:relative}
+/* a called tool fills in from the left (clip-path, compositor-friendly) */
+.agent-graph li::before{content:"";position:absolute;inset:0;background:var(--blue);clip-path:inset(0 100% 0 0);transition:clip-path .22s cubic-bezier(.23,1,.32,1)}
+.agent-graph li.hit::before{clip-path:inset(0 0 0 0)}
+.agent-graph li span{font:10.5px/1 monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.agent-graph li.hit{border-color:var(--blue);color:#fff}
+.agent-graph li.hit span{color:#dfe5ff}
+.agent-graph li[data-result]::after{content:"→ " attr(data-result);position:relative;font:10.5px/1.2 monospace;color:#dfe5ff;margin-top:3px}
+/* while the agent works: one progress line sweeps under the tools (constant motion: linear) */
+.agent-progress{position:absolute;left:16px;right:16px;bottom:-1px;height:2px;overflow:hidden;opacity:0;transition:opacity .15s}
+.agent-progress::before{content:"";position:absolute;top:0;bottom:0;width:30%;background:var(--blue);transform:translateX(-100%)}
+.agent.working .agent-progress{opacity:1}
+.agent.working .agent-progress::before{animation:sweep 1.1s linear infinite}
+@keyframes sweep{to{transform:translateX(340%)}}
+@media(prefers-reduced-motion:reduce){.agent-graph li::before,.agent-graph li span{transition:none}.agent.working .agent-progress::before{animation:none;width:100%;transform:none;opacity:.5}}
+.ask-log{overflow-y:auto;padding:4px 16px 12px;overscroll-behavior:contain}
+.agent .ask-log{flex:1 1 0;min-height:0}
+.ask-meta{margin-top:8px;font:11px/1.4 monospace;color:var(--muted)}
+.agent-graph li b{position:relative;font-weight:400}
+.ask-idle{padding:16px 0 8px}
+.idle-q{font-size:22px;line-height:1.2;letter-spacing:-.035em;color:var(--ink);font-weight:500;max-width:22ch}
+.idle-list{margin-top:14px;border-top:1px solid var(--line)}
+.idle-list button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:48px;padding:10px 2px;border:0;border-bottom:1px solid var(--line);background:transparent;font:15px Arial;color:var(--ink);text-align:left;cursor:pointer;transition:color .15s}
+.idle-list button b{color:var(--orange);font-weight:400}
+@media(hover:hover){.idle-list button:hover{color:var(--blue)}}
+.idle-list button:active{transform:scale(.99)}
+.idle-note{margin-top:14px;font:12px/1.5 monospace;color:var(--muted)}
+.ask-turn{padding-top:12px}
+.ask-q{margin-left:auto;width:fit-content;max-width:85%;padding:9px 12px;background:var(--blue);color:#fff;font-size:15px}
+.ask-spans{list-style:none;margin:12px 0 0;padding:0 0 0 16px;border-left:1px solid var(--line);font:12px/1.4 monospace;color:var(--muted)}
+.ask-spans li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:6px 0}
+.s-tool{color:var(--ink);word-break:break-word}.s-tool em{font-style:normal;color:var(--muted)}
+.s-ms{color:var(--orange);text-align:right}.s-note{grid-column:1/-1}
+.pending .s-ms{animation:blink 1s steps(2) infinite}@keyframes blink{50%{opacity:.2}}
+.ask-a{margin-top:12px;font-size:15px;line-height:1.55}.ask-a p{color:var(--ink)}
+.ask-a .tile-label{display:block;margin-bottom:4px;font-size:10.5px;letter-spacing:.1em;color:var(--blue)}
+.ask-follow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.ask-follow .tile-label{width:100%;font-size:10.5px;letter-spacing:.1em;color:var(--muted)}
+.ask-follow button{font:13px Arial;min-height:40px;padding:8px 11px;border:1px solid var(--line);background:transparent;cursor:pointer;color:var(--ink)}
+.ask-follow button:hover{border-color:var(--blue);color:var(--blue)}
+.ask-err p,.ask-err{color:var(--muted)}
+.ask-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.ask-links a{font-size:13px;padding:6px 9px;border:1px solid var(--line);color:var(--blue)}
+.ask-form{display:flex;gap:0;margin:12px 16px 16px;border:1px solid var(--ink);background:#fff}
+.ask-form input{flex:1;min-width:0;min-height:48px;padding:0 14px;border:0;background:transparent;font:15px Arial;color:var(--ink)}
+.ask-form:focus-within{outline:2px solid var(--blue);outline-offset:2px}.ask-form input:focus{outline:0}
+.ask-form button{display:grid;place-items:center;width:52px;border:0;background:var(--blue);color:#fff;cursor:pointer;transition:transform .12s cubic-bezier(.23,1,.32,1)}
+.ask-form button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ask-form button:active{transform:scale(.95)}
+.ask-form button[disabled]{opacity:.5;cursor:progress}
+
+/* demo player */
+.player{position:fixed;inset:0;z-index:45;display:grid;place-items:center;padding:24px;background:rgba(32,32,29,.82)}
+.player-in{position:relative;width:min(1000px,100%)}
+.player iframe{width:100%;aspect-ratio:16/9;border:1px solid var(--paper);background:#000}
+.player .ask-x{position:absolute;right:0;top:-48px;color:#fff}
+
+@media(max-width:1100px){.intro-panel.has-agent{grid-template-columns:1fr}.intro-panel.has-agent .agent{grid-column:1;grid-row:2;contain:none;height:520px;border-left:0;border-top:1px solid var(--line)}.intro-panel.has-agent .intro-rows{grid-row:3}.intro-panel.has-agent .dashboard-shortcuts{grid-row:4;grid-template-columns:repeat(2,minmax(0,1fr))}.intro-panel.has-agent .dashboard-tile:nth-child(even){border-right:0}.intro-panel.has-agent .dashboard-tile:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media(max-width:1000px){
+  .case,.case-aris{grid-template-columns:1fr;gap:22px}.case-aris .case-media{order:0}
+  .oss-grid{grid-template-columns:1fr}.oss-tile{align-self:stretch}.oss-list{border-left:0}
+  .bg-grid{grid-template-columns:1fr 1fr}.bg-grid article:nth-child(2n){border-right:0}.bg-grid article:nth-child(-n+4){border-bottom:1px solid var(--line)}.bg-grid article:last-child{grid-column:1/-1;border-right:0}
+}
+@media(max-width:650px){
+  .section-head{flex-direction:column;align-items:flex-start;gap:10px}.section-head h2{text-align:left}
+  .case{padding:22px 16px}.case-title h3{font-size:25px}.case-plain{font-size:17px}
+  .case-actions a,.case-actions button{flex:1 1 auto;text-align:center;min-height:44px}
+  .spans li{grid-template-columns:1fr;gap:8px}.oss-list{padding:4px 16px 18px}.oss-tile{padding:20px 16px}
+  .more-grid{grid-template-columns:1fr}.more-item{border-right:0}
+  .js .more-grid:not(.all) .more-item:nth-child(n+5){display:none}.js .more-toggle{display:block}
+  .more-foot{flex-direction:column;align-items:flex-start}
+    .agent-graph{grid-template-columns:1fr 1fr}.agent-graph::before{display:none}
+  .bg-grid{grid-template-columns:1fr}.bg-grid article{border-right:0;border-bottom:1px solid var(--line)}.bg-grid article:last-child{border-bottom:0}
+}
+
+/* ===== Motion (Emil Kowalski's rules) =====================================
+   One curve family: strong ease-out for things responding to the user,
+   iOS drawer curve for panels, linear only for constant progress.
+   UI responses stay under 300ms; only the once-per-visit hero entrance is longer.
+   Nothing moves on scroll, nothing loops while idle. */
+:root{--ease-out:cubic-bezier(.23,1,.32,1);--ease-in-out:cubic-bezier(.77,0,.175,1);--ease-drawer:cubic-bezier(.32,.72,0,1)}
+
+/* 1. Hero entrance: once per visit, staggered with uneven gaps, starts from visible-ish (blur + 8px). */
+@media(prefers-reduced-motion:no-preference){
+  .js .intro-copy>*,.js .intro-rows>details,.js .agent,.js .dashboard-tile,.js .profile-column{animation:enter .52s var(--ease-out) backwards}
+  .js .profile-column{animation-delay:0ms}
+  .js .intro-copy>.eyebrow{animation-delay:40ms}
+  .js .intro-copy>h1{animation-delay:90ms}
+  .js .intro-copy>p:not(.eyebrow){animation-delay:170ms}
+  .js .intro-copy>.hero-actions{animation-delay:220ms}
+  .js .agent{animation-delay:260ms}
+  .js .intro-rows>details:nth-child(1){animation-delay:300ms}
+  .js .intro-rows>details:nth-child(2){animation-delay:345ms}
+  .js .intro-rows>details:nth-child(3){animation-delay:380ms}
+  .js .intro-rows>details:nth-child(4){animation-delay:410ms}
+  .js .dashboard-tile{animation-delay:440ms}
+}
+@keyframes enter{from{opacity:0;transform:translateY(8px);filter:blur(4px)}}
+@media(prefers-reduced-motion:reduce){.js .intro-copy>*,.js .intro-rows>details,.js .agent,.js .dashboard-tile,.js .profile-column{animation:fade .3s ease backwards}}
+@keyframes fade{from{opacity:0}}
+
+/* 2. Disclosures: the + turns into ×, the content eases in instead of snapping. */
+.intro-rows .expand,.case-how .expand{display:inline-block;transition:transform .2s var(--ease-out)}
+.intro-rows details[open] .expand,.case-how[open] .expand{transform:rotate(45deg)}
+details[open]>.intro-detail,.case-how[open]>*:not(summary){animation:reveal .24s var(--ease-out) backwards}
+.case-how[open]>.case-results{animation-delay:40ms}.case-how[open]>.tags{animation-delay:70ms}
+@keyframes reveal{from{opacity:0;transform:translateY(-4px)}}
+@media(prefers-reduced-motion:reduce){details[open]>.intro-detail,.case-how[open]>*:not(summary){animation:fade .2s ease backwards}.intro-rows .expand,.case-how .expand{transition:none}}
+
+/* 3. Every pressable thing answers the press. */
+.hero-actions a,.hero-actions button,.case-actions a,.case-actions button,.email-copy,.ask-follow button,.dashboard-tile,.more-item,.oss-others a{transition:transform .16s var(--ease-out),background-color .15s ease,color .15s ease,border-color .15s ease}
+.hero-actions a:active,.hero-actions button:active,.email-copy:active,.ask-follow button:active{transform:scale(.97)}
+.dashboard-tile:active,.more-item:active,.oss-others a:active{transform:scale(.99)}
+.social-circles a{transition:color .2s ease,background-color .2s ease,transform .2s var(--ease-out)}
+.social-circles a:active{transform:scale(.94)}
+
+/* 4. Arrows point where they go: they nudge that way on hover (mouse only). */
+.tile-label b,.more-item span,.idle-list button b,.case-proof,.oss-tile>a{transition:transform .2s var(--ease-out),color .15s ease}
+@media(hover:hover) and (pointer:fine){
+  .dashboard-tile:hover .tile-label b{transform:translate(2px,2px)}
+  .resume-tile:hover .tile-label b{transform:translate(2px,-2px)}
+  .more-item:hover span{transform:translate(2px,-2px)}
+  .idle-list button span{display:inline-block;transition:transform .2s var(--ease-out)}
+  .idle-list button:hover span{transform:translateX(6px)}
+  .idle-list button:hover b{transform:translate(2px,-2px)}
+}
+
+/* 5. The agent at work: each step slides in as it happens, the answer fades up, follow-ups stagger. */
+.ask-q{animation:enter-r .22s var(--ease-out) backwards}
+.ask-spans li{animation:enter-l .22s var(--ease-out) backwards}
+.ask-a{animation:enter .28s var(--ease-out) backwards}
+.ask-follow button{animation:enter .26s var(--ease-out) backwards}
+.ask-follow button:nth-of-type(2){animation-delay:50ms}
+@keyframes enter-l{from{opacity:0;transform:translateX(-6px)}}
+@keyframes enter-r{from{opacity:0;transform:translateX(6px)}}
+@media(prefers-reduced-motion:reduce){.ask-q,.ask-spans li,.ask-a,.ask-follow button{animation:fade .2s ease backwards}}
+
+/* 6. Demo player: a modal, so it scales from the centre; closing is faster than opening. */
+.player{opacity:0;transition:opacity .15s ease}
+.player .player-in{transform:scale(.96);transition:transform .15s var(--ease-out)}
+.player.open{opacity:1;transition:opacity .22s ease}
+.player.open .player-in{transform:none;transition:transform .26s var(--ease-out)}
+@media(prefers-reduced-motion:reduce){.player .player-in,.player.open .player-in{transform:none;transition:none}}
+
+/* 7. "Copy email" -> "Copied!": a short blur bridges the two labels so they never visibly overlap. */
+.email-copy strong{display:inline-block;transition:filter .2s ease,opacity .2s ease}
+.email-copy strong.swap{filter:blur(2px);opacity:.4}
+@media(prefers-reduced-motion:reduce){.pending .s-ms{animation:none}}
+

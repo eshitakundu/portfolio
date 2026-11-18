@@ -1,75 +1,139 @@
-const $=(s)=>document.querySelector(s),live=(a)=>a.filter(x=>!x.draft);
-const linkList=(a=[])=>a.map(l=>`<a href="${l.href}" target="_blank" rel="noreferrer">${l.label} ↗</a>`).join("");
-const byId=id=>[...FLAGSHIP,...DATA_PROJECTS,...MISC_PROJECTS].find(p=>p.id===id);
+// Renders the home page sections from data.js (HOME + CASES + SOURCES).
+// Everything above the BROWSER-ONLY marker also runs at build time (scripts/build.mjs
+// pre-renders it into index.html), so keep it DOM-free apart from $(selector).innerHTML.
+const $=(s)=>document.querySelector(s);
+const esc=(s)=>String(s).replace(/&(?![a-z#0-9]+;)/gi,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const isExt=(h)=>/^https?:/.test(h);
+const a=(href,label,cls="")=>`<a${cls?` class="${cls}"`:""} href="${href}"${isExt(href)?' target="_blank" rel="noreferrer"':""}>${label}</a>`;
+const allProjects=()=>[...FLAGSHIP,...DATA_PROJECTS,...MISC_PROJECTS];
+const byId=(id)=>allProjects().find(p=>p.id===id);
+const src=(n)=>SOURCES.find(s=>s.n===n);
+const drivePreview=(h)=>h.includes("drive.google.com/file/d/")?h.replace(/\/view.*$/,"/preview"):h;
+const ICON={traceintel:["blue","T"],aris:["blue","A"],devpulse:["orange","D"]};
 
-const flagshipSpecs={
-  traceintel:{summary:"On-chain exposure agent: decodes every ERC-20 approval in an Ethereum or Monad transaction, then checks which permissions are still live.",points:[["THEN → NOW","Historical approvals compared with current allowance, owner balance, and spender code at a reorg-safe pinned block"],["Agent design","Planner calls 3 typed read-only tools under a code-enforced budget; reporter cites only verified claims, with a deterministic fallback"],["Evals","24 offline evals in CI, including 5 adversarial cases that script the model to misbehave"],["Architecture & deployment","React + TypeScript → Cloudflare Workers → Render / FastAPI → PostgreSQL; 101 pytest, Vitest, and Playwright tests"]]},
-  aris:{summary:"Agent workflow that evaluates a software dependency against your repo and emails an auditable adoption verdict.",points:[["Architecture","104-node DAG with 7 parallel evidence branches"],["Reliability","LLMs only extract and narrate; 18 Python nodes compute every score"],["Deployment","Cloudflare Pages frontend; Dockerized Heym/FastAPI/PostgreSQL backend on DigitalOcean via Cloudflare Tunnel"],["Integrations","GitHub / OSV / PyPI / npm / Stack Exchange / Tavily MCP / NVIDIA NIM"]]},
-  "mcp-devops-hub":{summary:"Telegram-driven DevOps agent that maps chat requests to fixed job skills and pulls failed-job logs for analysis.",points:[["Agent runtime","OpenClaw agent with 6 fixed, argument-free skills"],["Orchestration","Telegram → OpenClaw → team backend job queue"],["Diagnostics","Network, system, and login checks; job-status reports; failed-job log analysis"],["Execution safety","No exec tool; skills limited to safe, stateless commands"]]},
-  devpulse:{summary:"Pros and cons of a developer tool from Hacker News, where every point quotes a real comment and links to it.",points:[["Grounding","Model proposes; a validator keeps a point only if its quote is verbatim in the comment it cites"],["Failure handling","One repair round, then a rule-based analyst that is grounded by construction"],["Evals","CI guardrail eval scripts 8 model failures, including prompt injection: 0 ungrounded points published; 21 tests"],["Deployment","FastAPI on Cloudflare Python Workers; reports cached in D1 for 24 hours"]]},
-  "study-buddy-mcp":{summary:"Personal MCP server that gives Claude structured, safe access to study material and mastery data.",points:[["Protocol","13 tools, 3 resources, and 4 prompts"],["Safety","Path-traversal-safe document access"],["Data","SQLite mastery tracking with fuzzy matching"],["Backend","Pydantic-validated Python MCP server"]]}
-};
-const flagshipOrder=["traceintel","aris","devpulse","study-buddy-mcp"];
-const moreOrder=["agon","jev-flow","reply-radar","mcp-devops-hub","moodify","repobrief","deep-research-agent","github-ranker-mcp","flowchart-mcp","hn-mcp"];
-const earlierOrder=["elearning-analytics-dbt","disease-outbreak-predictor","ecommerce-spending","espresso-yourself","vbs-calculator"];
-
-function renderProjects(){
-  $("#featuredProjects").innerHTML=flagshipOrder.map((id,i)=>{const p=byId(id),s=flagshipSpecs[id];return `<article class="project ${i===0?"lead":""}" id="project-${id}" data-project="${id}"><div class="project-index">0${i+1}</div><div class="project-copy"><h3>${p.name}</h3><p class="project-summary">${s.summary}</p><div class="engineering"><span>Engineering summary</span><div class="engineering-grid">${s.points.map(([label,value])=>`<div><strong>${label}</strong><p>${value}</p></div>`).join("")}</div></div><div class="tags">${p.tags.slice(0,5).map(t=>`<span>${t}</span>`).join("")}</div></div><div class="project-links">${linkList(p.links)}</div></article>`}).join("");
-  $("#projectArchive").innerHTML=`<div class="archive-head"><div><span>Compact project archive</span><h3>More builds</h3></div><span>${String(moreOrder.length).padStart(2,"0")} additional builds</span></div><div class="archive-grid">${moreOrder.map(id=>{const p=byId(id);return `<article id="project-${id}" data-project="${id}"><h4>${p.name}</h4><p>${p.desc}</p><div class="tags">${p.tags.slice(0,5).map(t=>`<span>${t}</span>`).join("")}</div>${linkList(p.links)}</article>`}).join("")}</div><details class="older"><summary>Earlier practice & coursework (${earlierOrder.length+TRASH_PROJECTS.length})</summary><div>${[...earlierOrder.map(id=>{const p=byId(id);return {name:p.name,href:p.links[0].href}}),...TRASH_PROJECTS].map(p=>`<a href="${p.href}" target="_blank" rel="noreferrer">${p.name} ↗</a>`).join("")}</div></details>`;
+function caseMedia(c){
+  const m=c.media;
+  const inner=m.video
+    ?`<video class="case-video" muted loop playsinline preload="none" poster="${m.poster}" aria-label="${esc(m.alt)}" width="1120" height="630"><source src="${m.video}" type="video/mp4"></video>`
+    :`<img src="${m.image}" alt="${esc(m.alt)}" loading="lazy" width="1120" height="630">`;
+  return `<figure class="case-media"><span class="case-url" aria-hidden="true">${c.host}</span>${inner}</figure>`;
 }
 
-const layers=[
- {name:"AI / LLMs",desc:"Model APIs and evaluation form the reasoning layer behind my AI systems.",tech:["NVIDIA NIM","NOOA / OpenRouter","Structured outputs","Agent evaluation","Grounding validators"],projects:["traceintel","aris","devpulse","jev-flow"]},
- {name:"Agents & Orchestration",desc:"Agents divide complex work into coordinated, observable execution paths.",tech:["Python","Tool calling","LangGraph / LangChain","Parallel DAGs","Heym"],projects:["aris","agon","deep-research-agent","jev-flow"]},
- {name:"MCP",desc:"MCP gives models structured, validated access to tools, resources, and prompts.",tech:["FastMCP","MCP primitives","Skill routing"],projects:["aris","agon","study-buddy-mcp","github-ranker-mcp","flowchart-mcp","hn-mcp"]},
- {name:"Tools / APIs",desc:"External APIs ground agent decisions in current, verifiable information.",tech:["GitHub API","OSV","Tavily","Hacker News API","EVM JSON-RPC"],projects:["traceintel","aris","devpulse","github-ranker-mcp"]},
- {name:"Data Systems",desc:"Reliable storage and transformation keep application state and analytics usable.",tech:["PostgreSQL / SQLite","dbt","Snowflake","Airflow"],projects:["traceintel","study-buddy-mcp","elearning-analytics-dbt","disease-outbreak-predictor"]},
- {name:"Infrastructure / Deployment",desc:"Containerization and delivery workflows turn prototypes into running systems.",tech:["Docker","CI/CD","DigitalOcean","Cloudflare Workers + D1","Render"],projects:["traceintel","aris","devpulse","github-ranker-mcp"]}
-];
-function setLayer(i){
- document.querySelectorAll(".layer-node").forEach((n,j)=>{n.classList.toggle("active",i===j);n.setAttribute("aria-pressed",i===j)});
- const l=layers[i];$("#systemDetail").innerHTML=`<span>Layer 0${i+1}</span><h3>${l.name}</h3><p class="layer-desc">${l.desc}</p><div class="map-tech">${l.tech.map(t=>`<span>${t}</span>`).join("")}</div><p>Projects using this layer</p><div class="map-projects">${l.projects.map(id=>{const p=byId(id);return `<a href="#project-${id}" data-target="${id}">${p.name} <span>↘</span></a>`}).join("")}</div>`;
- document.querySelectorAll("[data-project]").forEach(el=>el.classList.toggle("map-match",l.projects.includes(el.dataset.project)));
-}
-function renderMap(){
-
- $("#systemFlow").innerHTML=layers.map((l,i)=>`<button class="layer-node" type="button" aria-pressed="false" data-layer="${i}"><small>0${i+1}</small><span>${l.name}</span><b>↓</b></button>`).join("");
- $("#systemFlow").addEventListener("click",e=>{const b=e.target.closest("[data-layer]");if(b)setLayer(+b.dataset.layer)});
- $("#systemFlow").addEventListener("mouseover",e=>{const b=e.target.closest("[data-layer]");if(b)setLayer(+b.dataset.layer)});
- setLayer(0);
+function renderCases(){
+  $("#cases").innerHTML=["traceintel","aris","devpulse"].map((id,i)=>{const c=CASES.find(x=>x.id===id),h=HOME.work[id],[tone,letter]=ICON[id];
+    const live=c.links.find(l=>l.primary),code=c.links.find(l=>l.label==="Code"),demo=c.links.find(l=>/demo/i.test(l.label));
+    return `<article class="case case-${id}" id="project-${id}">
+${caseMedia(c)}
+<div class="case-copy">
+<div class="case-title"><span class="identity-icon ${tone}">${letter}</span><h3>${c.name}</h3>${id==="aris"?'<span class="live-tag demo">RECORDED DEMO</span>':'<span class="live-tag"><span class="status-dot"></span>LIVE</span>'}</div>
+<p class="case-problem"><span>Problem</span>${h.problem}</p>
+<p class="case-plain"><span>What it does</span>${h.plain}</p>
+<a class="case-proof" href="${h.proof[2]}" target="_blank" rel="noreferrer"><em>Proof</em><span>${h.proof[0]}</span> <strong>${h.proof[1]}</strong> ↗</a>
+<div class="hero-actions case-actions">${a(live.href,id==="aris"?"See saved reports ↗":"Try it live ↗","primary")}${demo?`<button type="button" data-video="${drivePreview(demo.href)}" data-title="${esc(c.name)} demo">Watch ${h.demo} demo ▶</button>`:""}${a(code.href,"Code ↗")}</div>
+<details class="case-how"><summary>How it works <b class="expand">+</b></summary>
+<div class="engineering-grid"><div><strong>What it does</strong><p>${c.lede}</p></div><div><strong>How it's built</strong><p>${c.how}</p></div></div>
+<ul class="case-results">${c.evidence.map(([n,t,s])=>`<li><a href="${src(s).href}" target="_blank" rel="noreferrer"><b>${n}</b> ${t} ↗</a></li>`).join("")}</ul>
+<div class="tags">${c.tags.map(t=>`<span>${t}</span>`).join("")}</div>
+</details>
+</div></article>`}).join("");
 }
 
-function renderProfile(){
- $("#bio").innerHTML=`<p>I build LLM agents that call tools under hard limits: typed tool access, MCP servers, validators that check every claim against evidence, and evals in CI.</p><p>I built and deployed <strong>ARIS</strong>, a multi-agent technology adoption system with reproducible scoring and auditable verdicts. My latest project, <strong>TraceIntel</strong>, follows Ethereum and Monad transaction permissions from historical evidence to current exposure, using a NOOA agent that cites only verified evidence and falls back to deterministic analysis. <strong>DevPulse</strong> applies the same rule to opinions: the model proposes, and a validator publishes only points quoted verbatim from real comments.</p><p>I also contribute to open source: five merged PRs in <strong>AMD GAIA</strong>’s agent framework, mostly its MCP client and bridge, and two in <strong>CrossGL</strong>. I’m looking for agentic AI engineering roles.</p>`;
-  $("#experienceList").innerHTML=EXPERIENCE.map(x=>`<article><div><span>${x.dates}</span><small>${x.location}</small></div><div><h3>${x.role}</h3><h4>${x.org}</h4><ul>${x.bullets.map(b=>`<li>${b.replace("10+ hours/week","<strong>10+ hours/week</strong>").replace("70%","<strong>70%</strong>")}</li>`).join("")}</ul><a href="${x.cert}" target="_blank">View credential ↗</a><figure class="experience-photo"><img src="assets/experiences/XPMC.webp" alt="XPMC Work Readiness Program group" loading="lazy"><figcaption>XPMC Work Readiness Program · Federation University Australia</figcaption></figure></div></article>`).join("");
- $("#educationList").innerHTML=EDUCATION.map(x=>`<article><div><span>${x.dates}</span></div><div><h3>${x.degree}</h3><p>${x.school} · <strong>${x.meta}</strong></p></div></article>`).join("");
- const groups=[
-  ["Languages, Frontend & Backend",["JavaScript","TypeScript","React","Vite","Python","SQL","Node.js","FastAPI","Pydantic","REST APIs"]],
-  ["Agents & Orchestration",["LangGraph","LangChain","LLM Agents","MCP","FastMCP","Tool / Function Calling","Agent Orchestration","NOOA","Human-in-the-loop"]],
-  ["Retrieval & Evaluation",["RAG","Embeddings","Vector Search","Structured Outputs","LLM / Agent Evaluation","Adversarial Evals","Grounding Validators"]],
-  ["Databases",["PostgreSQL","SQLite","Cloudflare D1","FAISS"]],
-  ["Infrastructure & Developer Tooling",["Docker","Docker Compose","Git / GitHub","GitHub Actions","CI/CD","DigitalOcean","Cloudflare","Cloudflare Workers","Render","AWS S3"]],
-  ["Data & Analytics",["pandas","NumPy","scikit-learn","dbt","Snowflake","Airflow","Tableau","Power BI"]]
- ];
- $("#skills").innerHTML=groups.map(([name,items],i)=>`<article><span class="stack-index">0${i+1}</span><h3>${name}</h3><ul class="stack-list">${items.map(item=>`<li>${item}</li>`).join("")}</ul></article>`).join("");
-}
-function renderRecognition(){
- $("#achievements").innerHTML=ACHIEVEMENTS.map((a,i)=>`<article class="${i===0?"primary-award":""}"><span>0${i+1}</span><div><h3>${i===0?"2nd Prize":a.title}</h3><h4>${i===0?"BRICS-FS-36 Data Analysis & Visualization · International Final · Dec 2024":a.org}</h4><p>${i===0?"8-hour international analytics final · Python · Excel · Tableau · Streamlit":a.desc}</p><a href="${a.cert}" target="_blank">Credential ↗</a>${a.citation?`<a href="${a.citation}" target="_blank">Citation ↗</a>`:""}</div></article>`).join("");
- $("#memories").innerHTML=MESSAGES.map(m=>`<figure><img src="${m.img}" alt="${m.caption}" loading="lazy"><figcaption><strong>${m.text}</strong><span>${m.caption} · ${m.date}</span></figcaption></figure>`).join("");
- $("#certifications").innerHTML=[...CERTIFICATIONS,...CERTIFICATIONS_MORE].map(c=>`<a href="${c.cert}" target="_blank"><span>${c.name}<small>${c.org}</small></span><span>${c.date||"View"} ↗</span></a>`).join("");
+function renderOss(){
+  const o=HOME.oss,pr=(n)=>a(`https://github.com/amd/gaia/pull/${n}`,`#${n}`);
+  $("#oss").innerHTML=`<div class="oss-grid">
+<div class="oss-tile"><span class="tile-label">AMD GAIA</span><strong>5 merged,<br>2 in review.</strong><p>${o.plain}</p><p class="oss-prs">Merged: ${o.merged.map(pr).join(" ")}</p>${a(src(4).href,"See all my merged pull requests ↗")}</div>
+<div class="oss-list">
+<ul class="spans">${o.changes.map(t=>`<li><span class="state">MERGED</span><span>${t}</span></li>`).join("")}${o.open.map(p=>`<li class="is-open"><span class="state">IN REVIEW</span><span>${p.text} ${pr(p.n)}</span></li>`).join("")}</ul>
+<div class="oss-others">${o.others.map(x=>`<a href="${x.href}" target="_blank" rel="noreferrer"><b>${x.name}</b><span>${x.text}</span><em>${x.count}</em></a>`).join("")}</div>
+</div></div>`;
 }
 
-renderProjects();renderMap();renderProfile();renderRecognition();$("#year").textContent=new Date().getFullYear();
-const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+function renderMore(){
+  $("#more-list").innerHTML=`<div class="more-grid">${HOME.more.map(m=>{const p=m.id?(byId(m.id)||CASES.find(c=>c.id===m.id)):null;const name=m.name||p.name.split(" | ")[0];const href=m.href||(p.links.find(l=>/live|site/i.test(l.label))||p.links[0]).href;
+    return `<a class="more-item" href="${href}" target="_blank" rel="noreferrer">${m.tag?`<span class="tile-label">${m.tag.toUpperCase()}</span>`:""}<h3>${name}</h3><p>${m.plain}</p><span>${/github\.com/.test(href)?"Code":"Open"} ↗</span></a>`}).join("")}</div><div class="more-foot"><button class="more-toggle" type="button">Show ${HOME.more.length-4} more ↓</button><a href="https://github.com/eshitakundu?tab=repositories" target="_blank" rel="noreferrer">All projects on GitHub ↗</a></div>`;
+}
+
+function renderBackground(){
+  $("#background-list").innerHTML=`<div class="bg-grid">${HOME.background.map(b=>`<article class="${b.k==="Award"&&/2nd/.test(b.title)?"primary-award":""}"><span class="tile-label">${b.k.toUpperCase()}</span><h3>${a(b.href,b.title)}</h3><p>${b.text}</p></article>`).join("")}</div>`;
+}
+
+/* BROWSER-ONLY: everything below needs a real browser. */
+if(!$("#cases").children.length){renderCases();renderOss();renderMore();renderBackground();}
+$("#year").textContent=new Date().getFullYear();
+const still=matchMedia("(prefers-reduced-motion: reduce)");
+
+// Header hides on scroll down, returns on scroll up (as before).
 let lastY=0;addEventListener("scroll",()=>{const y=scrollY;$(".site-header").classList.toggle("hidden",y>lastY&&y>160);lastY=y},{passive:true});
 
+// Project loops play only while on screen, and never for reduced-motion users.
+const vids=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;
+  if(e.isIntersecting&&!still.matches){v.preload="auto";v.play().catch(()=>{})}else v.pause();
+}),{threshold:.4});
+document.querySelectorAll(".case-video").forEach(v=>vids.observe(v));
+
+// Full demos open in a player only when asked for.
+const player=$("#player"),frame=$("#playerFrame");let lastFocus=null;
+const closePlayer=()=>{player.classList.remove("open");setTimeout(()=>{player.hidden=true;frame.src="about:blank"},still.matches?0:150);lastFocus?.focus()};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-video]");if(!b)return;
+  lastFocus=b;frame.title=b.dataset.title;frame.src=b.dataset.video;player.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>player.classList.add("open")));$("#playerClose").focus()});
+$("#playerClose").addEventListener("click",closePlayer);
+player.addEventListener("click",e=>{if(e.target===player)closePlayer()});
+
+$(".more-toggle")?.addEventListener("click",e=>{$(".more-grid").classList.add("all");e.currentTarget.remove()});
+
 const emailCopy=$("#emailCopy"),copyStatus=$("#copyStatus");
-emailCopy.addEventListener("click",async()=>{
- const email=emailCopy.dataset.email;
- try{await navigator.clipboard.writeText(email)}catch{const field=document.createElement("textarea");field.value=email;field.setAttribute("readonly","");field.style.position="fixed";field.style.opacity="0";document.body.appendChild(field);field.select();const copied=document.execCommand("copy");field.remove();if(!copied){copyStatus.textContent="Please select and copy the email address above.";return}}
- emailCopy.querySelector("strong").textContent="Copied!";copyStatus.textContent="Email address copied to clipboard.";
- setTimeout(()=>{emailCopy.querySelector("strong").textContent="Copy email";copyStatus.textContent=""},2500);
-});
-const localClock = document.querySelector('#localClock');
-function updateClock(){localClock.textContent = new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit'}).format(new Date());}
-updateClock(); setInterval(updateClock,60000);
+emailCopy.addEventListener("click",async()=>{const email=emailCopy.dataset.email,label=emailCopy.querySelector("strong");
+  try{await navigator.clipboard.writeText(email)}catch{copyStatus.textContent="Couldn't copy. The address is "+email;return}
+  const swapTo=(t)=>{label.classList.add("swap");setTimeout(()=>{label.textContent=t;label.classList.remove("swap")},still.matches?0:110)};
+  swapTo("Copied!");copyStatus.textContent="Email address copied to clipboard.";
+  setTimeout(()=>{swapTo("Copy email");copyStatus.textContent=""},2500)});
+
+const localClock=$("#localClock");
+const dayNight=$("#dayNight");
+const SUN='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>';
+const MOON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+function updateClock(){const now=new Date();localClock.textContent=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Kolkata",hour:"2-digit",minute:"2-digit"}).format(now);
+  const h=+new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Kolkata",hour:"2-digit",hour12:false}).format(now),day=h>=6&&h<18;
+  dayNight.innerHTML=day?SUN:MOON;dayNight.className="daynight "+(day?"is-day":"is-night");dayNight.setAttribute("aria-label",day?"Daytime in Kolkata":"Night-time in Kolkata");dayNight.title=dayNight.getAttribute("aria-label")}
+updateClock();setInterval(updateClock,60000);
+
+// ---- Ask my AI agent ----------------------------------------------------
+// Optional. The button only appears when /api/ask answers its health check,
+// so the page is complete without it. ?agent=mock uses canned data for testing.
+const agent=$("#agent"),askLog=$("#askLog"),askForm=$("#askForm"),askInput=$("#askInput");
+const nodes=[...document.querySelectorAll(".agent-graph li")];
+const mock=new URLSearchParams(location.search).get("agent")==="mock";
+const api=async(body)=>{
+  if(mock){await new Promise(r=>setTimeout(r,700));return {trace:[{tool:"search_projects",args:{query:body.q},ms:4,note:"3 matches"},{tool:"get_project",args:{id:"traceintel"},ms:2,note:"TraceIntel"}],answer:"This is test data. She built TraceIntel and DevPulse, which are live, and ARIS, which has a recorded demo.",links:[{label:"TraceIntel",href:"#project-traceintel"}]}}
+  const r=await fetch("/api/ask",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error(r.status===429?"limit":"down");return r.json()};
+(async()=>{try{if(!mock){const r=await fetch("/api/ask");if(!r.ok)return;const j=await r.json();if(!j.ok)return}agent.hidden=false;document.querySelector(".intro-panel").classList.add("has-agent");document.querySelector(".intro-grid").classList.add("agent-on")}catch{}})();
+
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!player.hidden)closePlayer()});
+const SUGGEST=["What has she built?","Has she worked with MCP?","Is she open to remote work?","What has she done in open source?"],asked=new Set();
+if(mock)$("#agentMode").textContent="Test mode";
+askLog.addEventListener("click",e=>{const b=e.target.closest(".idle-list button,.ask-follow button");if(!b||askForm.querySelector("button").disabled)return;askInput.value=b.querySelector("span")?.textContent||b.textContent;askForm.requestSubmit()});
+
+const fmtArgs=(o)=>Object.entries(o||{}).map(([k,v])=>`${k}: "${esc(String(v).slice(0,40))}"`).join(", ");
+const wait=(ms)=>new Promise(r=>setTimeout(r,still.matches?0:ms));
+// The answer types in word by word: it shows the agent producing it, and is skipped for reduced motion.
+async function typeIn(el,text){if(still.matches){el.textContent=text;return}const words=text.split(" ");el.textContent="";
+  for(let i=0;i<words.length;i++){el.textContent+=(i?" ":"")+words[i];if(i%2)await wait(22)}}
+askForm.addEventListener("submit",async e=>{e.preventDefault();const q=askInput.value.trim();if(!q)return;asked.add(q);
+  askInput.value="";const send=askForm.querySelector("button");send.disabled=true;
+  const turn=document.createElement("div");turn.className="ask-turn";
+  turn.innerHTML=`<p class="ask-q">${esc(q)}</p><ol class="ask-spans"><li class="pending"><span class="s-tool">choosing tools</span><span class="s-ms">…</span></li></ol>`;
+  askLog.replaceChildren(turn);nodes.forEach(n=>{n.classList.remove("hit");delete n.dataset.result});agent.classList.add("working");
+  const spans=turn.querySelector(".ask-spans");
+  try{const res=await api({q});spans.innerHTML="";agent.classList.remove("working");
+    for(const s of res.trace){const li=document.createElement("li");li.innerHTML=`<span class="s-tool">${esc(s.tool)}(<em>${fmtArgs(s.args)}</em>)</span><span class="s-ms">${s.ms} ms</span><span class="s-note">${esc(s.note||"")}</span>`;spans.appendChild(li);const node=nodes.find(n=>n.dataset.tool===s.tool);if(node){node.classList.add("hit");node.dataset.result=s.note||"done"}await wait(200)}
+    const ms=res.trace.reduce((t,s)=>t+(s.ms||0),0);
+    const p=document.createElement("div");p.className="ask-a";
+    p.innerHTML=`<span class="tile-label">AGENT</span><p class="ask-text"></p>`;turn.appendChild(p);
+    await typeIn(p.querySelector(".ask-text"),res.answer);
+    p.insertAdjacentHTML("beforeend",`<p class="ask-meta">${res.trace.length} tool call${res.trace.length===1?"":"s"} · ${ms} ms · answered from this site's data only</p>${res.links?.length?`<p class="ask-links">${res.links.map(l=>a(l.href,esc(l.label)+" ↗")).join("")}</p>`:""}`);
+    const next=SUGGEST.filter(s=>!asked.has(s)).slice(0,2);
+    if(next.length)turn.insertAdjacentHTML("beforeend",`<div class="ask-follow"><span class="tile-label">ASK NEXT</span>${next.map(s=>`<button type="button"><span>${s}</span></button>`).join("")}</div>`);
+  }catch(err){spans.innerHTML="";agent.classList.remove("working");const p=document.createElement("p");p.className="ask-a ask-err";
+    p.textContent=err.message==="limit"?"That's the question limit for now. The résumé has everything, or email me directly.":"The agent isn't answering right now. The résumé has everything, or email me directly.";turn.appendChild(p)}
+  send.disabled=false;askInput.focus({preventScroll:true})});

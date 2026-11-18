@@ -48,6 +48,180 @@ const CONTACT = {
   github: "https://github.com/eshitakundu"
 };
 
+// ---- CASE FILES (the three flagship projects at the top of the page) ------
+// Every number here is from the project's repo, CI or a recorded live run.
+// `evidence` rows are [figure, what it measures]. Keep them checkable.
+const CASES = [
+  {
+    id: "traceintel",
+    theme: "blue",
+    kicker: "Security agent for Ethereum and Monad",
+    name: "TraceIntel",
+    host: "traceintel.eshita.dev",
+    media: { video: "assets/work/traceintel.mp4", poster: "assets/work/traceintel.jpg", alt: "TraceIntel report: the agent's briefing and a THEN to NOW comparison of a token permission" },
+    lede: "Paste an old transaction and see which token permissions it left behind are still live, explained by an agent that may only cite verified evidence.",
+    evidence: [
+      ["24", "offline evals in CI, 5 of them adversarial", 7],
+      ["0", "ungrounded claims in live runs on 2 models", 7],
+      ["7/8", "correct advice end to end on a free model", 7],
+      ["101", "pytest, Vitest and Playwright tests", 8]
+    ],
+    how: "A NOOA planner calls 3 typed, read-only tools under a budget enforced in code. The reporter can only cite claims the tools verified, and falls back to a deterministic report.", howCite: 7,
+    tags: ["NOOA", "FastAPI", "PostgreSQL", "React + TypeScript", "Cloudflare Workers"],
+    links: [
+      { label: "Open live", href: "https://traceintel.eshita.dev", primary: true },
+      { label: "Watch 1:33 demo", href: "https://drive.google.com/file/d/1-5eEX6gudDaP5FLFxx9WotcHQ9CJlThD/view?usp=drive_link" },
+      { label: "Code", href: "https://github.com/eshitakundu/TraceIntel" }
+    ]
+  },
+  {
+    id: "aris",
+    theme: "dark",
+    kicker: "Multi-agent workflow for adopting dependencies",
+    name: "ARIS",
+    host: "aris.eshita.dev",
+    media: { video: "assets/work/aris.mp4", poster: "assets/work/aris.jpg", alt: "ARIS run console: seven evidence branches filling in, ending in a Keep 72.6 verdict" },
+    lede: "Name a package and point ARIS at your repo. Seven parallel branches gather evidence from 8 sources, and you get an emailed brief with an adopt, trial, hold or avoid verdict.",
+    evidence: [
+      ["104", "node DAG with 7 evidence branches running in parallel", 9],
+      ["18", "Python nodes compute every score; LLMs only extract and narrate", 9],
+      ["38", "scoring tests in CI", 10]
+    ],
+    how: "Runs on my self-hosted fork of Heym. I proposed its Python exec node upstream, and the maintainers of the 1.7K-star project shipped it as a native feature.", howCite: 19,
+    tags: ["Heym", "Python", "NVIDIA NIM", "GitHub / OSV / Tavily", "Docker + Cloudflare Tunnel"],
+    links: [
+      { label: "Open live", href: "https://aris.eshita.dev", primary: true },
+      { label: "Watch 1:21 demo", href: "https://drive.google.com/file/d/1jML5SADdQUz9jS4FM7lG59d3zc-DFHqd/view?usp=sharing" },
+      { label: "Code", href: "https://github.com/eshitakundu/ARIS" }
+    ]
+  },
+  {
+    id: "devpulse",
+    theme: "orange",
+    kicker: "Grounded summaries of Hacker News",
+    name: "DevPulse",
+    host: "devpulse.eshita.dev",
+    media: { image: "assets/work/devpulse.jpg", alt: "DevPulse report for Bun: pros and cons, each quoting a real Hacker News comment" },
+    lede: "Ask what developers think of a tool and get pros and cons where every point quotes a real Hacker News comment and links to it.",
+    evidence: [
+      ["149", "verbatim-cited points in a live run over 20 tools", 12],
+      ["18/19", "model reports passed the quote validator", 12],
+      ["0.27 s", "cached response, down from 17.8 s, with Cloudflare D1", 12]
+    ],
+    how: "The model only proposes. A validator keeps a point only if its quote appears word for word in the comment it cites, with one repair round and a rule-based fallback.", howCite: 13,
+    tags: ["Python", "FastAPI", "Pydantic", "OpenRouter", "Cloudflare Workers + D1"],
+    links: [
+      { label: "Open live", href: "https://devpulse.eshita.dev/?tool=Bun", primary: true },
+      { label: "Code", href: "https://github.com/eshitakundu/DevPulse" }
+    ]
+  },
+  {
+    id: "agon",
+    theme: "dark",
+    kicker: "Hackathon agent, Colosseum · MCP + Solana",
+    name: "Agon",
+    host: "agon-landing-mu.vercel.app",
+    media: { image: "assets/work/agon.jpg", alt: "Agon landing page: a guardrailed AI trading agent" },
+    lede: "A team hackathon build: an MCP server that lets AI clients like Claude Code research Solana tokens and paper-trade them, with a guard the model can't talk its way past.",
+    evidence: [
+      ["8", "typed MCP tools for research and paper trading", 18],
+      ["100+", "registered accounts during the hackathon", 20],
+      ["~3 µs", "per trade decision by a guard with no network or model calls", 18]
+    ],
+    how: "I co-designed the MCP server and specified the deterministic trade guard that caps size and slippage outside the LLM. Uncertain outcomes fail closed.",
+    howCite: 18,
+    tags: ["TypeScript", "MCP", "Solana", "Jupiter API"],
+    links: [
+      { label: "Open site", href: "https://agon-landing-mu.vercel.app", primary: true },
+      { label: "Watch demo", href: "https://youtu.be/2ded1QWIE_g" }
+    ]
+  }
+];
+
+// ---- SOURCES -------------------------------------------------------------
+// The page cites its own claims. Numbers are fixed in order of first use;
+// index.html writes <a class="cite" href="#s4">4</a> by hand for static text,
+// and CASES evidence rows carry the source number as a third element.
+const SOURCES = [
+  { n: 1, type: "Live", title: "TraceIntel, running", href: "https://traceintel.eshita.dev" },
+  { n: 2, type: "Live", title: "ARIS, running", href: "https://aris.eshita.dev" },
+  { n: 3, type: "Live", title: "DevPulse, running", href: "https://devpulse.eshita.dev/?tool=Bun" },
+  { n: 4, type: "PRs", title: "My merged pull requests in amd/gaia", href: "https://github.com/amd/gaia/pulls?q=is%3Apr+author%3Aeshitakundu+is%3Amerged" },
+  { n: 5, type: "Credential", title: "BRICS-FS-36 second prize certificate", href: "https://drive.google.com/file/d/1eUbbKUpUdZsSF0-W7ApcbcmyK6M2rRP9/view?usp=drive_link" },
+  { n: 6, type: "Credential", title: "EL Excellence Award, Top 50 Learner", href: "https://drive.google.com/file/d/1GGTMfMh05PWTjIRcA4W3HnQFWSENJk-e/view" },
+  { n: 7, type: "Code", title: "TraceIntel offline evals and live-run results", href: "https://github.com/eshitakundu/TraceIntel/tree/main/evals" },
+  { n: 8, type: "CI", title: "TraceIntel CI: tests and evals on every push", href: "https://github.com/eshitakundu/TraceIntel/actions/workflows/ci.yml" },
+  { n: 9, type: "Code", title: "ARIS workflow graph and scoring nodes", href: "https://github.com/eshitakundu/ARIS/tree/main/workflows" },
+  { n: 10, type: "CI", title: "ARIS scoring tests", href: "https://github.com/eshitakundu/ARIS/actions/workflows/tests.yml" },
+  { n: 11, type: "Docs", title: "ARIS README: architecture and the Heym Code node", href: "https://github.com/eshitakundu/ARIS#readme" },
+  { n: 12, type: "Data", title: "DevPulse live benchmark over 20 tools, 17 Nov 2026", href: "https://github.com/eshitakundu/DevPulse/blob/main/evals/results/live-2026-11-17.json" },
+  { n: 13, type: "CI", title: "DevPulse CI: guardrail eval and tests", href: "https://github.com/eshitakundu/DevPulse/actions/workflows/ci.yml" },
+  { n: 14, type: "PRs", title: "My merged pull requests in CrossGL/crosstl", href: "https://github.com/CrossGL/crosstl/pulls?q=is%3Apr+author%3Aeshitakundu+is%3Amerged" },
+  { n: 15, type: "PR", title: "ai-engineering-from-scratch #720", href: "https://github.com/rohitg00/ai-engineering-from-scratch/pull/720" },
+  { n: 16, type: "Credential", title: "XPMC automation work, Federation University Australia", href: "https://drive.google.com/file/d/1UYP0-IhTqH1KCa6GsnZkKMWBa8agiodJ/view?usp=sharing" },
+  { n: 17, type: "Code", title: "Study Buddy MCP server", href: "https://github.com/eshitakundu/study-buddy" },
+  { n: 18, type: "Video", title: "Agon hackathon demo", href: "https://youtu.be/2ded1QWIE_g" },
+  { n: 19, type: "Discussion", title: "Heym maintainers ship the proposed Python node (#136)", href: "https://github.com/heymrun/heym/discussions/136" },
+  { n: 20, type: "Live", title: "Agon landing page", href: "https://agon-landing-mu.vercel.app" },
+  { n: 21, type: "Recommendation", title: "LinkedIn recommendation, XPMC program", href: "https://www.linkedin.com/in/eshitakundu/details/recommendations/" }
+];
+
+// ---- KEE: the agent who runs the hero --------------------------------------
+// Each scene: Kee walks to `side`, takes a `pose` (props +
+// expression), and the opposite half shows `big` type, a short `note` and a few
+// `facts`. `cites` are SOURCES numbers; lines without cites are Eshita's own words.
+const KEE_TOPICS = [
+  { id: "intro", label: "about()", sub: "who she is", pose: "wave", side: "left", wash: "#e6e0d2", inkTone: "#22201c",
+    kicker: "Hello", big: "I'm Eshita.",
+    note: "I build AI agents, and the checks that stop them from making things up.",
+    facts: [
+      { title: "AI engineer", text: "Kolkata, India" },
+      { title: "B.Tech, Computer Science", text: "CGPA 8.80" },
+      { title: "3 agents live", text: "TraceIntel, ARIS, DevPulse", cites: [1, 2, 3], go: "#work" }
+    ] },
+  { id: "projects", label: "projects()", sub: "3 agents, live", pose: "laptop", side: "left", wash: "#d2dbe7", inkTone: "#22201c",
+    kicker: "Projects", big: "3 agents, all live",
+    note: "Open any of them right now.",
+    facts: [
+      { img: "assets/work/traceintel.jpg", title: "TraceIntel", text: "Which token permissions did an old transaction leave behind?", cites: [1, 7], go: "#project-traceintel" },
+      { img: "assets/work/aris.jpg", title: "ARIS", text: "Should this dependency enter your stack? A scored brief, by email.", cites: [2, 9], go: "#project-aris" },
+      { img: "assets/work/devpulse.jpg", title: "DevPulse", text: "What Hacker News really thinks of a tool, quote by quote.", cites: [3, 12], go: "#project-devpulse" }
+    ] },
+  { id: "trust", label: "verify()", sub: "how she tests", pose: "detective", side: "right", wash: "#d5e4da", inkTone: "#22201c",
+    kicker: "How I test", big: "0 made-up claims",
+    note: "in TraceIntel's live runs, on two different models.", noteCites: [7],
+    facts: [
+      { title: "24 evals in CI", text: "5 of them try to trick the model.", cites: [7, 8] },
+      { title: "149 quotes", text: "checked word for word by DevPulse's validator.", cites: [12] },
+      { title: "38 scoring tests", text: "ARIS's maths is Python, not the model.", cites: [10] }
+    ] },
+  { id: "oss", label: "open_source()", sub: "8 merged PRs", pose: "flag", side: "right", wash: "#dfd9ea", inkTone: "#22201c",
+    kicker: "Open source", big: "8 merged PRs",
+    note: "across 3 projects, mostly AMD's agent framework.", noteCites: [4, 14, 15],
+    facts: [
+      { title: "AMD GAIA", text: "5 merged, 2 open. The MCP client and bridge.", cites: [4], go: "#open-source" },
+      { title: "Honorable mentions", text: "CrossGL's shader compiler (2) and ai-engineering-from-scratch (1).", cites: [14, 15] }
+    ] },
+  { id: "awards", label: "awards()", sub: "2nd, BRICS final", pose: "trophy", side: "left", wash: "#ecdcbd", inkTone: "#22201c",
+    kicker: "Awards", big: "2nd place",
+    note: "BRICS-FS-36 Data Analysis and Visualization, international final, China, 2024.", noteCites: [5],
+    facts: [
+      { img: "assets/experiences/BRICS_winning.webp", title: "The announcement", text: "Second prize, data analysis and visualization." },
+      { title: "Top 50 Learner", text: "Federation University Australia, 2026.", cites: [6] }
+    ] },
+  { id: "hire", label: "contact()", sub: "say hi", pose: "letter", side: "right", wash: "#ead4cc", inkTone: "#22201c",
+    kicker: "Contact", big: "Say hi",
+    note: "Looking for full-time AI engineering roles. Remote, or relocating within India.",
+    facts: [
+      { contact: true },
+      { title: "Résumé", text: "Everything on one page.", go: "resume.html", goLabel: "Open it" }
+    ] }
+];
+
+// Smaller builds, listed compactly under the case files (ids from the lists below).
+const BUILD_ORDER = ["jev-flow", "study-buddy-mcp", "github-ranker-mcp", "deep-research-agent", "nooa-mini-lab", "mcp-devops-hub", "lost-media-detective", "mcp-api-key-server", "hn-mcp", "flowchart-mcp", "demo-mcp-server", "daily-tech-digest-live", "repobrief", "reply-radar", "moodify", "netflix-elt-dbt-live"];
+const EARLIER_ORDER = ["elearning-analytics-dbt", "disease-outbreak-predictor", "ecommerce-spending", "espresso-yourself", "vbs-calculator"];
+
 // ---- RESUME SECTIONS (mirrors jake.tex exactly; do not add unproven claims) --
 
 const EDUCATION = [
@@ -93,7 +267,7 @@ const ACHIEVEMENTS = [
 const CERTIFICATIONS = [
   { name: "Applied ML in Python", cert: "https://drive.google.com/file/d/1VJWcxqMfhzTZrcLeHnlotZAyNLGY2VhV/view?usp=sharing", org: "University of Michigan", date: "Apr 2025" },
   { name: "OCI AI Foundations", cert: "https://drive.google.com/file/d/11d-zq13ilOsTe8kAMNJ35lhlTo-YA5TA/view?usp=sharing", org: "Oracle", date: "2026" },
-  { name: "MCP Fractal", cert: "https://drive.google.com/file/d/18AgmTAJGU2zwegKp96C6OH06Ux1U24bx/view?usp=sharing", org: "Coursera", date: "2026" },
+  { name: "MCP Mastery", cert: "https://drive.google.com/file/d/18AgmTAJGU2zwegKp96C6OH06Ux1U24bx/view?usp=sharing", org: "Coursera", date: "2026" },
   { name: "SQL", cert: "https://drive.google.com/file/d/10pEUAIvh9mh0-mswEgHcz70reCDYTkTn/view?usp=sharing", org: "University of Colorado Boulder", date: "Apr 2025" }
 ];
 
@@ -325,6 +499,12 @@ const MISC_PROJECTS = [
       { label: "GitHub", href: "https://github.com/eshitakundu/MoodIfy" }
     ]
   },
+  { id: "nooa-mini-lab", name: "nooa-mini-lab", desc: "Minimal NVIDIA NOOA experiment: an agent that inspects and modifies live Python state through object-oriented actions.", tags: ["Python", "NOOA", "Agents"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/nooa-mini-lab" }] },
+  { id: "mcp-api-key-server", name: "mcp-api-key-server", desc: "Tiny MCP server that only answers requests carrying an API key, for checking what clients and tunnels really send.", tags: ["Python", "MCP", "Auth"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/mcp-api-key-server" }] },
+  { id: "demo-mcp-server", name: "demo-mcp-server", desc: "Minimal FastMCP server with two typed tools; my template for larger MCP servers, with MCP Inspector and Claude Desktop setup.", tags: ["Python", "FastMCP"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/demo-mcp-server" }] },
+  { id: "lost-media-detective", name: "Lost Media Detective", desc: "Turns a vague memory of a lost online video into ranked candidates with evidence links, or says not found yet. Work in progress.", tags: ["LangGraph", "LangSmith", "Tavily"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/lost-media-detective" }] },
+  { id: "daily-tech-digest-live", name: "daily-tech-digest", desc: "Heym workflow that summarises top Hacker News stories with an LLM and emails a daily digest.", tags: ["Heym", "LLM", "Email"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/daily-tech-digest" }] },
+  { id: "netflix-elt-dbt-live", name: "MovieLens ELT (dbt + DuckDB)", desc: "Python loads raw data into DuckDB, and dbt builds tested staging views and star-schema marts: 42 tests, CI on every push.", tags: ["dbt", "DuckDB", "CI"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/netflix-elt-dbt" }] },
   { id: "trackify", name: "Trackify", draft: true, tags: ["Python"], links: [{ label: "GitHub", href: "https://github.com/eshitakundu/Trackify" }] }
 ];
 
@@ -363,3 +543,80 @@ const MESSAGES = [
     date: "Nov 2024"
   }
 ];
+
+// ---- HOME (2026-11 redesign) ----------------------------------------------
+// Plain-English layer for the home page. Every line restates a fact already
+// in CASES / SOURCES above; `href` is where a visitor can check it.
+const HOME = {
+  line: "I build AI assistants that check their facts before they answer.",
+  meta: "AI engineer in Kolkata. Open to full-time roles, remote or anywhere in India.",
+  trace: [
+    { label: "Built 3 AI tools anyone can try today", value: "3 live", href: "#work" },
+    { label: "Code merged into AMD's open-source AI agent framework", value: "5 merged", href: "#open-source" },
+    { label: "Tested to catch made-up answers", value: "0 made-up claims", href: "https://github.com/eshitakundu/TraceIntel/tree/main/evals" },
+    { label: "2nd place, international data analysis final in China", value: "2024", href: "https://drive.google.com/file/d/1eUbbKUpUdZsSF0-W7ApcbcmyK6M2rRP9/view?usp=drive_link" },
+    { label: "B.Tech in Computer Science, Sister Nivedita University", value: "CGPA 8.80", href: "resume.html" }
+  ],
+  work: {
+    traceintel: {
+      problem: "Token approvals outlive the swaps that create them, so a wallet can be drained months later without signing anything new.",
+      plain: "Paste in an old transaction and it shows which permissions are still open, and whether you should revoke them.",
+      proof: ["Live tests on 2 AI models:", "0 made-up claims", "https://github.com/eshitakundu/TraceIntel/tree/main/evals"],
+      demo: "1:33"
+    },
+    aris: {
+      problem: "Picking a new library means digging through CVEs, GitHub activity and download charts, then judging whether it fits your codebase.",
+      plain: "Name a library and point it at your repo. It researches the library across 8 sources and emails you a scored verdict: adopt, trial, hold or avoid.",
+      proof: ["Every score is checked by", "38 automated tests", "https://github.com/eshitakundu/ARIS/actions/workflows/tests.yml"],
+      demo: "1:21",
+      status: "The hosted research backend is offline, so the site shows recorded reports and a demo video instead of running new briefs."
+    },
+    devpulse: {
+      problem: "The real opinions about a dev tool are buried in long Hacker News threads, and AI summaries of those threads can make up quotes.",
+      plain: "Ask about any dev tool and get pros and cons from Hacker News, each one quoting and linking the actual comment.",
+      proof: ["Checked word for word in a live run:", "149 quoted points", "https://github.com/eshitakundu/DevPulse/blob/main/evals/results/live-2026-11-17.json"]
+    }
+  },
+  oss: {
+    plain: "GAIA is AMD's framework for running AI agents on your own machine. I mostly work on its MCP layer, the part that lets those agents talk to other tools. 5 of my pull requests are merged and 2 more are in review.",
+    changes: [
+      "Fixed GAIA's MCP client to follow the spec, so servers built with the official MCP SDK accept it.",
+      "Made AI calls stop as soon as the requesting app disconnects.",
+      "Keeps saved connectors in sync when the connector catalog changes."
+    ],
+    merged: [6525, 6629, 6724, 6238, 6239],
+    open: [
+      { n: 8121, text: "Passes large tool results by reference to keep them out of the prompt (planned for v0.27.0)" },
+      { n: 8294, text: "A test that measures how many prompt tokens each MCP server costs" }
+    ],
+    others: [
+      { name: "CrossGL crosstl", count: "2 merged", text: "Fixes in a shader compiler", href: "https://github.com/CrossGL/crosstl/pulls?q=is%3Apr+author%3Aeshitakundu+is%3Amerged" },
+      { name: "ai-engineering-from-scratch", count: "1 merged", text: "A widely used open AI engineering course", href: "https://github.com/rohitg00/ai-engineering-from-scratch/pull/720" },
+      { name: "Heym", count: "idea adopted", text: "I proposed its Python code node; the maintainers built it", href: "https://github.com/heymrun/heym/discussions/136" }
+    ]
+  },
+  more: [
+    { name: "Readmit", tag: "ETHGlobal Mumbai 2026", href: "https://readmit-kohl.vercel.app", plain: "Tells you which step of a new-style Ethereum transaction broke, why, and how to fix it. It then resends the corrected transaction." },
+    { name: "Origami Verse", tag: "NEAR hackathon 2026", href: "https://multiverse-lending.vercel.app", plain: "Conditional markets on NEAR: hold assets across possible outcomes and borrow against the least favourable one." },
+    { name: "Ebbflow", tag: "NEAR hackathon 2026", href: "https://github.com/prithwish122/near-pm", plain: "An order book on NEAR where each order is a price curve, so a single trade can fill across many sellers at once." },
+    { id: "jev-flow", plain: "Sorts support messages and hands the unclear ones to a human" },
+    { id: "agon", name: "Agon", tag: "Colosseum hackathon", plain: "An AI trading assistant with hard spending limits the AI can't override" },
+    { id: "study-buddy-mcp", plain: "Gives Claude structured access to my study notes and past papers" },
+    { id: "deep-research-agent", plain: "Three AI agents research one question at the same time, then combine what they found" },
+    { id: "github-ranker-mcp", plain: "Ranks GitHub profiles against a job description" },
+    { id: "mcp-devops-hub", plain: "Team build: run server health checks by chatting with a Telegram bot" },
+    { id: "repobrief", plain: "Explains any GitHub repo in a few seconds" },
+    { id: "reply-radar", plain: "Finds X posts worth replying to and drafts replies in my voice" },
+    { id: "flowchart-mcp", plain: "Describe a process in plain English, get a flowchart back" },
+    { id: "hn-mcp", plain: "Lets AI assistants browse Hacker News" },
+    { id: "moodify", plain: "Tell it how you feel and get a song someone in the community shared for that feeling" },
+    { id: "lost-media-detective", plain: "Work in progress: turns a vague memory of a lost video into ranked leads with evidence links" }
+  ],
+  background: [
+    { k: "Experience", title: "Automation Developer and Business Analyst", text: "Federation University Australia industry program, Sep to Nov 2024. Built bots that saved a team 10+ hours a week.", href: "https://drive.google.com/file/d/1UYP0-IhTqH1KCa6GsnZkKMWBa8agiodJ/view?usp=sharing" },
+    { k: "Award", title: "2nd place, BRICS-FS-36 Data Analysis and Visualization", text: "International final, China, Dec 2024 (competed remotely).", href: "https://drive.google.com/file/d/1eUbbKUpUdZsSF0-W7ApcbcmyK6M2rRP9/view?usp=drive_link" },
+    { k: "Award", title: "Top 100, UnvibeCode Engineering Challenge", text: "Alphashots.ai, Cohort 3, 2026. Rank 88, recognised for open-source contribution.", href: "assets/certs/unvibecode-cohort3-certificate.pdf" },
+    { k: "Award", title: "Top 50 Learner", text: "Federation University Australia, Feb 2026.", href: "https://drive.google.com/file/d/1GGTMfMh05PWTjIRcA4W3HnQFWSENJk-e/view" },
+    { k: "Education", title: "B.Tech, Computer Science and Engineering", text: "Sister Nivedita University, 2022 to 2026. CGPA 8.80 out of 10.", href: "resume.html" }
+  ]
+};
