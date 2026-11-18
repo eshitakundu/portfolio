@@ -26,7 +26,7 @@ export function refreshGitHub() {
     const repos = u.repositories.nodes.filter((r) => !HIDE.has(r.name)).slice(0, 6)
       .map((r) => ({ name: r.name, description: r.description || '', language: r.primaryLanguage?.name || '', pushed: r.pushedAt.slice(0, 10), href: `https://github.com/${USER}/${r.name}` }));
     const data = {
-      fetched: new Date().toISOString().slice(0, 10),
+      fetched: new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10), // India date
       publicRepos: u.repositories.totalCount,
       yearContributions: cal.totalContributions,
       yearCommits: u.contributionsCollection.totalCommitContributions,
