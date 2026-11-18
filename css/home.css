@@ -442,3 +442,6 @@ details[open]>.intro-detail,.case-how[open]>*:not(summary){animation:reveal .24s
 .l1{background:#dfe8a8;box-shadow:inset 0 0 0 1px #c3cf7d}
 .l2{background:#c9dc6b}
 .l3{background:#93ad2f}
+
+/* intro: plain facts, no tagline */
+.intro-copy>p.hero-sub{margin-top:14px;font-size:clamp(17px,1.5vw,21px);line-height:1.45;color:var(--ink);max-width:40ch}
