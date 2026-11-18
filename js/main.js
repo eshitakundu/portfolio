@@ -133,7 +133,7 @@ const SUN='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r
 const MOON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
 function updateClock(){const now=new Date();localClock.textContent=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Kolkata",hour:"2-digit",minute:"2-digit"}).format(now);
   const h=+new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Kolkata",hour:"2-digit",hour12:false}).format(now),day=h>=6&&h<18;
-  dayNight.innerHTML=day?SUN:MOON;dayNight.className="daynight "+(day?"is-day":"is-night");dayNight.setAttribute("aria-label",day?"Daytime in Kolkata":"Night-time in Kolkata");dayNight.title=dayNight.getAttribute("aria-label")}
+  dayNight.innerHTML=day?SUN:MOON;dayNight.className="daynight "+(day?"is-day":"is-night");dayNight.setAttribute("aria-label",day?"Daytime in India (IST)":"Night-time in India (IST)");dayNight.title=dayNight.getAttribute("aria-label")}
 updateClock();setInterval(updateClock,60000);
 
 // ---- Ask my AI agent ----------------------------------------------------

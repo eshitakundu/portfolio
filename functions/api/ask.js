@@ -87,7 +87,7 @@ const PRESETS = {
   },
   [norm("Is she open to remote work?")]: (trace, links) => {
     const b = step(trace, links, "get_background", {});
-    return `Yes. She is looking for full-time AI engineering roles, remote or anywhere in India, and is based in ${b.location}. Email: ${b.contact.email}.`;
+    return `Yes. She is looking for full-time AI engineering roles, remote or anywhere in India. Email: ${b.contact.email}.`;
   },
   [norm("What has she done in open source?")]: (trace, links) => {
     const o = step(trace, links, "get_open_source", {});
