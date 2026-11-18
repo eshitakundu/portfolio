@@ -131,7 +131,7 @@ askForm.addEventListener("submit",async e=>{e.preventDefault();const q=askInput.
     const p=document.createElement("div");p.className="ask-a";
     p.innerHTML=`<span class="tile-label">AGENT</span><p class="ask-text"></p>`;turn.appendChild(p);
     await typeIn(p.querySelector(".ask-text"),res.answer);
-    p.insertAdjacentHTML("beforeend",`<p class="ask-meta">${res.trace.length} tool call${res.trace.length===1?"":"s"} · ${ms} ms · answered from this site's data only</p>${res.links?.length?`<p class="ask-links">${res.links.map(l=>a(l.href,esc(l.label)+" ↗")).join("")}</p>`:""}`);
+    p.insertAdjacentHTML("beforeend",`<p class="ask-meta">${res.trace.length} tool call${res.trace.length===1?"":"s"} · ${ms} ms · ${res.mode==="preset"?"fixed answer from this site's data, no AI model":"AI answer from this site's data only"}</p>${res.links?.length?`<p class="ask-links">${res.links.map(l=>a(l.href,esc(l.label)+" ↗")).join("")}</p>`:""}`);
     const next=SUGGEST.filter(s=>!asked.has(s)).slice(0,2);
     if(next.length)turn.insertAdjacentHTML("beforeend",`<div class="ask-follow"><span class="tile-label">ASK NEXT</span>${next.map(s=>`<button type="button"><span>${s}</span></button>`).join("")}</div>`);
   }catch(err){spans.innerHTML="";agent.classList.remove("working");const p=document.createElement("p");p.className="ask-a ask-err";

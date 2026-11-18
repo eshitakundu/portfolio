@@ -57,6 +57,52 @@ async function chatNIM(env, messages, useTools = true) {
   return { text: m.content || "", calls: (m.tool_calls || []).map((c) => ({ name: c.function.name, args: JSON.parse(c.function.arguments || "{}") })) };
 }
 
+// ---- Suggested questions: answered deterministically, no model call ----------
+// The panel's four suggested questions always have the same correct answer, so
+// they run the same read-only tools and build the answer from KB directly.
+// Instant, free, and they cannot drift. Typed questions still go to the model.
+const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim();
+const list = (xs) => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " and " + xs[xs.length - 1];
+function step(trace, links, name, args) {
+  const t0 = Date.now(), out = runTool(name, args);
+  trace.push({ tool: name, args, ms: Date.now() - t0, note: out.note });
+  (out.links || []).forEach((l) => links.set(l.href, l));
+  return out.result;
+}
+const PRESETS = {
+  [norm("What has she built?")]: (trace, links) => {
+    step(trace, links, "search_projects", { query: "" });
+    const f = (id) => KB.projects.find((p) => p.id === id);
+    const [ti, ar, dp] = ["traceintel", "aris", "devpulse"].map(f);
+    const smaller = KB.projects.filter((p) => !p.flagship).length;
+    [ti, ar, dp].forEach((p) => p.links[0] && links.set(p.links[0].href, p.links[0]));
+    return `Three AI agents: ${ti.name} (live) finds old crypto permissions that could still drain a wallet; ${ar.name} (recorded demo) tells a team whether a new library is safe to adopt; ${dp.name} (live) sums up what Hacker News thinks of a dev tool, quoting a real comment for every point. She also has ${KB.oss.gaia.merged_prs.length} merged pull requests in AMD GAIA and ${smaller} smaller builds and hackathon projects.`;
+  },
+  [norm("Has she worked with MCP?")]: (trace, links) => {
+    const hits = step(trace, links, "search_projects", { query: "MCP" });
+    step(trace, links, "get_open_source", {});
+    const servers = KB.projects.filter((p) => !p.flagship && /mcp/i.test(p.name)).map((p) => p.name);
+    const others = (hits || []).filter((h) => !h.flagship && !/mcp/i.test(h.name)).map((h) => h.name);
+    return `Yes. She works on the MCP layer of AMD's GAIA agent framework (${KB.oss.gaia.merged_prs.length} pull requests merged, ${KB.oss.gaia.open_prs.length} in review). She has also built MCP servers: ${list(servers)}${others.length ? `, and used MCP in ${list(others)}` : ""}.`;
+  },
+  [norm("Is she open to remote work?")]: (trace, links) => {
+    const b = step(trace, links, "get_background", {});
+    return `Yes. She is looking for full-time AI engineering roles, remote or anywhere in India, and is based in ${b.location}. Email: ${b.contact.email}.`;
+  },
+  [norm("What has she done in open source?")]: (trace, links) => {
+    const o = step(trace, links, "get_open_source", {});
+    const others = o.others.map((x) => x.split(":")[0] + " (" + x.split(":")[1].split(",")[0].trim() + ")");
+    return `Her main open-source work is in AMD GAIA, AMD's framework for running AI agents locally: ${o.gaia.merged_prs.length} pull requests merged and ${o.gaia.open_prs.length} in review, all on its MCP layer. She has also contributed to ${list(others)}.`;
+  }
+};
+export function presetAnswer(q) {
+  const fn = PRESETS[norm(q)];
+  if (!fn) return null;
+  const trace = [], links = new Map();
+  const answer = fn(trace, links);
+  return { trace, answer, links: [...links.values()].slice(0, 3), mode: "preset" };
+}
+
 export async function runAgent(env, q) {
   const chat = env.AI ? chatWorkersAI : chatNIM;
   const messages = [{ role: "system", content: SYSTEM }, { role: "user", content: q }];
@@ -111,12 +157,14 @@ const json = (body, status = 200) => new Response(JSON.stringify(body), { status
 
 export const onRequestGet = ({ env }) => json({ ok: Boolean(env.AI || env.NIM_API_KEY) });
 export async function onRequestPost({ request, env }) {
-  if (!env.AI && !env.NIM_API_KEY) return json({ error: "unavailable" }, 503);
-  const ip = request.headers.get("cf-connecting-ip") || "anon";
-  if (limited(ip)) return json({ error: "limit" }, 429);
   let q = "";
   try { q = String((await request.json()).q || "").trim().slice(0, MAX_Q); } catch {}
   if (!q) return json({ error: "empty" }, 400);
+  const preset = presetAnswer(q);
+  if (preset) return json(preset);
+  if (!env.AI && !env.NIM_API_KEY) return json({ error: "unavailable" }, 503);
+  const ip = request.headers.get("cf-connecting-ip") || "anon";
+  if (limited(ip)) return json({ error: "limit" }, 429);
   try { return json(await runAgent(env, q)); }
   catch (e) {
     if (env.AI && env.NIM_API_KEY) { try { return json(await runAgent({ NIM_API_KEY: env.NIM_API_KEY }, q)); } catch {} }
