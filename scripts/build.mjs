@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import path from 'node:path';
 import { buildKB } from './kb.mjs';
+import { refreshGitHub } from './github.mjs';
+refreshGitHub();
 // Run with Node.js: node scripts/build.mjs. Deploy the generated dist/ directory.
 const root = path.resolve(import.meta.dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
@@ -11,9 +13,9 @@ const context = vm.createContext({URL, document:{querySelector(selector){if(!nod
 const main = read('js/main.js');
 const marker = main.indexOf('/* BROWSER-ONLY');
 if (marker < 0) throw new Error('BROWSER-ONLY marker missing from js/main.js');
-vm.runInContext(read('js/data.js') + '\n' + main.slice(0, marker) + '\nrenderCases();renderOss();renderMore();renderBackground();', context);
+vm.runInContext(read('js/github-data.js') + '\n' + read('js/data.js') + '\n' + main.slice(0, marker) + '\nrenderCases();renderOss();renderMore();renderBackground();renderGitHub();', context);
 let html = read('index.html');
-for (const id of ['cases', 'oss', 'more-list', 'background-list']) {
+for (const id of ['cases', 'oss', 'github-block', 'more-list', 'background-list']) {
   const start = `<!-- ${id}:start -->`, end = `<!-- ${id}:end -->`;
   const content = `<div id="${id}">${nodes.get('#'+id).innerHTML}</div>`;
   if (html.includes(start)) html = html.slice(0, html.indexOf(start)) + start + content + end + html.slice(html.indexOf(end) + end.length);

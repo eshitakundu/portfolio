@@ -9,7 +9,7 @@ const allProjects=()=>[...FLAGSHIP,...DATA_PROJECTS,...MISC_PROJECTS];
 const byId=(id)=>allProjects().find(p=>p.id===id);
 const src=(n)=>SOURCES.find(s=>s.n===n);
 const drivePreview=(h)=>h.includes("drive.google.com/file/d/")?h.replace(/\/view.*$/,"/preview"):h;
-const ICON={traceintel:["blue","T"],aris:["blue","A"],devpulse:["orange","D"]};
+const ICON={traceintel:["blue","T"],aris:["green","A"],devpulse:["orange","D"]};
 
 function caseMedia(c){
   const m=c.media;
@@ -48,17 +48,54 @@ function renderOss(){
 </div></div>`;
 }
 
+const LETTER_TONES=["orange","green","sage","orange","green"];
+function moreEntries(){
+  return HOME.more.map(m=>{const p=m.id?(byId(m.id)||CASES.find(c=>c.id===m.id)):null;const name=m.name||p.name.split(" | ")[0];
+    const href=m.href||(p.links.find(l=>/live|site/i.test(l.label))||p.links[0]).href;
+    return {id:m.id||name.toLowerCase().replace(/\s+/g,"-"),name,plain:m.plain,tag:m.tag||(m.id==="mcp-devops-hub"?"Team build":""),href,live:!/github\.com/.test(href)};});
+}
+const corner=(e)=>`<span class="corner ${e.live?"is-live":""}">${e.live?"LIVE":"CODE"} ↗</span>`;
 function renderMore(){
-  $("#more-list").innerHTML=`<div class="more-grid">${HOME.more.map(m=>{const p=m.id?(byId(m.id)||CASES.find(c=>c.id===m.id)):null;const name=m.name||p.name.split(" | ")[0];const href=m.href||(p.links.find(l=>/live|site/i.test(l.label))||p.links[0]).href;
-    return `<a class="more-item" href="${href}" target="_blank" rel="noreferrer">${m.tag?`<span class="tile-label">${m.tag.toUpperCase()}</span>`:""}<h3>${name}</h3><p>${m.plain}</p><span>${/github\.com/.test(href)?"Code":"Open"} ↗</span></a>`}).join("")}</div><div class="more-foot"><button class="more-toggle" type="button">Show ${HOME.more.length-4} more ↓</button><a href="https://github.com/eshitakundu?tab=repositories" target="_blank" rel="noreferrer">All projects on GitHub ↗</a></div>`;
+  const all=moreEntries();
+  const hack=all.filter(e=>e.tag),mcp=all.filter(e=>!e.tag&&/mcp/i.test(e.name)),tools=all.filter(e=>!e.tag&&!/mcp/i.test(e.name));
+  $("#more-list").innerHTML=`<div class="more-bento">
+<div class="hack-panel"><p class="group-label">${hack.length} HACKATHON &amp; TEAM BUILDS</p><div class="hack-grid">${hack.map((e,i)=>`<a class="hack-tile${i===0?" feature":""}" href="${e.href}" target="_blank" rel="noreferrer"><span class="identity-icon ${LETTER_TONES[i%5]}">${e.name[0]}</span>${corner(e)}<span class="stamp">${esc(e.tag).toUpperCase()}</span><h3>${e.name}</h3><p>${e.plain}</p></a>`).join("")}</div></div>
+<div class="more-side">
+<div class="mcp-panel"><p class="group-label">${mcp.length} MCP SERVERS</p><ul class="row-list">${mcp.map(e=>`<li><a href="${e.href}" target="_blank" rel="noreferrer"><span class="chip">MCP</span><span class="row-text"><b>${e.name.replace(/ MCP Server$| MCP$/,"")}</b><span>${e.plain}</span></span>${corner(e)}</a></li>`).join("")}</ul></div>
+<div class="tools-panel"><p class="group-label">${tools.length} AGENTS &amp; TOOLS</p><ul class="row-list tools-list">${tools.map(e=>`<li><a href="${e.href}" target="_blank" rel="noreferrer"><span class="row-text"><b>${e.name}</b><span>${e.plain}</span></span>${corner(e)}</a></li>`).join("")}</ul><button class="more-toggle" type="button">Show ${Math.max(tools.length-3,0)} more ↓</button></div>
+</div></div>
+<div class="more-foot"><a href="https://github.com/eshitakundu?tab=repositories" target="_blank" rel="noreferrer">All projects on GitHub ↗</a></div>`;
 }
 
 function renderBackground(){
-  $("#background-list").innerHTML=`<div class="bg-grid">${HOME.background.map(b=>`<article class="${b.k==="Award"&&/2nd/.test(b.title)?"primary-award":""}"><span class="tile-label">${b.k.toUpperCase()}</span><h3>${a(b.href,b.title)}</h3><p>${b.text}</p></article>`).join("")}</div>`;
+  const B=(t)=>HOME.background.find(b=>b.title.includes(t));
+  const brics=B("BRICS"),top100=B("Top 100"),top50=B("Top 50"),exp=HOME.background.find(b=>b.k==="Experience"),edu=HOME.background.find(b=>b.k==="Education");
+  $("#background-list").innerHTML=`<div class="bg-bento">
+<a class="bg-photo" href="${brics.href}" target="_blank" rel="noreferrer"><img src="assets/experiences/BRICS_winning.webp" alt="The stage screen at the BRICS-FS-36 international final in China listing Sister Nivedita University, Eshita Kundu, under Second prize" loading="lazy" width="900" height="574"></a>
+<a class="bg-cell bg-brics" href="${brics.href}" target="_blank" rel="noreferrer"><span class="tile-label">AWARD · DEC 2024</span><strong class="numeral">2nd</strong><h3>BRICS-FS-36 Data Analysis &amp; Visualization</h3><p>International final, China (competed remotely)</p></a>
+<div class="bg-cell bg-ranks"><a href="${top100.href}" target="_blank" rel="noreferrer"><span class="tile-label">UNVIBECODE · 2026</span><strong class="numeral">#88</strong><p>Top 100, UnvibeCode Engineering Challenge (Alphashots.ai), for open-source contribution</p></a><a href="${top50.href}" target="_blank" rel="noreferrer"><span class="tile-label">FEDERATION UNI · 2026</span><strong class="numeral">Top 50</strong><p>Learner award, Federation University Australia</p></a></div>
+<a class="bg-cell bg-exp" href="${exp.href}" target="_blank" rel="noreferrer"><span class="tile-label">EXPERIENCE · SEP–NOV 2024</span><h3>${exp.title}</h3><p><strong class="numeral sm">10+ hrs</strong> saved per week with UiPath bots, Federation University Australia industry program</p></a>
+<a class="bg-cell bg-edu" href="${edu.href}"><span class="tile-label">EDUCATION · 2022–2026</span><strong class="numeral">8.80</strong><p>CGPA out of 10, B.Tech Computer Science and Engineering, Sister Nivedita University</p></a>
+</div>`;
+}
+
+function renderGitHub(){
+  if(typeof GITHUB==="undefined")return;
+  const g=GITHUB,lvl=(n)=>n===0?0:n<4?1:n<10?2:n<25?3:4;
+  const first=new Date(g.days[0][0]+"T00:00:00Z").getUTCDay();
+  const cells=Array(first).fill('<i class="pad"></i>').concat(g.days.map(([d,n],i)=>`<i class="l${lvl(n)}" style="--c:${Math.floor((i+first)/7)}" title="${n} contribution${n===1?"":"s"} on ${d}"></i>`));
+  const months=[];let last=-1;g.days.forEach(([d],i)=>{const m=+d.slice(5,7),col=Math.floor((i+first)/7);if(m!==last&&+d.slice(8)<=7){months.push(`<span style="grid-column:${col+1}">${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][m-1]}</span>`);last=m}});
+  const ext=g.external.reduce((n,x)=>n+x.merged,0);
+  const fmt=(n)=>n.toLocaleString("en-US");
+  $("#github-block").innerHTML=`<div class="gh-cal-panel"><div class="gh-cal-head"><span class="tile-label">CONTRIBUTIONS, LAST 12 MONTHS</span><span class="tile-label">UPDATED ${g.fetched}</span></div>
+<div class="gh-cal-scroll"><div class="gh-months">${months.join("")}</div><div class="gh-cal" role="img" aria-label="${fmt(g.yearContributions)} GitHub contributions in the last year">${cells.join("")}</div></div>
+<div class="gh-legend"><span>Less</span><i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span>More</span></div></div>
+<div class="gh-stats"><div class="gh-stat s1"><strong class="numeral">${fmt(g.yearContributions)}</strong><span>contributions in the last year</span></div><div class="gh-stat s2"><strong class="numeral">${ext}</strong><span>pull requests merged into other people's projects</span></div><div class="gh-stat s3"><strong class="numeral">${g.activeDays}</strong><span>active days this year</span></div><div class="gh-stat s4"><strong class="numeral">${g.publicRepos}</strong><span>public repositories</span></div></div>
+<div class="gh-ext"><p class="group-label">MERGED OUTSIDE MY OWN REPOS</p>${g.external.map(x=>{const org=x.repo.split("/")[0];return `<a href="${x.href}" target="_blank" rel="noreferrer"><img src="https://github.com/${org}.png?size=64" alt="" width="32" height="32" loading="lazy"><span><b>${x.repo}</b></span><em>${x.merged} merged</em></a>`}).join("")}<a class="gh-profile" href="https://github.com/eshitakundu" target="_blank" rel="noreferrer">github.com/eshitakundu ↗</a></div>`;
 }
 
 /* BROWSER-ONLY: everything below needs a real browser. */
-if(!$("#cases").children.length){renderCases();renderOss();renderMore();renderBackground();}
+if(!$("#cases").children.length){renderCases();renderOss();renderMore();renderBackground();renderGitHub();}
 $("#year").textContent=new Date().getFullYear();
 const still=matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -79,7 +116,9 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-video]");i
 $("#playerClose").addEventListener("click",closePlayer);
 player.addEventListener("click",e=>{if(e.target===player)closePlayer()});
 
-$(".more-toggle")?.addEventListener("click",e=>{$(".more-grid").classList.add("all");e.currentTarget.remove()});
+$(".more-toggle")?.addEventListener("click",e=>{$(".tools-list").classList.add("all");e.currentTarget.remove()});
+// The contribution calendar fills in once, column by column, the first time it scrolls into view.
+const cal=$(".gh-cal");if(cal&&!still.matches){cal.classList.add("wait");new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){cal.classList.remove("wait");cal.classList.add("play");o.disconnect()}}),{threshold:.3}).observe(cal)}
 
 const emailCopy=$("#emailCopy"),copyStatus=$("#copyStatus");
 emailCopy.addEventListener("click",async()=>{const email=emailCopy.dataset.email,label=emailCopy.querySelector("strong");

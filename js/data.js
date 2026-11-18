@@ -591,7 +591,7 @@ const HOME = {
     ],
     others: [
       { name: "CrossGL crosstl", count: "2 merged", text: "Fixes in a shader compiler", href: "https://github.com/CrossGL/crosstl/pulls?q=is%3Apr+author%3Aeshitakundu+is%3Amerged" },
-      { name: "ai-engineering-from-scratch", count: "1 merged", text: "A widely used open AI engineering course", href: "https://github.com/rohitg00/ai-engineering-from-scratch/pull/720" },
+      { name: "ai-engineering-from-scratch", count: "2 merged", text: "A widely used open AI engineering course", href: "https://github.com/rohitg00/ai-engineering-from-scratch/pulls?q=is%3Apr+author%3Aeshitakundu+is%3Amerged" },
       { name: "Heym", count: "idea adopted", text: "I proposed its Python code node; the maintainers built it", href: "https://github.com/heymrun/heym/discussions/136" }
     ]
   },

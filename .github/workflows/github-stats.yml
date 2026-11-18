@@ -1,0 +1,42 @@
+name: Refresh GitHub stats
+
+# Once a day, rebuild the GitHub section's numbers from the GitHub API.
+# It commits only when the numbers changed; the push then redeploys eshita.dev.
+on:
+  schedule:
+    - cron: "30 0 * * *"   # 06:00 IST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-stats
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Rebuild with fresh GitHub data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/build.mjs
+
+      - name: Commit if the numbers changed
+        run: |
+          git add js/github-data.js index.html lib/kb.js
+          if git diff --cached --quiet; then
+            echo "No change in GitHub stats."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Refresh GitHub stats"
+          git push
