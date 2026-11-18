@@ -7,9 +7,14 @@ export function buildKB(ctx) {
   for (const id of ["traceintel", "aris", "devpulse"]) {
     const c = CASES.find((x) => x.id === id), h = HOME.work[id];
     const results = c.evidence.map(([n, t]) => `${n} ${t}`);
-    projects.push({ id, name: c.name, flagship: true, status: h.status || "Live: anyone can try it now.", plain: h.plain, details: `${c.lede} ${c.how}`, results, links: c.links.map((l) => ({ label: `${c.name}: ${l.label}`, href: l.href })),
+    projects.push({ id, name: c.name, flagship: true, status: h.status || "Live: anyone can try it now.", plain: h.plain, details: `${c.lede} ${c.how}`, results, links: c.links.map((l) => ({ label: `${c.name}: ${id === "aris" && l.primary ? "Saved reports" : l.label}`, href: l.href })),
       text: [c.name, c.kicker, c.lede, c.how, h.plain, ...c.tags, ...results].join(" ").toLowerCase() });
   }
+  const o0 = HOME.oss;
+  projects.push({ id: "amd-gaia", name: "AMD GAIA (open source)", flagship: true, status: "Merged pull requests in AMD's open-source agent framework.", plain: o0.plain,
+    details: o0.changes.join(" "), results: [`${o0.merged.length} merged pull requests`, `${o0.open.length} in review`],
+    links: [{ label: "GAIA pull requests", href: SOURCES.find((s) => s.n === 4).href }],
+    text: ["amd gaia open source mcp model context protocol client connectors agents framework pull requests", o0.plain, ...o0.changes].join(" ").toLowerCase() });
   for (const m of HOME.more) {
     const p = m.id ? (all.find((x) => x.id === m.id) || CASES.find((x) => x.id === m.id)) : { links: [{ label: "Open", href: m.href }], tags: [] };
     const name = m.name || p.name.split(" | ")[0];
