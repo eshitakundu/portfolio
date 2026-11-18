@@ -549,7 +549,7 @@ const MESSAGES = [
 // in CASES / SOURCES above; `href` is where a visitor can check it.
 const HOME = {
   line: "I build AI assistants that check their facts before they answer.",
-  meta: "AI engineer. Open to full-time roles, remote or anywhere in India.",
+  meta: "AI engineer in Kolkata. Open to full-time roles, remote or anywhere in India.",
   trace: [
     { label: "Built 3 AI tools anyone can try today", value: "3 live", href: "#work" },
     { label: "Code merged into AMD's open-source AI agent framework", value: "5 merged", href: "#open-source" },

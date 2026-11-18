@@ -25,7 +25,7 @@ export function buildKB(ctx) {
   const o = HOME.oss;
   const oss = { gaia: { what: o.plain, merged_changes: o.changes, merged_prs: o.merged.map((n) => `amd/gaia#${n}`), open_prs: o.open.map((p) => `amd/gaia#${p.n}: ${p.text}`) },
     others: o.others.map((x) => `${x.name}: ${x.count}, ${x.text}`), merged_total: o.merged.length + o.others.reduce((n, x) => n + (parseInt(x.count) || 0), 0) };
-  const background = { location: "India (IST, UTC+5:30)", wants: "Full-time AI engineering roles (agents, tool use, MCP). Remote, or relocating anywhere in India.",
+  const background = { location: "Kolkata, India", wants: "Full-time AI engineering roles (agents, tool use, MCP). Remote, or relocating anywhere in India.",
     education: EDUCATION.map((e) => `${e.degree}, ${e.school}, ${e.dates}, ${e.meta}`),
     experience: EXPERIENCE.map((e) => `${e.role} at ${e.org}, ${e.dates}. ${e.bullets.join(" ")}`),
     awards: [...ACHIEVEMENTS.map((a) => `${a.title} (${a.org})`), ...HOME.background.filter((b) => b.k === "Award" && !ACHIEVEMENTS.some((x) => x.title.includes(b.title.split(",")[0]))).map((b) => `${b.title}: ${b.text}`)],
