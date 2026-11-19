@@ -83,7 +83,7 @@ const PRESETS = {
     step(trace, links, "get_open_source", {});
     const servers = KB.projects.filter((p) => !p.flagship && /mcp/i.test(p.name)).map((p) => p.name);
     const others = (hits || []).filter((h) => !h.flagship && !/mcp/i.test(h.name)).map((h) => h.name);
-    return `Yes. She works on the MCP layer of AMD's GAIA agent framework (${KB.oss.gaia.merged_prs.length} pull requests merged, ${KB.oss.gaia.open_prs.length} in review). She has also built MCP servers: ${list(servers)}${others.length ? `, and used MCP in ${list(others)}` : ""}.`;
+    return `Yes. She works on the MCP layer of AMD's GAIA agent framework (${KB.oss.gaia.merged_prs.length} pull requests merged${KB.oss.gaia.open_prs.length ? `, ${KB.oss.gaia.open_prs.length} in review` : ""}). She has also built MCP servers: ${list(servers)}${others.length ? `, and used MCP in ${list(others)}` : ""}.`;
   },
   [norm("Is she open to remote work?")]: (trace, links) => {
     const b = step(trace, links, "get_background", {});
@@ -92,7 +92,7 @@ const PRESETS = {
   [norm("What has she done in open source?")]: (trace, links) => {
     const o = step(trace, links, "get_open_source", {});
     const others = o.others.map((x) => x.split(":")[0] + " (" + x.split(":")[1].split(",")[0].trim() + ")");
-    return `Her main open-source work is in AMD GAIA, AMD's framework for running AI agents locally: ${o.gaia.merged_prs.length} pull requests merged and ${o.gaia.open_prs.length} in review, all on its MCP layer. She has also contributed to ${list(others)}.`;
+    return `Her main open-source work is in AMD GAIA, AMD's framework for running AI agents locally: ${o.gaia.merged_prs.length} pull requests merged${o.gaia.open_prs.length ? ` and ${o.gaia.open_prs.length} in review` : ""}, mostly on its MCP layer. She has also contributed to ${list(others)}.`;
   }
 };
 export function presetAnswer(q) {

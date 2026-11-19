@@ -12,7 +12,7 @@ export function buildKB(ctx) {
   }
   const o0 = HOME.oss;
   projects.push({ id: "amd-gaia", name: "AMD GAIA (open source)", flagship: true, status: "Merged pull requests in AMD's open-source agent framework.", plain: o0.plain,
-    details: o0.changes.join(" "), results: [`${o0.merged.length} merged pull requests`, `${o0.open.length} in review`],
+    details: o0.changes.join(" "), results: [`${o0.merged.length} merged pull requests`, ...(o0.open.length ? [`${o0.open.length} in review`] : [])],
     links: [{ label: "GAIA pull requests", href: SOURCES.find((s) => s.n === 4).href }],
     text: ["amd gaia open source mcp model context protocol client connectors agents framework pull requests", o0.plain, ...o0.changes].join(" ").toLowerCase() });
   for (const m of HOME.more) {

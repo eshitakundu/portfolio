@@ -195,12 +195,12 @@ const KEE_TOPICS = [
       { title: "149 quotes", text: "checked word for word by DevPulse's validator.", cites: [12] },
       { title: "38 scoring tests", text: "ARIS's maths is Python, not the model.", cites: [10] }
     ] },
-  { id: "oss", label: "open_source()", sub: "8 merged PRs", pose: "flag", side: "right", wash: "#dfd9ea", inkTone: "#22201c",
-    kicker: "Open source", big: "8 merged PRs",
+  { id: "oss", label: "open_source()", sub: "11 merged PRs", pose: "flag", side: "right", wash: "#dfd9ea", inkTone: "#22201c",
+    kicker: "Open source", big: "11 merged PRs",
     note: "across 3 projects, mostly AMD's agent framework.", noteCites: [4, 14, 15],
     facts: [
-      { title: "AMD GAIA", text: "5 merged, 2 open. The MCP client and bridge.", cites: [4], go: "#open-source" },
-      { title: "Honorable mentions", text: "CrossGL's shader compiler (2) and ai-engineering-from-scratch (1).", cites: [14, 15] }
+      { title: "AMD GAIA", text: "7 merged. The MCP client, bridge and tool results.", cites: [4], go: "#open-source" },
+      { title: "Honorable mentions", text: "CrossGL's shader compiler (2) and ai-engineering-from-scratch (2).", cites: [14, 15] }
     ] },
   { id: "awards", label: "awards()", sub: "2nd, BRICS final", pose: "trophy", side: "left", wash: "#ecdcbd", inkTone: "#22201c",
     kicker: "Awards", big: "2nd place",
@@ -552,7 +552,7 @@ const HOME = {
   meta: "AI engineer in Kolkata. Open to full-time roles, remote or anywhere in India.",
   trace: [
     { label: "Built 3 AI tools anyone can try today", value: "3 live", href: "#work" },
-    { label: "Code merged into AMD's open-source AI agent framework", value: "5 merged", href: "#open-source" },
+    { label: "Code merged into AMD's open-source AI agent framework", value: "7 merged", href: "#open-source" },
     { label: "Tested to catch made-up answers", value: "0 made-up claims", href: "https://github.com/eshitakundu/TraceIntel/tree/main/evals" },
     { label: "2nd place, international data analysis final in China", value: "2024", href: "https://drive.google.com/file/d/1eUbbKUpUdZsSF0-W7ApcbcmyK6M2rRP9/view?usp=drive_link" },
     { label: "B.Tech in Computer Science, Sister Nivedita University", value: "CGPA 8.80", href: "resume.html" }
@@ -578,17 +578,16 @@ const HOME = {
     }
   },
   oss: {
-    plain: "GAIA is AMD's framework for running AI agents on your own machine. I mostly work on its MCP layer, the part that lets those agents talk to other tools. 5 of my pull requests are merged and 2 more are in review.",
+    plain: "GAIA is AMD's framework for running AI agents on your own machine. I mostly work on its MCP layer, the part that lets those agents talk to other tools. 7 of my pull requests are merged.",
     changes: [
       "Fixed GAIA's MCP client to follow the spec, so servers built with the official MCP SDK accept it.",
       "Made AI calls stop as soon as the requesting app disconnects.",
-      "Keeps saved connectors in sync when the connector catalog changes."
+      "Keeps saved connectors in sync when the connector catalog changes.",
+      "Passes large tool results by reference to keep them out of the prompt.",
+      "A test that measures how many prompt tokens each MCP server costs."
     ],
-    merged: [6525, 6629, 6724, 6238, 6239],
-    open: [
-      { n: 8121, text: "Passes large tool results by reference to keep them out of the prompt (planned for v0.27.0)" },
-      { n: 8294, text: "A test that measures how many prompt tokens each MCP server costs" }
-    ],
+    merged: [6525, 6629, 6724, 6238, 6239, 8121, 8294],
+    open: [],
     others: [
       { name: "CrossGL crosstl", count: "2 merged", text: "Fixes in a shader compiler", href: "https://github.com/CrossGL/crosstl/pulls?q=is%3Apr+author%3Aeshitakundu+is%3Amerged" },
       { name: "ai-engineering-from-scratch", count: "2 merged", text: "A widely used open AI engineering course", href: "https://github.com/rohitg00/ai-engineering-from-scratch/pulls?q=is%3Apr+author%3Aeshitakundu+is%3Amerged" },

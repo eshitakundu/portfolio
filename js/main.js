@@ -41,7 +41,7 @@ ${caseMedia(c)}
 function renderOss(){
   const o=HOME.oss,pr=(n)=>a(`https://github.com/amd/gaia/pull/${n}`,`#${n}`);
   $("#oss").innerHTML=`<div class="oss-grid">
-<div class="oss-tile"><span class="tile-label">AMD GAIA</span><strong>5 merged,<br>2 in review.</strong><p>${o.plain}</p><p class="oss-prs">Merged: ${o.merged.map(pr).join(" ")}</p>${a(src(4).href,"See all my merged pull requests ↗")}</div>
+<div class="oss-tile"><span class="tile-label">AMD GAIA</span><strong>${o.merged.length} merged${o.open.length?`,<br>${o.open.length} in review`:""}.</strong><p>${o.plain}</p><p class="oss-prs">Merged: ${o.merged.map(pr).join(" ")}</p>${a(src(4).href,"See all my merged pull requests ↗")}</div>
 <div class="oss-list">
 <ul class="spans">${o.changes.map(t=>`<li><span class="state">MERGED</span><span>${t}</span></li>`).join("")}${o.open.map(p=>`<li class="is-open"><span class="state">IN REVIEW</span><span>${p.text} ${pr(p.n)}</span></li>`).join("")}</ul>
 <div class="oss-others">${o.others.map(x=>`<a href="${x.href}" target="_blank" rel="noreferrer"><b>${x.name}</b><span>${x.text}</span><em>${x.count}</em></a>`).join("")}</div>
