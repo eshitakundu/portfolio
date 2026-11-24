@@ -445,3 +445,19 @@ details[open]>.intro-detail,.case-how[open]>*:not(summary){animation:reveal .24s
 
 /* intro: plain facts, no tagline */
 .intro-copy>p.hero-sub{margin-top:14px;font-size:clamp(17px,1.5vw,21px);line-height:1.45;color:var(--ink);max-width:40ch}
+
+/* Photo column without the agent: social links on top, a few plain facts below (fills the column instead of leaving a gap). */
+@media(min-width:651px){
+  .profile-column .profile-social{flex:0 0 auto;padding:18px 16px;border-bottom:1px solid var(--ink)}
+  .profile-facts{display:block;margin:0;padding:4px 16px;flex:1;background:var(--paper)}
+  .intro-grid:not(.agent-on) .profile-column .profile-social{padding:14px 16px;gap:12px}
+  .intro-grid:not(.agent-on) .profile-facts div:nth-child(2),.intro-grid:not(.agent-on) .profile-facts div:last-child{display:none}
+  .intro-grid:not(.agent-on) .profile-facts div:nth-child(3){border-bottom:0}
+}
+/* Links that lost their arrows still need to look like links. */
+.corner,.contact-links a,.profile-email,.intro-detail a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.corner{text-decoration-color:var(--line)}.corner.is-live{text-decoration-color:rgba(195,69,33,.45)}
+.contact-links a{text-decoration-color:rgba(255,255,255,.5)}
+/* Hackathon list: rows size to their text instead of stretching to the side column. */
+.hack-tile{min-height:0}
+.hack-grid{grid-auto-rows:auto;align-content:start}
