@@ -14,7 +14,7 @@ const BIO = {
   photoSrc: "assets/img/avatar-photo.webp",
   body: `
     <p>I built and deployed <strong>ARIS</strong>, a live tool that scores whether a software dependency is safe to adopt. It runs on a self-hosted fork of Heym.</p>
-    <p>Most of my time goes into the unglamorous parts: getting scoring logic to give the same answer twice, keeping agent workflows from silently breaking, and building dashboards that hold up once real people start clicking around in them.</p>
+    <p>Most of my time goes into the unglamorous parts: getting scoring logic to give the same answer twice, keeping agent workflows from silently breaking, and building dashboards that hold up once people start clicking around in them.</p>
     <p>I won <strong>2nd Prize</strong> at the BRICS-FS-36 international final in China, hosted by WorldSkills Russia and partner organizations.</p>
   `
 };
@@ -27,7 +27,7 @@ const TERMINAL_LINES = [
   { cmd: true, text: "whoami" },
   { text: "eshita kundu - agentic ai engineer, cs graduate" },
   { cmd: true, text: "cat status.txt" },
-  { text: "3 agents live · 7 merged OSS PRs · open to full-time roles" },
+  { text: "2 agents live, 7 merged OSS PRs, open to full-time roles" },
   { cmd: true, text: "cat awards.txt" },
   { text: "2nd place, BRICS-FS-36 international final (data analysis & viz, china)" },
   { cmd: true, text: "ls skills/" },
@@ -101,8 +101,8 @@ const CASES = [
     kicker: "Grounded summaries of Hacker News",
     name: "DevPulse",
     host: "devpulse.eshita.dev",
-    media: { image: "assets/work/devpulse.jpg", alt: "DevPulse report for Bun: pros and cons, each quoting a real Hacker News comment" },
-    lede: "Ask what developers think of a tool and get pros and cons where every point quotes a real Hacker News comment and links to it.",
+    media: { image: "assets/work/devpulse.jpg", alt: "DevPulse report for Bun: pros and cons, each quoting a Hacker News comment" },
+    lede: "Ask what developers think of a tool and get pros and cons where every point quotes a Hacker News comment word for word and links to it.",
     evidence: [
       ["149", "verbatim-cited points in a live run over 20 tools", 12],
       ["18/19", "model reports passed the quote validator", 12],
@@ -118,7 +118,7 @@ const CASES = [
   {
     id: "agon",
     theme: "dark",
-    kicker: "Hackathon agent, Colosseum · MCP + Solana",
+    kicker: "Hackathon agent, Colosseum, MCP + Solana",
     name: "Agon",
     host: "agon-landing-mu.vercel.app",
     media: { image: "assets/work/agon.jpg", alt: "Agon landing page: a guardrailed AI trading agent" },
@@ -199,7 +199,7 @@ const KEE_TOPICS = [
     kicker: "Open source", big: "11 merged PRs",
     note: "across 3 projects, mostly AMD's agent framework.", noteCites: [4, 14, 15],
     facts: [
-      { title: "AMD GAIA", text: "7 merged. The MCP client, bridge and tool results.", cites: [4], go: "#open-source" },
+      { title: "AMD GAIA", text: "7 merged: the MCP client, bridge and tool results.", cites: [4], go: "#open-source" },
       { title: "Honorable mentions", text: "CrossGL's shader compiler (2) and ai-engineering-from-scratch (2).", cites: [14, 15] }
     ] },
   { id: "awards", label: "awards()", sub: "2nd, BRICS final", pose: "trophy", side: "left", wash: "#ecdcbd", inkTone: "#22201c",
@@ -252,7 +252,7 @@ const ACHIEVEMENTS = [
   {
     title: "2nd Place - BRICS-FS-36 Data Analysis & Visualization",
     cert: "https://drive.google.com/file/d/1eUbbKUpUdZsSF0-W7ApcbcmyK6M2rRP9/view?usp=drive_link",
-    org: "International final, China · Dec 2024",
+    org: "International final, China, Dec 2024",
     desc: "Won 2nd Prize in the international final held in China and hosted by WorldSkills Russia and partner organizations."
   },
   {
@@ -333,7 +333,7 @@ const FLAGSHIP = [
     name: "DevPulse | Grounded Opinions from Hacker News",
     hex: ["#FFD84D", "#6699FF"],
     caption: "what do developers actually say about a tool?",
-    desc: "Reads the Hacker News threads about a developer tool and returns pros and cons where every point quotes a real comment and links to it. The model only proposes; a validator keeps a point only if its quote appears word for word in the comment it cites, with one repair round and a rule-based fallback. In a live run over 20 tools, the model wrote 18 of 19 reports that passed validation (149 verbatim-cited points), and the D1 cache cut response time from 17.8 s to 0.27 s. Runs as a Python Worker on Cloudflare.",
+    desc: "Reads the Hacker News threads about a developer tool and returns pros and cons where every point quotes a comment word for word and links to it. The model only proposes; a validator keeps a point only if its quote appears word for word in the comment it cites, with one repair round and a rule-based fallback. In a live run over 20 tools, the model wrote 18 of 19 reports that passed validation (149 verbatim-cited points), and the D1 cache cut response time from 17.8 s to 0.27 s. Runs as a Python Worker on Cloudflare.",
     tags: ["Python", "FastAPI", "Pydantic", "OpenRouter", "Cloudflare Workers + D1"],
     links: [
       { label: "Live", href: "https://devpulse.eshita.dev/?tool=Bun" },
@@ -537,7 +537,7 @@ const MESSAGES = [
     date: "Nov 2024"
   },
   {
-    text: "BRICS-FS-36 · 2nd Prize",
+    text: "BRICS-FS-36, 2nd Prize",
     img: "assets/experiences/BRICS_winning.png",
     caption: "2nd Prize, BRICS-FS-36 International Final",
     date: "Nov 2024"
@@ -551,7 +551,7 @@ const HOME = {
   line: "I build AI assistants that check their facts before they answer.",
   meta: "AI engineer in Kolkata. Open to full-time roles, remote or anywhere in India.",
   trace: [
-    { label: "Built 3 AI tools anyone can try today", value: "3 live", href: "#work" },
+    { label: "Built 2 AI tools anyone can try today", value: "2 live", href: "#work" },
     { label: "Code merged into AMD's open-source AI agent framework", value: "7 merged", href: "#open-source" },
     { label: "Tested to catch made-up answers", value: "0 made-up claims", href: "https://github.com/eshitakundu/TraceIntel/tree/main/evals" },
     { label: "2nd place, international data analysis final in China", value: "2024", href: "https://drive.google.com/file/d/1eUbbKUpUdZsSF0-W7ApcbcmyK6M2rRP9/view?usp=drive_link" },
@@ -572,7 +572,7 @@ const HOME = {
       status: "The hosted research backend is offline, so the site shows recorded reports and a demo video instead of running new briefs."
     },
     devpulse: {
-      problem: "The real opinions about a dev tool are buried in long Hacker News threads, and AI summaries of those threads can make up quotes.",
+      problem: "What developers think of a tool is buried in long Hacker News threads, and AI summaries of those threads can make up quotes.",
       plain: "Ask about any dev tool and get pros and cons from Hacker News, each one quoting and linking the actual comment.",
       proof: ["Checked word for word in a live run:", "149 quoted points", "https://github.com/eshitakundu/DevPulse/blob/main/evals/results/live-2026-11-17.json"]
     }

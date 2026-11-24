@@ -31,31 +31,31 @@
 .hero-actions a:active,.hero-actions button:active{transform:scale(.97)}
 
 /* section shared */
-.section-head h2{text-align:right}
+.section-head h2{text-align:left}
 .section-lede{padding:18px 22px;border-bottom:1px solid var(--line);font-size:15px}
 
 /* live projects */
 .case{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;padding:30px 24px;border-bottom:1px solid var(--line);align-items:start}
 .case:last-child{border-bottom:0}
 /* three flagships, three worlds, each matching its letter tile */
-.case-traceintel{background:#eaedf8;box-shadow:inset 4px 0 0 var(--blue)}
-.case-aris{background:var(--ink);color:#f3f1e9;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
+.case-traceintel{background:#eaedf8}
+.case-aris{background:var(--ink);color:#f3f3ef;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
 .case-aris .case-media{order:2;border-color:#5c5c56}
 .case-aris .case-url{background:#2c2c28;color:#b9b8b0;border-color:#5c5c56}
-.case-aris h3,.case-aris .case-plain,.case-aris .case-problem span,.case-aris .case-plain span,.case-aris .case-proof em,.case-aris .case-how summary,.case-aris .engineering-grid strong,.case-aris .case-results b{color:#f3f1e9}
+.case-aris h3,.case-aris .case-plain,.case-aris .case-problem span,.case-aris .case-plain span,.case-aris .case-proof em,.case-aris .case-how summary,.case-aris .engineering-grid strong,.case-aris .case-results b{color:#f3f3ef}
 .case-aris p,.case-aris .case-problem,.case-aris .case-proof,.case-aris .case-results a{color:#c4c3bb}
 .case-aris .case-proof{border-color:#4a4a45}
 .case-aris .case-proof strong{color:#c9dc6b}
 .case-aris .identity-icon{background:#c9dc6b;color:var(--ink)}
 .case-aris .live-tag.demo{background:transparent;color:#c4c3bb;border-color:#6b6b65}
-.case-aris .case-actions a,.case-aris .case-actions button{background:transparent;color:#f3f1e9;border-color:#8a8a83}
+.case-aris .case-actions a,.case-aris .case-actions button{background:transparent;color:#f3f3ef;border-color:#8a8a83}
 .case-aris .case-actions a.primary{background:#c9dc6b;border-color:#c9dc6b;color:var(--ink)}
 .case-aris .case-actions a:hover,.case-aris .case-actions button:hover{border-color:#c9dc6b;color:#c9dc6b}
 .case-aris .case-actions a.primary:hover{color:var(--ink);filter:brightness(1.05)}
 .case-aris .tags span{border-color:#4a4a45;color:#c4c3bb}
 .case-aris .expand{color:#ed6d40}
 .case-aris a:focus-visible,.case-aris button:focus-visible,.case-aris summary:focus-visible{outline-color:#c9dc6b}
-.case-devpulse{background:#f6e6da;box-shadow:inset 4px 0 0 #ed6d40}
+.case-devpulse{background:#f6e6da}
 .case-devpulse .case-proof strong{color:#a3381a}
 .case-devpulse .case-actions a.primary{background:#c34521;border-color:#c34521}
 .case-devpulse .case-actions a.primary:hover{background:#a3381a;color:#fff}
@@ -249,7 +249,7 @@
   .js .intro-rows>details:nth-child(4){animation-delay:410ms}
   .js .dashboard-tile{animation-delay:440ms}
 }
-@keyframes enter{from{opacity:0;transform:translateY(8px);filter:blur(4px)}}
+@keyframes enter{from{opacity:0;transform:translateY(6px)}}
 @media(prefers-reduced-motion:reduce){.js .intro-copy>*,.js .intro-rows>details,.js .agent,.js .dashboard-tile,.js .profile-column{animation:fade .3s ease backwards}}
 @keyframes fade{from{opacity:0}}
 
@@ -308,17 +308,17 @@ details[open]>.intro-detail,.case-how[open]>*:not(summary){animation:reveal .24s
 
 /* --- smaller builds: three named groups instead of 15 identical rows --- */
 .more-bento{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);border-top:1px solid var(--line)}
-.hack-panel{background:#efe1c3;padding:20px;border-right:1px solid var(--line)}
-.hack-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
-.hack-tile{position:relative;display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid var(--ink);background:var(--paper);min-height:150px;transition:transform .16s var(--ease-out),box-shadow .16s var(--ease-out)}
+.hack-panel{padding:20px;border-right:1px solid var(--line)}
+.hack-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:10px;border-top:1px solid var(--line)}
+.hack-tile{position:relative;display:flex;flex-direction:column;gap:8px;padding:16px 16px 16px 0;border-bottom:1px solid var(--line);min-height:150px}.hack-tile:nth-child(even){padding-left:16px;border-left:1px solid var(--line)}
 .hack-tile.feature{grid-row:span 2}
 .hack-tile.feature h3{font-size:24px}
 .hack-tile .identity-icon{width:40px;height:40px;font-size:24px}
 .hack-tile h3{font-size:19px;letter-spacing:-.03em}
 .hack-tile p{font-size:14px}
-.stamp{align-self:flex-start;font-size:10.5px;padding:4px 6px;border:1px solid var(--ink)}
-.corner{position:absolute;top:12px;right:12px;font:700 10.5px/1 monospace;letter-spacing:.08em;padding:5px 7px;border:1px solid var(--ink);color:var(--ink);background:var(--paper)}
-.corner.is-live{background:#c34521;border-color:#c34521;color:#fff}
+.stamp{align-self:flex-start;font:11px/1.3 monospace;letter-spacing:.02em;color:var(--muted)}
+.corner{position:absolute;top:16px;right:12px;font:700 11px/1 monospace;letter-spacing:.04em;color:var(--muted)}
+.corner.is-live{color:#c34521}
 .more-side{display:flex;flex-direction:column}
 .mcp-panel{background:#e5e9d8;padding:20px;border-bottom:1px solid var(--line)}
 .tools-panel{padding:20px;flex:1}
@@ -328,7 +328,7 @@ details[open]>.intro-detail,.case-how[open]>*:not(summary){animation:reveal .24s
 .row-list .corner{top:12px;right:0}
 .row-text{display:grid;gap:2px}.row-text b{font-size:16px;letter-spacing:-.02em}.row-text span{font-size:13.5px;color:var(--muted)}
 .chip{flex-shrink:0;margin-top:1px;font:700 10.5px/1 monospace;letter-spacing:.08em;padding:5px 6px;background:#c9dc6b;color:var(--ink)}
-@media(hover:hover) and (pointer:fine){.hack-tile:hover{transform:translateY(-2px);box-shadow:0 6px 0 -3px var(--ink)}.row-list a:hover{transform:translateX(3px)}.row-list a:hover b,.hack-tile:hover h3{color:var(--ink);text-decoration:underline;text-decoration-color:#c34521;text-underline-offset:3px}}
+@media(hover:hover) and (pointer:fine){.row-list a:hover{transform:translateX(3px)}.row-list a:hover b,.hack-tile:hover h3{color:var(--ink);text-decoration:underline;text-decoration-color:#c34521;text-underline-offset:3px}}
 .more-foot a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
 
 /* --- background: one photo, the numbers that matter --- */
@@ -340,7 +340,7 @@ details[open]>.intro-detail,.case-how[open]>*:not(summary){animation:reveal .24s
 .bg-cell+.bg-cell,.bg-ranks{border-left:1px solid var(--line)}
 .bg-cell h3{font-size:18px;line-height:1.25;letter-spacing:-.03em}
 .bg-cell p{font-size:14px}
-.bg-brics{background:#efe1c3}.bg-brics .numeral{font-size:72px;color:#c34521}
+.bg-brics{background:#e8ebf4}.bg-brics .numeral{font-size:72px;color:#c34521}
 .bg-ranks{display:grid;grid-template-rows:1fr 1fr;padding:0}
 .bg-ranks a{display:flex;flex-direction:column;gap:8px;padding:20px 22px}
 .bg-ranks a+a{border-top:1px solid var(--line)}
@@ -375,7 +375,7 @@ details[open]>.intro-detail,.case-how[open]>*:not(summary){animation:reveal .24s
 .gh-stat{display:flex;flex-direction:column;gap:8px;padding:18px}
 .gh-stat+.gh-stat{border-left:1px solid var(--ink)}
 .gh-stat .numeral{font-size:44px}.gh-stat span{font-size:13.5px;color:var(--muted)}
-.gh-stat.s1{background:#e5e9d8}.gh-stat.s2{background:#c9dc6b}.gh-stat.s3{background:#efe1c3}
+.gh-stat.s1{background:#e5e9d8}.gh-stat.s2{background:#c9dc6b}.gh-stat.s3{background:#e8ebf4}
 .gh-ext{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:16px}
 .gh-ext .group-label{width:100%;margin-bottom:2px}
 .gh-ext a{display:flex;align-items:center;gap:10px;padding:8px 12px 8px 8px;border:1px solid var(--line);background:var(--paper);transition:transform .16s var(--ease-out),border-color .15s}
@@ -386,8 +386,8 @@ details[open]>.intro-detail,.case-how[open]>*:not(summary){animation:reveal .24s
 @media(prefers-reduced-motion:reduce){.gh-cal.play i,.gh-cal.wait i{animation:none;opacity:1;transform:none}}
 
 /* --- less blue: blue = her name, the main action and the contact band --- */
-.hero-portrait{background:#efe1c3}
-.work-tile{background:#efe1c3}
+.hero-portrait{background:#e8ebf4}
+.work-tile{background:#e8ebf4}
 .agent-head{background:#e5e9d8}
 .agent-head .identity-icon.agent-avatar{background:#c9dc6b}
 .agent-avatar svg{stroke:var(--ink)}
@@ -395,14 +395,14 @@ details[open]>.intro-detail,.case-how[open]>*:not(summary){animation:reveal .24s
 .agent-graph li.hit{border-color:var(--ink);color:var(--ink)}
 .agent-graph li.hit span,.agent-graph li[data-result]::after{color:var(--ink)}
 .agent-progress::before{background:#ed6d40}
-.ask-q{background:#efe1c3;color:var(--ink);border:1px solid var(--ink)}
+.ask-q{background:#e8ebf4;color:var(--ink);border:1px solid var(--ink)}
 .ask-a .tile-label{color:#a3381a}
 .ask-links a{color:var(--ink);border-color:var(--ink)}
 .ask-form button{background:#c34521}
 .ask-form button:hover{background:#a3381a}
 .ask-form:focus-within{outline-color:#c34521}
 .idle-list button b{color:#c34521}
-.case-traceintel{box-shadow:inset 4px 0 0 var(--ink)}
+
 .spans a,.pr-list a,.oss-prs a,.case-results a,.oss-tile>a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
 .spans a:hover,.pr-list a:hover,.oss-prs a:hover,.case-results a:hover,.oss-tile>a:hover{text-decoration-color:var(--blue);color:var(--ink)}
 
@@ -418,7 +418,7 @@ details[open]>.intro-detail,.case-how[open]>*:not(summary){animation:reveal .24s
   .gh-stats{grid-template-columns:1fr 1fr}.gh-stat:nth-child(3){border-left:0}.gh-stat:nth-child(n+3){border-top:1px solid var(--ink)}
 }
 @media(max-width:650px){
-  .hack-grid{grid-template-columns:1fr}.hack-tile.feature{grid-row:auto}
+  .hack-grid{grid-template-columns:1fr}.hack-tile.feature{grid-row:auto}.hack-tile:nth-child(even){padding-left:0;border-left:0}
   .bg-bento{grid-template-columns:1fr}.bg-bento>*{border-left:0!important}.bg-edu{border-top:1px solid var(--line)}
   .js .tools-list:not(.all) li:nth-child(n+4){display:none}.js .tools-panel .more-toggle{display:block}
   #github-block{padding:14px}.gh-stat .numeral{font-size:34px}

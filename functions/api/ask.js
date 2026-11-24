@@ -76,7 +76,7 @@ const PRESETS = {
     const [ti, ar, dp] = ["traceintel", "aris", "devpulse"].map(f);
     const smaller = KB.projects.filter((p) => !p.flagship).length;
     [ti, ar, dp].forEach((p) => p.links[0] && links.set(p.links[0].href, p.links[0]));
-    return `Three AI agents: ${ti.name} (live) finds old crypto permissions that could still drain a wallet; ${ar.name} (recorded demo) tells a team whether a new library is safe to adopt; ${dp.name} (live) sums up what Hacker News thinks of a dev tool, quoting a real comment for every point. She also has ${KB.oss.gaia.merged_prs.length} merged pull requests in AMD GAIA and ${smaller} smaller builds and hackathon projects.`;
+    return `Three AI agents: ${ti.name} (live) finds old crypto permissions that could still drain a wallet; ${ar.name} (recorded demo) tells a team whether a new library is safe to adopt; ${dp.name} (live) sums up what Hacker News thinks of a dev tool, quoting the source comment for every point. She also has ${KB.oss.gaia.merged_prs.length} merged pull requests in AMD GAIA and ${smaller} smaller builds and hackathon projects.`;
   },
   [norm("Has she worked with MCP?")]: (trace, links) => {
     const hits = step(trace, links, "search_projects", { query: "MCP" });
