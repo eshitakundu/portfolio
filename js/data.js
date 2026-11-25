@@ -61,16 +61,16 @@ const CASES = [
     media: { video: "assets/work/traceintel.mp4", poster: "assets/work/traceintel.jpg", alt: "TraceIntel report: the agent's briefing and a THEN to NOW comparison of a token permission" },
     lede: "Paste an old transaction and see which token permissions it left behind are still live, explained by an agent that may only cite verified evidence.",
     evidence: [
-      ["24", "offline evals in CI, 5 of them adversarial", 7],
+      ["35", "offline evals in CI, 6 of them adversarial", 7],
       ["0", "ungrounded claims in live runs on 2 models", 7],
       ["7/8", "correct advice end to end on a free model", 7],
-      ["101", "pytest, Vitest and Playwright tests", 8]
+      ["130", "pytest, Vitest and Playwright tests", 8]
     ],
-    how: "A NOOA planner calls 3 typed, read-only tools under a budget enforced in code. The reporter can only cite claims the tools verified, and falls back to a deterministic report.", howCite: 7,
-    tags: ["NOOA", "FastAPI", "PostgreSQL", "React + TypeScript", "Cloudflare Workers"],
+    how: "A NOOA planner calls 3 typed, read-only tools under a budget enforced in code. The reporter can only cite claims the tools verified, and falls back to a deterministic report. An MCP server also lets other agents check an approval or permit before signing: rules over on-chain evidence return allow, warn or block, and fail closed.", howCite: 7,
+    tags: ["NOOA", "MCP", "FastAPI", "PostgreSQL", "React + TypeScript", "Cloudflare Workers"],
     links: [
       { label: "Open live", href: "https://traceintel.eshita.dev", primary: true },
-      { label: "Watch 1:33 demo", href: "https://drive.google.com/file/d/1-5eEX6gudDaP5FLFxx9WotcHQ9CJlThD/view?usp=drive_link" },
+      { label: "Watch 1:56 demo", href: "https://drive.google.com/file/d/1-5eEX6gudDaP5FLFxx9WotcHQ9CJlThD/view?usp=drive_link" },
       { label: "Code", href: "https://github.com/eshitakundu/TraceIntel" }
     ]
   },
@@ -191,7 +191,7 @@ const KEE_TOPICS = [
     kicker: "How I test", big: "0 made-up claims",
     note: "in TraceIntel's live runs, on two different models.", noteCites: [7],
     facts: [
-      { title: "24 evals in CI", text: "5 of them try to trick the model.", cites: [7, 8] },
+      { title: "35 evals in CI", text: "6 of them try to trick the model.", cites: [7, 8] },
       { title: "149 quotes", text: "checked word for word by DevPulse's validator.", cites: [12] },
       { title: "38 scoring tests", text: "ARIS's maths is Python, not the model.", cites: [10] }
     ] },
@@ -306,7 +306,7 @@ const FLAGSHIP = [
     flagship: true,
     hex: ["#6699FF", "#8FC97A"],
     caption: "the transaction finished. what permissions are still active?",
-    desc: "On-chain exposure agent for Ethereum and Monad. Decodes every ERC-20 approval in a transaction and compares historical permissions with current allowance, owner balance, and spender code in a THEN → NOW view. A NOOA planner calls 3 typed read-only tools under a code-enforced budget; a reporter cites only verified claims, with a deterministic fallback. 24 offline evals (5 adversarial) and 101 tests run in CI, and live runs on 2 models produced 0 ungrounded claims.",
+    desc: "On-chain exposure agent for Ethereum and Monad. Decodes every ERC-20 approval in a transaction and compares historical permissions with current allowance, owner balance, and spender code in a THEN → NOW view. A NOOA planner calls 3 typed read-only tools under a code-enforced budget; a reporter cites only verified claims, with a deterministic fallback. An MCP server lets other agents check an approval or permit before signing, returning allow, warn or block from rules over on-chain evidence. 35 offline evals (6 adversarial) and 130 tests run in CI, and live runs on 2 models produced 0 ungrounded claims.",
     tags: ["NOOA", "FastAPI", "PostgreSQL", "React + TypeScript", "Ethereum + Monad"],
     links: [
       { label: "Live", href: "https://traceintel.eshita.dev" },
@@ -562,7 +562,7 @@ const HOME = {
       problem: "Token approvals outlive the swaps that create them, so a wallet can be drained months later without signing anything new.",
       plain: "Paste in an old transaction and it shows which permissions are still open, and whether you should revoke them.",
       proof: ["Live tests on 2 AI models:", "0 made-up claims", "https://github.com/eshitakundu/TraceIntel/tree/main/evals"],
-      demo: "1:33"
+      demo: "1:56"
     },
     aris: {
       problem: "Picking a new library means digging through CVEs, GitHub activity and download charts, then judging whether it fits your codebase.",
